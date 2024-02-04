@@ -17,9 +17,8 @@ import {
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
-import { useUserDetailsQuery } from '../../../apis/userLogin';
+import { useDeleteuserMutation, useUserDetailsQuery } from '../../../apis/userLogin';
 import UpdateUser from '../UpdateUser';
-
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -54,17 +53,24 @@ interface UserDetails {
 const rowsPerPage = 10;
 
 const ShowStaff = () => {
-  const [updateUser,setUpdateUser] = useState(null);
-  const { data, error, isLoading } = useUserDetailsQuery();
+  const [updateUser, setUpdateUser] = useState<UserDetails | null>(null);
+  const { data, error, isLoading, refetch } = useUserDetailsQuery();
   const [userInfo, setUserInfo] = useState<UserDetails[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const [selectedRole, setSelectedRole] = useState('All');
+  const [apis] = useDeleteuserMutation();
+
   useEffect(() => {
-    if (data && Array.isArray(data)) {
-      setUserInfo(data);
-    }
-  }, [data]);  
+    const fetchData = async () => {
+      await refetch(); // Assuming refetch is available in useUserDetailsQuery
+      if (data && Array.isArray(data)) {
+        setUserInfo(data);
+      }
+    };
+
+    fetchData();
+  }, [data, refetch]);
   const filteredUserInfo = userInfo
     .filter((user) => (selectedDepartment === 'All' ? true : user.department === selectedDepartment))
     .filter((user) => (selectedRole === 'All' ? true : user.role === selectedRole))
@@ -91,13 +97,24 @@ const ShowStaff = () => {
     setPage(0);
   };
   
-  const handleUpdate = (_id : any)=>{
-    <UpdateUser ></UpdateUser>
+  const handleUpdate = (user: UserDetails) => {
+    setUpdateUser(user);
+  }
+
+  const handleDelete = async (_id: any) => {
+    try {
+      const response = await apis({ _id });
+      if ('data' in response) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Unexpected error during sign-in:', error);
+    }
   }
   return (
     <>
     {
-      updateUser ?  <UpdateUser></UpdateUser> :
+      updateUser ?  <UpdateUser user={updateUser}></UpdateUser> :
       <>
       <br />
       <div style={{ marginLeft: '5%', gap: '5%', display: 'flex' }}>
@@ -171,11 +188,11 @@ const ShowStaff = () => {
                         <StyledTableCell align="center">{row.email}</StyledTableCell>
                         <StyledTableCell align="center">{row.department}</StyledTableCell>
                         <StyledTableCell align="center">{row.role}</StyledTableCell>
-                        <StyledTableCell align="center" onClick={() => handleUpdate(row._id)}>
+                        <StyledTableCell align="center" onClick={() => handleUpdate(row)}>
                           <Typography sx={{ color: 'blue', cursor: 'pointer' }}>Update</Typography>
                         </StyledTableCell>
                         <StyledTableCell align="center" >
-                          <Typography sx={{ color: 'red', cursor: 'pointer' }}>Delete</Typography>
+                          <Typography sx={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDelete(row._id)}>Delete</Typography>
                         </StyledTableCell>
                       </StyledTableRow>
                     )

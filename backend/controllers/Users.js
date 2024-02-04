@@ -35,6 +35,11 @@ const users = async(req,res)=>{
 const adduser = async(req,res)=>{
     const {name,department,id,email,role} = req.body;
     try{
+        const Search = await UserModel.find({id});
+        if(Search.length>0){
+            res.json({ error: "Already account is find" });
+        }
+       else{
         const User = new UserModel({
             name,
             department,
@@ -44,6 +49,7 @@ const adduser = async(req,res)=>{
         });
         const result1 = await User.save();
         res.json({ message: "Added successful" });
+       }
     }
     catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
@@ -51,9 +57,9 @@ const adduser = async(req,res)=>{
 }
 
 const deleteuser = async(req,res)=>{
-    const {id} = req.body;
+    const {_id} = req.body;
     try{
-        const result = await UserModel.deleteOne({ id: id });
+        const result = await UserModel.deleteOne({ _id: _id });
         if (result.deletedCount === 1) {
             res.json({ message: "Deleted successfully" });
         } else {

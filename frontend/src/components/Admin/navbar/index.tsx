@@ -4,14 +4,15 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddUser from '../AddUser';
-import ShowStaff from '../ShowUser';
-import TemporaryDrawer from '../sidebar/index'; // Import the Drawer component
+import ShowUser from '../ShowUser';
+import TemporaryDrawer from '../sidebar/index';
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('User');
+  const [refreshShowStaff, setRefreshShowStaff] = useState<string>(new Date().toISOString());
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -20,6 +21,13 @@ export default function NavBar() {
   const handleSelectItem = (item: string) => {
     setSelectedItem(item);
     setDrawerOpen(false);
+    if (item === 'User') {
+      handleRefreshShowStaff();
+    }
+  };
+
+  const handleRefreshShowStaff = () => {
+    setRefreshShowStaff(new Date().toISOString());
   };
 
   return (
@@ -46,15 +54,10 @@ export default function NavBar() {
         setDrawerOpen={setDrawerOpen}
         onSelectItem={handleSelectItem}
       />
-      {selectedItem && (
-        <div>
-          {selectedItem === 'User' && <ShowStaff />}
-          {selectedItem === 'AddUser' && <AddUser />}
-          
-        </div>
-      )}
+      <div key={refreshShowStaff}>
+        {selectedItem === 'User' && <ShowUser key={refreshShowStaff} />}
+        {selectedItem === 'AddUser' && <AddUser />}
+      </div>
     </Box>
   );
 }
-
-

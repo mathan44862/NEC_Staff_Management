@@ -11,7 +11,7 @@ interface ResponseGetUser{
     error: {
       status : string
     }
-  }
+}
   interface ApiResponse {
     data?: {
       Monthly: number;
@@ -75,6 +75,10 @@ interface LeaveYear{
   year:number,
   month:number
 }
+interface Response{
+  message:string
+} 
+
 export const userLogin = createApi({
     reducerPath:"userLogin",
     baseQuery:fetchBaseQuery({baseUrl:"http://localhost:5000",
@@ -133,11 +137,37 @@ export const userLogin = createApi({
         method: 'POST'
       })
   }),
-    userDetails : builder.query<UserDetails[],void>({
+  userDetails : builder.query<UserDetails[],void>({
       query: (payload) => ({
         url: `/users`
       })
-    }),
+  }),
+  adduser : builder.mutation<Response,UserDetails>({
+    query: (payload) => ({
+      url: `/adduser`,
+      body: payload,
+      method: 'POST'
     })
+  }),
+  deleteuser : builder.mutation<Response,{_id:string}>({
+    query: (payload) => ({
+      url: `/deleteuser`,
+      body: payload,
+      method: 'POST'
+    })
+  }),
+  updateuser : builder.mutation<Response,UserDetails>({
+    query: (payload) => ({
+      url: `/updateuser`,
+      body: payload,
+      method: 'POST'
+    })
+  }),
+  }),  
 })  
-export const { useLoginUserMutation , useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,useDeclineLeaveRequestMutation} = userLogin;
+export const { useLoginUserMutation , 
+  useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
+  useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
+  useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
+  useUpdateuserMutation
+} = userLogin;

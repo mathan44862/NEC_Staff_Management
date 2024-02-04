@@ -32,18 +32,6 @@ const MyRoutes = () => {
         }
       ]
     }, 
-    {
-      path: '/admin',
-      element: (
-          <Navbar></Navbar>
-      ),
-      children: [
-        {
-          path: 'updateuser',
-          element: <UpdateUser/>
-        }
-      ]
-    }, 
   ]);
   return element;
 };

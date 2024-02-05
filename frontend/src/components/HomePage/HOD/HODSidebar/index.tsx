@@ -21,7 +21,7 @@ const Sidebar: React.FC<TemporaryDrawerProps> = ({ drawerOpen, setDrawerOpen, on
       onKeyDown={() => setDrawerOpen(false)}
     >
       <List>
-        {['Calender','ShowRequest','Profile'].map((text) => (
+        {['Calender','ShowRequest','LeaveRequest','Profile'].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => onSelectItem(text)}>
               <ListItemText primary={text} />

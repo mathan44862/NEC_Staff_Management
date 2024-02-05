@@ -4,35 +4,34 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
-
 import TemporaryDrawer from '../HODSidebar/index';
 
 import { jwtDecode } from 'jwt-decode';
 import Profile from '../../../Profile';
 import { ShowRequestPage } from '../../../ShowRequestPage';
 import ShowLeaveDate from '../../../ShowLeaveDate';
-
-
-
+import RequestLeave from '../../../RequestLeave';
+import { useNavigate } from 'react-router-dom';
 
 interface UserDetails {
   _id: string;
-  email: String;
-  password: String;
-  role: String;
-  id: String;
-  department: String;
-  name: String;
+  email: string;
+  password: string;
+  role: string;
+  id: string;
+  department: string;
+  name: string;
 }
-
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('Calender');
   const [refreshShowStaff, setRefreshShowStaff] = useState<string>(new Date().toISOString());
 
-
+  const navigate = useNavigate();
   let hasToken = localStorage.getItem('accessToken');
   let user: UserDetails = hasToken ? jwtDecode(hasToken) : {
     _id: '',
@@ -60,6 +59,14 @@ export default function NavBar() {
     setRefreshShowStaff(new Date().toISOString());
   };
 
+  const handleLogOut = ()=>{
+    const keyToDelete = 'accessToken';
+        if (localStorage.getItem(keyToDelete)) {
+            localStorage.removeItem(keyToDelete);
+            navigate('/');
+        }
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -75,8 +82,13 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-             Dashboard
+            Dashboard
           </Typography>
+          <Tooltip title="Logout" >
+            <IconButton onClick={handleLogOut}>
+              <LogoutRoundedIcon sx={{color:'white'}} />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <TemporaryDrawer
@@ -85,9 +97,10 @@ export default function NavBar() {
         onSelectItem={handleSelectItem}
       />
       <div key={refreshShowStaff}>
-        {selectedItem === 'Calender' && <ShowLeaveDate></ShowLeaveDate> }
-        {selectedItem === 'ShowRequest' && <ShowRequestPage></ShowRequestPage> }
-        {selectedItem === 'Profile' && <Profile></Profile> }
+        {selectedItem === 'Calender' && <ShowLeaveDate />}
+        {selectedItem === 'ShowRequest' && <ShowRequestPage />}
+        {selectedItem === 'LeaveRequest' && <RequestLeave />}
+        {selectedItem === 'Profile' && <Profile />}
       </div>
     </Box>
   );

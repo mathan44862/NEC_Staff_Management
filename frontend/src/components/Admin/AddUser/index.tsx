@@ -70,23 +70,22 @@ const AddUser: React.FC = () => {
         <form onSubmit={formik.handleSubmit}>
           <Stack alignItems={'center'} margin={'5%'}>
             <Typography variant='h5' component={'h1'}>
-              Enter Staff Details 👇👇
+              Enter Staff Details 
             </Typography>{' '}
             {accountAlready && <span style={{ color: 'red' }}><br />Already Account is there</span>}
-            <br />
+            <br /> <br />
             <TextField
               id="name"
               name="name"
               label="Name"
               variant="outlined"
-              sx={{ width: '25%' }}
+              sx={{ width: '35ch'}}
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
             />
-            <br />
             <br />
             <TextField
               id="department"

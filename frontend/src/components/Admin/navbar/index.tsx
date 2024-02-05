@@ -8,12 +8,40 @@ import { useState, useEffect } from 'react';
 import AddUser from '../AddUser';
 import ShowUser from '../ShowUser';
 import TemporaryDrawer from '../sidebar/index';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UpdateUser from '../UpdateUser';
+import { jwtDecode } from 'jwt-decode';
+import Profile from '../../HomePage/Layout/Profile';
+
+
+interface UserDetails {
+  _id: string;
+  email: String;
+  password: String;
+  role: String;
+  id: String;
+  department: String;
+  name: String;
+}
+
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('User');
   const [refreshShowStaff, setRefreshShowStaff] = useState<string>(new Date().toISOString());
 
+
+  let hasToken = localStorage.getItem('accessToken');
+  let user: UserDetails = hasToken ? jwtDecode(hasToken) : {
+    _id: '',
+    email: '',
+    password: '',
+    role: '',
+    id: 'norollno',
+    department: 'nodepartmentfound',
+    name: 'nouserfound'
+  };  
+    
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
   };
@@ -57,6 +85,7 @@ export default function NavBar() {
       <div key={refreshShowStaff}>
         {selectedItem === 'User' && <ShowUser key={refreshShowStaff} />}
         {selectedItem === 'AddUser' && <AddUser />}
+        {selectedItem === 'Profile' && <><UpdateUser user={user}></UpdateUser><Profile></Profile></>}
       </div>
     </Box>
   );

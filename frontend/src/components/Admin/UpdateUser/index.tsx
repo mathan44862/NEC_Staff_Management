@@ -143,9 +143,9 @@ export default function UpdateUser({ user }: UpdateUserProps) {
             <MenuItem value="S&H PHY.ED ">S&H PHY.ED  Department</MenuItem>
           </Select>
         </FormControl>
+        <br />
         <FormControl>
           <InputLabel id="demo-simple-select-label">Role</InputLabel>
-          <br />
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"

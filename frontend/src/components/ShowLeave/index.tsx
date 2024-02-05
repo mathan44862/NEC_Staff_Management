@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
-import { useUserLeaveDetailsMutation } from "../../../../apis/userLogin";
+import { useUserLeaveDetailsMutation } from "../../apis/userLogin";
 
 interface ApiResponse {
   data?: {

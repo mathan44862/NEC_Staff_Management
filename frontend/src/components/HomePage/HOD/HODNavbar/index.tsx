@@ -6,11 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-import TemporaryDrawer from '../StaffSidebar/index';
+import TemporaryDrawer from '../HODSidebar/index';
 
 import { jwtDecode } from 'jwt-decode';
 import Profile from '../../../Profile';
-import RequestLeave from '../../../RequestLeave';
+import { ShowRequestPage } from '../../../ShowRequestPage';
 import ShowLeaveDate from '../../../ShowLeaveDate';
 
 
@@ -86,7 +86,7 @@ export default function NavBar() {
       />
       <div key={refreshShowStaff}>
         {selectedItem === 'Calender' && <ShowLeaveDate></ShowLeaveDate> }
-        {selectedItem === 'SendRequest' && <RequestLeave></RequestLeave> }
+        {selectedItem === 'ShowRequest' && <ShowRequestPage></ShowRequestPage> }
         {selectedItem === 'Profile' && <Profile></Profile> }
       </div>
     </Box>

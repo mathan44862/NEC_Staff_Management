@@ -5,6 +5,7 @@ import Navbar from "../Admin/Navbar";
 import ShowStaff from "../Admin/ShowUser";
 import Profile from "../Profile";
 import StaffNavbar from "./Staffs/StaffNavbar";
+import HODNavbar from "./HOD/HODNavbar";
 
 interface User {
   role: String;
@@ -49,7 +50,11 @@ const HomePage = () => {
       </>
     );
   } else {
-    // Handle other roles (hod, staff, etc.)
+    if(user.role == "hod"){
+      return (
+        <HODNavbar></HODNavbar>
+      );
+    }
     return (
       <StaffNavbar></StaffNavbar>
     );

@@ -1,11 +1,10 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import Profile from '../../HomePage/Layout/Profile';
+import React from 'react';
 
 interface TemporaryDrawerProps {
   drawerOpen: boolean;
@@ -22,7 +21,7 @@ const Sidebar: React.FC<TemporaryDrawerProps> = ({ drawerOpen, setDrawerOpen, on
       onKeyDown={() => setDrawerOpen(false)}
     >
       <List>
-        {['User','AddUser','Profile'].map((text) => (
+        {['Calender','SendRequest','Profile'].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => onSelectItem(text)}>
               <ListItemText primary={text} />

@@ -60,7 +60,7 @@ const RequestLeave = () => {
             {!reqRes ?
                 <>
                     
-                    <Card sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff'}}>
+                    <Card sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#ffffff',color:'#3a86ff'}}>
                         <CardContent>
                         <Stack sx={{ alignItems: "center", marginTop: '1rem' }}>
                         <Typography variant="h6" component="h1">Send Leave Request</Typography><br />
@@ -76,11 +76,12 @@ const RequestLeave = () => {
                                     value={radioValue}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="monthly" control={<Radio sx={{color:'#ffffff'}}/>} label="Monthly" />
-                                    <FormControlLabel value="emergency" control={<Radio sx={{color:'#ffffff'}}/>} label="Emergency" />
-                                    <FormControlLabel value="vacation" control={<Radio sx={{color:'#ffffff'}}/>} label="Vacation" />
-                                    <FormControlLabel value="casualleave" control={<Radio sx={{color:'#ffffff'}}/>} label="Casual Leave" />
+                                    <FormControlLabel value="monthly" control={<Radio />} label="Monthly" />
+                                    <FormControlLabel value="emergency" control={<Radio />} label="Emergency" />
+                                    <FormControlLabel value="vacation" control={<Radio />} label="Vacation" />
+                                    <FormControlLabel value="casualleave" control={<Radio />} label="Casual Leave" />
                                 </RadioGroup>
+                                <br />
                                 <FormControl sx={{ width: '80%' }}>
                                     <InputLabel id="demo-simple-select-label">On-Duty</InputLabel>
                                     <Select
@@ -89,7 +90,6 @@ const RequestLeave = () => {
                                         value={onDuty}
                                         label="On-Duty"
                                         onChange={handleOnDutyChange}
-                                        sx={{ color: '#000000', backgroundColor: '#ffffff' }}
                                         inputProps={{
                                             style: {
                                                 borderColor: 'blue',
@@ -108,7 +108,7 @@ const RequestLeave = () => {
                                         label="Pick your date"
                                         value={date}
                                         onChange={(newValue) => (setDate(newValue))}
-                                        sx={{backgroundColor:'white'}}
+                                        
                                     />
                                 </DemoContainer>
                             </LocalizationProvider><br />

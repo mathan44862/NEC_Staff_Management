@@ -6,6 +6,7 @@ import Profile from "./Layout/Profile";
 import RequestLeave from "./Layout/RequestLeave";
 import ShowLeaveDate from "./Layout/ShowLeaveDate";
 import Navbar from "../Admin/navbar";
+import StaffNavbar from "./Staffs/StaffNavbar";
 
 interface User {
   role: String;
@@ -52,26 +53,7 @@ const HomePage = () => {
   } else {
     // Handle other roles (hod, staff, etc.)
     return (
-      <Stack direction={"column"} gap={'2%'} id="homepage">
-        <Stack direction={"column"}>
-          {user.role === "hod" && (
-            <>
-              <Button
-                variant="contained"
-                sx={{ width: '20ch', marginLeft: '3%', marginTop: "5%" }}
-                type="submit"
-                onClick={() => { navigate('/showrequest'); }}
-              >
-                Show Request
-              </Button>
-              <br /><br />
-            </>
-          )}
-          <Profile />
-          <RequestLeave />
-          <ShowLeaveDate />
-        </Stack>
-      </Stack>
+      <StaffNavbar></StaffNavbar>
     );
   }
 };

@@ -4,13 +4,16 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useState, useEffect } from 'react';
+
+import TemporaryDrawer from '../sidebar/index';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import { jwtDecode } from 'jwt-decode';
-import { useState } from 'react';
-import Profile from '../../HomePage/Layout/Profile';
-import TemporaryDrawer from '../../HomePage/Staffs/sidebar/index';
-import AddUser from '../AddUser';
-import ShowUser from '../ShowUser';
-import UpdateUser from '../UpdateUser';
+import ShowLeaveDate from '../../Layout/ShowLeaveDate';
+import RequestLeave from '../../Layout/RequestLeave';
+import Profile from '../../Layout/Profile';
+
 
 
 interface UserDetails {
@@ -26,7 +29,7 @@ interface UserDetails {
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>('User');
+  const [selectedItem, setSelectedItem] = useState<string | null>('Calender');
   const [refreshShowStaff, setRefreshShowStaff] = useState<string>(new Date().toISOString());
 
 
@@ -48,7 +51,7 @@ export default function NavBar() {
   const handleSelectItem = (item: string) => {
     setSelectedItem(item);
     setDrawerOpen(false);
-    if (item === 'User') {
+    if (item === 'Calender') {
       handleRefreshShowStaff();
     }
   };
@@ -72,7 +75,7 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Admin Dashboard
+             Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -82,9 +85,9 @@ export default function NavBar() {
         onSelectItem={handleSelectItem}
       />
       <div key={refreshShowStaff}>
-        {selectedItem === 'User' && <ShowUser key={refreshShowStaff} />}
-        {selectedItem === 'AddUser' && <AddUser />}
-        {selectedItem === 'Profile' && <><UpdateUser user={user}></UpdateUser><Profile></Profile></>}
+        {selectedItem === 'Calender' && <ShowLeaveDate></ShowLeaveDate> }
+        {selectedItem === 'SendRequest' && <RequestLeave></RequestLeave> }
+        {selectedItem === 'Profile' && <Profile></Profile> }
       </div>
     </Box>
   );

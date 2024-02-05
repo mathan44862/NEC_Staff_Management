@@ -3,6 +3,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
 import { useUserLeaveDetailsMutation } from "../../apis/userLogin";
+import { useMediaQuery } from "@mui/material";
+
 
 interface ApiResponse {
   data?: {
@@ -33,9 +35,9 @@ const ShowLeave: React.FC<ShowLeaveProps> = ({ year,month }) => {
     const fetchData = async () => {
       try {
         const result = await userLeaveDetailsMutation({year,month});
+        console.log(result)
         if (result) {
           setUserLeaveInfo(result as ApiResponse);
-          
         }
       } catch (error) {
         console.error("Error fetching user leave details:", error);
@@ -43,8 +45,14 @@ const ShowLeave: React.FC<ShowLeaveProps> = ({ year,month }) => {
     };
     fetchData();
   }, [year,month]);
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
+    
   return (
-    <Stack alignItems={"center"} direction={"column"} id="container">
+
+    <Stack alignItems={"center"}  id="container"  marginTop={'5%'}     marginBottom={'2%'}
+    direction={isSmallScreen ? 'column' : 'row'}
+            gap={isSmallScreen ? '5%' : '10%'}
+    >
       <br />
         <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'4%'}} >
           <CardContent>

@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import Showleave from '../ShowLeave';
 import Calendar from './calender';
 import Month from './template';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 
 interface User {
   joiningdate: string;
@@ -52,20 +55,20 @@ const ShowLeaveDate = () => {
       <Stack alignItems={'center'} marginBottom={'2%'}>
           <br />
           <br />
-        <Stack direction={'row'} alignItems={"center"} gap={"5%"}>
-          <Button variant="contained" onClick={actionPreviousYear} sx={{ borderRadius: '50%' }}>{previousButton}</Button>
-          <Typography variant="h6" component="h1" sx={{ width: "30%" }}>
+        <Stack direction={'row'} alignItems={"center"} gap={"7%"}>
+          <div onClick={actionPreviousYear} style={{cursor:'pointer'}}><NavigateBeforeIcon></NavigateBeforeIcon></div>
+          <Typography variant="h6" component="h1" sx={{  marginRight:'5%'}}>
             {currentYear}
           </Typography>
-          <Button variant="contained" onClick={actionNextYear} sx={{ borderRadius: '50%' }}>{nextButton}</Button>
+          <div onClick={actionNextYear} style={{cursor:'pointer'}}><NavigateNextIcon></NavigateNextIcon></div>
         </Stack>
       <br />
-        <Stack direction={'row'} gap={'5%'} >
-          <Button variant="contained" onClick={actionPreviousMonth} sx={{ borderRadius: '50%' }}>{previousButton}</Button>
-          <Typography variant="h6" component="h1" sx={{ width: "40%" }}>
+        <Stack direction={'row'} gap={'7%'} >
+          <div onClick={actionPreviousMonth} style={{cursor:'pointer'}}><NavigateBeforeIcon></NavigateBeforeIcon></div>
+          <Typography variant="h6" component="h1" sx={{  marginRight:'1%'}}>
             {Month(currentMonth)}
           </Typography>
-          <Button variant="contained" onClick={actionNextMonth} sx={{ borderRadius: '50%' }}>{nextButton}</Button>
+          <div onClick={actionNextMonth} style={{cursor:'pointer'}}><NavigateNextIcon></NavigateNextIcon></div>
         </Stack>
       </Stack>
       {

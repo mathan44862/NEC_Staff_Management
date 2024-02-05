@@ -10,7 +10,6 @@ const signin = async (req, res) => {
         const foundUser = await UserModel.findOne({ email });
         if (foundUser) {
             const { email, role, id, department, name, joiningdate } = foundUser;
-
             const userid = { email: email, role: role || 'staff', id: id, department: department, name: name };
             const accessToken = jwt.sign(userid, process.env.ACCESS_TOKEN);
 

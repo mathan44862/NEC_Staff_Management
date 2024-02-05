@@ -1,6 +1,5 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useEffect, useState } from 'react';
-
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from "@mui/material";
 import { MonthDays, Weak } from "../template";
 import { useUserLeaveMutation } from "../../../apis/userLogin";
 
@@ -99,35 +98,37 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
     }
   }
 
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
+
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ maxWidth: isSmallScreen ? '80%' : '80%', margin: 'auto', border: '1px solid black' }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" sx={{color:'red'}}>Sunday</TableCell>
-            <TableCell align="center">Monday</TableCell>
-            <TableCell align="center">Tuesday</TableCell>
-            <TableCell align="center">Wednesday</TableCell>
-            <TableCell align="center">Thursday</TableCell>
-            <TableCell align="center">Friday</TableCell>
-            <TableCell align="center">Saturday</TableCell>
+            <TableCell align="center" sx={{ color: 'red' }}>Sun</TableCell>
+            <TableCell align="center">Mon</TableCell>
+            <TableCell align="center">Tue</TableCell>
+            <TableCell align="center">Wed</TableCell>
+            <TableCell align="center">Thu</TableCell>
+            <TableCell align="center">Fri</TableCell>
+            <TableCell align="center">Sat</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, rowIndex) => (
             <TableRow key={rowIndex}>
               {row.map((day, dayIndex) => (
-                <TableCell key={dayIndex} align="center" style={{ color: day < 0 || dayIndex%7==0 ? 'red' : 'black' }}>
+                <TableCell key={dayIndex} align="center" sx={{ color: day < 0 || dayIndex % 7 === 0 ? 'red' : 'black' }}>
                   {
                     day !== 0 ? (
-                    day === -1 ? 'M' :
-                    day === -2 ? 'V' :
-                    day === -3 ? 'E' :
-                    day === -4 ? 'CL' :
-                    day === -5 ? 'OF' :
-                    day === -6 ? 'EX' :
-                    day === -7 ? 'HS' :
-                    day
+                      day === -1 ? 'M' :
+                        day === -2 ? 'V' :
+                          day === -3 ? 'E' :
+                            day === -4 ? 'CL' :
+                              day === -5 ? 'OF' :
+                                day === -6 ? 'EX' :
+                                  day === -7 ? 'HS' :
+                                    day
                     ) : ' '
                   }
                 </TableCell>

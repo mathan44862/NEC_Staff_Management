@@ -49,12 +49,9 @@ const ShowLeaveDate = () => {
   
   return (
     <Stack>
-      <Stack alignItems={'center'}>
-        <br />
-        <Typography variant="h4" component="h1">
-          Leave Calendar
-        </Typography>
-        <br />
+      <Stack alignItems={'center'} marginBottom={'2%'}>
+          <br />
+          <br />
         <Stack direction={'row'} alignItems={"center"} gap={"5%"}>
           <Button variant="contained" onClick={actionPreviousYear} sx={{ borderRadius: '50%' }}>{previousButton}</Button>
           <Typography variant="h6" component="h1" sx={{ width: "30%" }}>

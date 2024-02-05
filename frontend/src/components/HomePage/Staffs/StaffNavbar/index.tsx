@@ -4,15 +4,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import TemporaryDrawer from '../sidebar/index';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import TemporaryDrawer from '../StaffSidebar/index';
 
 import { jwtDecode } from 'jwt-decode';
-import ShowLeaveDate from '../../Layout/ShowLeaveDate';
+import Profile from '../../../Profile';
 import RequestLeave from '../../Layout/RequestLeave';
-import Profile from '../../Layout/Profile';
+import ShowLeaveDate from '../../Layout/ShowLeaveDate';
 
 
 

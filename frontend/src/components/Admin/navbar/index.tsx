@@ -6,10 +6,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
-import Profile from '../../HomePage/Layout/Profile';
-import TemporaryDrawer from '../../HomePage/Staffs/sidebar/index';
+import Profile from '../../Profile';
 import AddUser from '../AddUser';
 import ShowUser from '../ShowUser';
+import TemporaryDrawer from '../Sidebar/index';
 import UpdateUser from '../UpdateUser';
 
 
@@ -83,8 +83,8 @@ export default function NavBar() {
       />
       <div key={refreshShowStaff}>
         {selectedItem === 'User' && <ShowUser key={refreshShowStaff} />}
-        {selectedItem === 'AddUser' && <AddUser />}
-        {selectedItem === 'Profile' && <><UpdateUser user={user}></UpdateUser><Profile></Profile></>}
+        {selectedItem === 'Add User' && <AddUser />}
+        {selectedItem === 'Profile' && <><Profile></Profile></>}
       </div>
     </Box>
   );

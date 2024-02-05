@@ -3,8 +3,6 @@ import HomePage from '../components/LoginPage';
 
 import { ShowRequestPage } from '../components/ShowRequestPage';
 import ProtectedRouter from './ProtectedRouter';
-import Navbar from '../components/Admin/navbar';
-import UpdateUser from '../components/Admin/UpdateUser';
 
 const MyRoutes = () => {
   let element = useRoutes([

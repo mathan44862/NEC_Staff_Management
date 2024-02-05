@@ -1,11 +1,9 @@
 import { Box, Button, Stack } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Admin/Navbar";
 import ShowStaff from "../Admin/ShowUser";
-import Profile from "./Layout/Profile";
-import RequestLeave from "./Layout/RequestLeave";
-import ShowLeaveDate from "./Layout/ShowLeaveDate";
-import Navbar from "../Admin/navbar";
+import Profile from "../Profile";
 import StaffNavbar from "./Staffs/StaffNavbar";
 
 interface User {

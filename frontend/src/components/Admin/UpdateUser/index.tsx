@@ -76,9 +76,6 @@ export default function UpdateUser({ user }: UpdateUserProps) {
   }
   return (
     <><Stack alignItems={"center"} margin={'6%'}>
-        <Typography variant="h4" component="h1">
-          Customizable Fields 👇👇
-        </Typography>{' '}
         <br />
         <br />
         <TextField

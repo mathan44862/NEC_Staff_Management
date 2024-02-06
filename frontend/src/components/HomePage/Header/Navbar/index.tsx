@@ -1,3 +1,5 @@
+// NavBar.tsx
+import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,20 +12,11 @@ import { useState } from 'react';
 import TemporaryDrawer from '../Sidebar';
 
 import { jwtDecode } from 'jwt-decode';
-import Profile from '../../../Profile';
-import { ShowRequestPage } from '../../../ShowRequestPage';
-import ShowLeaveDate from '../../../ShowLeaveDate';
-import RequestLeave from '../../../RequestLeave';
+
 import { useNavigate } from 'react-router-dom';
 
 interface UserDetails {
-  _id: string;
-  email: string;
-  password: string;
   role: string;
-  id: string;
-  department: string;
-  name: string;
 }
 
 export default function NavBar() {
@@ -34,39 +27,27 @@ export default function NavBar() {
   const navigate = useNavigate();
   let hasToken = localStorage.getItem('accessToken');
   let user: UserDetails = hasToken ? jwtDecode(hasToken) : {
-    _id: '',
-    email: '',
-    password: '',
-    role: '',
-    id: 'norollno',
-    department: 'nodepartmentfound',
-    name: 'nouserfound'
+    role: ''
   };  
     
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
   };
 
-  const handleSelectItem = (item: string) => {
-    setSelectedItem(item);
-    setDrawerOpen(false);
-    if (item === 'Calender') {
-      handleRefreshShowStaff();
-    }
-  };
-
   const handleRefreshShowStaff = () => {
     setRefreshShowStaff(new Date().toISOString());
   };
 
-  const handleLogOut = ()=>{
+  const handleLogOut = () => {
     const keyToDelete = 'accessToken';
-        if (localStorage.getItem(keyToDelete)) {
-            localStorage.removeItem(keyToDelete);
-            navigate('/');
-        }
+    if (localStorage.getItem(keyToDelete)) {
+      localStorage.removeItem(keyToDelete);
+      navigate('/');
+    }
   }
-
+  const drawerListStaff = ['Calender',  'LeaveRequest', 'Profile'];
+  const drawerListHod = ['Calender','ShowRequest','LeaveRequest','Profile'];
+  const drawerListAdmin = ['User','AddUser','Profile'];
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -84,14 +65,30 @@ export default function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
-          <Tooltip title="Logout" >
+          <Tooltip title="Logout">
             <IconButton onClick={handleLogOut}>
-              <LogoutRoundedIcon sx={{color:'white'}} />
+              <LogoutRoundedIcon sx={{ color: 'white' }} />
             </IconButton>
           </Tooltip>
         </Toolbar>
       </AppBar>
-      <TemporaryDrawer/>
+      {
+        user.role == "staff" ? <TemporaryDrawer
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        drawerList={drawerListStaff} // Pass the array list as a prop
+      />:
+      user.role == "hod" ? <TemporaryDrawer
+      drawerOpen={drawerOpen}
+      setDrawerOpen={setDrawerOpen}
+      drawerList={drawerListHod} // Pass the array list as a prop
+    />:
+    <TemporaryDrawer
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        drawerList={drawerListAdmin} // Pass the array list as a prop
+      />
+      }
     </Box>
   );
 }

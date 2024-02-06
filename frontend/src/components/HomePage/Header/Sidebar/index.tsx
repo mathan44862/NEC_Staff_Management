@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+// Sidebar.tsx
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface SidebarProps {
-  // Add any necessary props here
+interface TemporaryDrawerProps {
+  drawerOpen: boolean;
+  setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  drawerList: string[]; // Add the prop for the array list
 }
 
-const Sidebar: React.FC<SidebarProps> = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const onselect = (text: string) => {
-    console.log(`${text} selected`);
-  };
-
+const Sidebar: React.FC<TemporaryDrawerProps> = ({ drawerOpen, setDrawerOpen, drawerList }) => {
+  const navigate = useNavigate();
   const list = () => (
     <Box
       sx={{ width: 250 }}
@@ -25,9 +24,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
       onKeyDown={() => setDrawerOpen(false)}
     >
       <List>
-        {['Calender', 'ShowRequest', 'LeaveRequest', 'Profile'].map((text) => (
+        {drawerList.map((text,index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={() => onselect(text)}>
+            <ListItemButton onClick={()=>{
+              (index == 0 )?navigate('/') : navigate('/'+text);
+            }}>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>

@@ -59,7 +59,7 @@ const RequestLeave = () => {
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
                                 <FormControl sx={{ width: '100%', marginBottom: '1rem' }}>
-                                    <InputLabel id='demo-simple-select-label'>On-Duty</InputLabel>
+                                    <InputLabel id='demo-simple-select-label'>Reason</InputLabel>
                                     <Select
                                         labelId='demo-simple-select-label'
                                         id='demo-simple-select'

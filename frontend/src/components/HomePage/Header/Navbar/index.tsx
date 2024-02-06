@@ -45,8 +45,8 @@ export default function NavBar() {
       navigate('/');
     }
   }
-  const drawerListStaff = ['Calender',  'LeaveRequest', 'Profile'];
-  const drawerListHod = ['Calender','ShowRequest','LeaveRequest','Profile'];
+  const drawerListStaff = ['Calender',  'LeaveRequest', 'Profile','Show Leave Details'];
+  const drawerListHod = ['Calender','ShowRequest','LeaveRequest','Profile','Show Leave Details'];
   const drawerListAdmin = ['User','AddUser','Profile'];
   return (
     <Box sx={{ flexGrow: 1 }}>

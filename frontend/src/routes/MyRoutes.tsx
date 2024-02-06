@@ -9,6 +9,7 @@ import RequestLeave from '../components/RequestLeave';
 import Profile from '../components/Profile';
 import AddUser from '../components/Admin/AddUser';
 import UpdateUser from '../components/Admin/UpdateUser';
+import ShowLeaveDetails from '../components/ShowLeaveDetails';
 
 const MyRoutes = () => {
   let element = useRoutes([
@@ -53,6 +54,14 @@ const MyRoutes = () => {
       element: (
        <Header>
         <AddUser></AddUser>
+       </Header>
+      ),
+    }, 
+    {
+      path: '/Show Leave Details',
+      element: (
+       <Header>
+          <ShowLeaveDetails></ShowLeaveDetails>
        </Header>
       ),
     }, 

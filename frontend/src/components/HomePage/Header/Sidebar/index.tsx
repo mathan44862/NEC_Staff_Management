@@ -7,11 +7,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { Stack } from '@mui/material';
 
 interface TemporaryDrawerProps {
   drawerOpen: boolean;
   setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  drawerList: string[]; // Add the prop for the array list
+  drawerList: (string | ReactNode)[][];
 }
 
 const Sidebar: React.FC<TemporaryDrawerProps> = ({ drawerOpen, setDrawerOpen, drawerList }) => {
@@ -24,12 +26,15 @@ const Sidebar: React.FC<TemporaryDrawerProps> = ({ drawerOpen, setDrawerOpen, dr
       onKeyDown={() => setDrawerOpen(false)}
     >
       <List>
-        {drawerList.map((text,index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={()=>{
-              (index == 0 )?navigate('/') : navigate('/'+text);
+        {drawerList.map(([text, icon], index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton onClick={() => {
+              (index === 0) ? navigate('/') : navigate('/' + text);
             }}>
-              <ListItemText primary={text} />
+              
+            <Stack direction={"row"} gap={'10%'}>{icon}
+              <ListItemText primary={text} /></Stack>
+            
             </ListItemButton>
           </ListItem>
         ))}

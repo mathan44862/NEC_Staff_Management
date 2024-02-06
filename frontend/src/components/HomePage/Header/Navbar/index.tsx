@@ -10,10 +10,15 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import TemporaryDrawer from '../Sidebar';
-
 import { jwtDecode } from 'jwt-decode';
-
 import { useNavigate } from 'react-router-dom';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import Person2Icon from '@mui/icons-material/Person2';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 
 interface UserDetails {
   role: string;
@@ -21,9 +26,6 @@ interface UserDetails {
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>('Calender');
-  const [refreshShowStaff, setRefreshShowStaff] = useState<string>(new Date().toISOString());
-
   const navigate = useNavigate();
   let hasToken = localStorage.getItem('accessToken');
   let user: UserDetails = hasToken ? jwtDecode(hasToken) : {
@@ -34,10 +36,6 @@ export default function NavBar() {
     setDrawerOpen(true);
   };
 
-  const handleRefreshShowStaff = () => {
-    setRefreshShowStaff(new Date().toISOString());
-  };
-
   const handleLogOut = () => {
     const keyToDelete = 'accessToken';
     if (localStorage.getItem(keyToDelete)) {
@@ -45,9 +43,11 @@ export default function NavBar() {
       navigate('/');
     }
   }
-  const drawerListStaff = ['Calender',  'LeaveRequest', 'Profile','Show Leave Details'];
-  const drawerListHod = ['Calender','ShowRequest','LeaveRequest','Profile','Show Leave Details'];
-  const drawerListAdmin = ['User','AddUser','Profile'];
+
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />]];
+  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['AddUser', <PersonAddIcon />], ['Profile', <PersonPinIcon />]];
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -72,22 +72,23 @@ export default function NavBar() {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      {
-        user.role == "staff" ? <TemporaryDrawer
-        drawerOpen={drawerOpen}
-        setDrawerOpen={setDrawerOpen}
-        drawerList={drawerListStaff} // Pass the array list as a prop
-      />:
-      user.role == "hod" ? <TemporaryDrawer
-      drawerOpen={drawerOpen}
-      setDrawerOpen={setDrawerOpen}
-      drawerList={drawerListHod} // Pass the array list as a prop
-    />:
-    <TemporaryDrawer
-        drawerOpen={drawerOpen}
-        setDrawerOpen={setDrawerOpen}
-        drawerList={drawerListAdmin} // Pass the array list as a prop
-      />
+      {user.role === "staff" ? 
+        <TemporaryDrawer
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          drawerList={drawerListStaff} // Pass the array list as a prop
+        /> :
+        user.role === "hod" ? 
+        <TemporaryDrawer
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          drawerList={drawerListHod} // Pass the array list as a prop
+        /> :
+        <TemporaryDrawer
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          drawerList={drawerListAdmin} // Pass the array list as a prop
+        />
       }
     </Box>
   );

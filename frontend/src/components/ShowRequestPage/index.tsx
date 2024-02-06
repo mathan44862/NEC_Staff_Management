@@ -90,10 +90,11 @@ export const ShowRequestPage = () => {
   console.log(data);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
+    <TableContainer component={Paper} sx={{ width: '80%', margin: '0 auto', borderRadius: '8px', marginTop:'3%' }}>
+      {/* Adjust the 'width' and 'margin' properties above according to your requirements */}
+      <Table sx={{ minWidth: 300 , marginTop:'0%'}} aria-label="customized table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{backgroundColor:'blueviolet'}}>
             <StyledTableCell align="center">Staff Id</StyledTableCell>
             <StyledTableCell align="center">Staff Name</StyledTableCell>
             <StyledTableCell align="center">Reason</StyledTableCell>
@@ -104,6 +105,7 @@ export const ShowRequestPage = () => {
             <StyledTableCell align="center">Decline Request</StyledTableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
         { userLeaveInfo.length>0 ? userLeaveInfo.map((row) => (
   <StyledTableRow key={row.id}>
@@ -132,5 +134,6 @@ export const ShowRequestPage = () => {
         </TableBody>
       </Table>
     </TableContainer>
+      
   );
 };

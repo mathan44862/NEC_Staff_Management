@@ -6,7 +6,8 @@ import ShowStaff from "../Admin/ShowUser";
 import Profile from "../Profile";
 import StaffNavbar from "./Staffs/StaffNavbar";
 import HODNavbar from "./HOD/HODNavbar";
-import Navbar from "../Admin/Navbar";
+import Navbar from "../Admin/navbar";
+
 
 interface User {
   role: String;

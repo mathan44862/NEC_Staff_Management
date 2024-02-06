@@ -14,13 +14,13 @@ interface ResponseGetUser{
 }
   interface ApiResponse {
     data?: {
-      Monthly: number;
+      Medical: number;
       Vacation: number;
-      Emergency: number;
       Casual : number,
       Official : number,
       Exam : number,
-      Higherstudy : number
+      Higherstudy : number,
+      Others : number
     };
     error?: {
       message: string;

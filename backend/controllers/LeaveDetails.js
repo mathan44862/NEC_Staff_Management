@@ -20,13 +20,13 @@ const userLeaveCount = async (req, res) => {
   try {
     var LeaveInfomation1;
     var LeaveInfomation2;
-    var monthly = 0;
     var vacation = 0;
-    var emergency = 0;
+    var medical = 0;
     var casual = 0;
     var official = 0;
     var exam = 0;
     var higherstudy = 0;
+    var others = 0;
     if(month>=6){
       LeaveInfomation1 = await LeaveInfoModel.find({
         id: req.user.id,
@@ -54,14 +54,11 @@ const userLeaveCount = async (req, res) => {
     if (LeaveInfomation1 && LeaveInfomation1.length > 0) {
       LeaveInfomation1.forEach((leave) => {
         switch (leave.reason) {
-          case "monthly":
-            monthly++;
-            break;
           case "vacation":
             vacation++;
             break;
-          case "emergency":
-            emergency++;
+          case "medical":
+            medical++;
             break;
           case "casualleave":
             casual++;
@@ -75,20 +72,20 @@ const userLeaveCount = async (req, res) => {
           case "higherstudy":
             higherstudy++;
             break;
+          default :
+            others++;
+            break;
         }
       });
     }
     if (LeaveInfomation2 && LeaveInfomation2.length > 0) {
         LeaveInfomation2.forEach((leave) => {
           switch (leave.reason) {
-            case "monthly":
-              monthly++;
-              break;
             case "vacation":
               vacation++;
               break;
-            case "emergency":
-              emergency++;
+            case "medical":
+              medical++;
               break;
             case "casualleave":
               casual++;
@@ -102,17 +99,20 @@ const userLeaveCount = async (req, res) => {
             case "higherstudy":
               higherstudy++;
               break;
+            default :
+              others++;
+              break;
           }
         });
     } 
     res.json({
-      Monthly: monthly,
       Vacation: vacation,
-      Emergency: emergency,
+      Medical: medical,
       Casual: casual,
       Official: official,
       Exam: exam,
-      Higherstudy: higherstudy
+      Higherstudy: higherstudy,
+      Others : others
     });
   } catch (error) {
     res.json(error);

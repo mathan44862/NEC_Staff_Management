@@ -25,7 +25,7 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
     const fetchData = async () => {
       try {
         const result = await userLeaveMutation({ year, month });
-        
+        console.log(result);
         if (result && 'data' in result && 'data' in result.data) {
           setUserLeave(Array.isArray(result.data.data) ? result.data.data : [result.data.data]);
         }
@@ -41,25 +41,22 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
 
   const getUserLeaveType = (day: number): number => {
     const leaveInfo = userLeave.find((leave) => leave.date === day);
-
     if (leaveInfo) {
       switch (leaveInfo.reason) {
-        case "monthly":
+        case "medical":
           return -1;
         case "vacation":
           return -2;
-        case "emergency":
-          return -3;
         case "casualleave":
-          return -4;
+          return -3;
         case "official":
-          return -5;
+          return -4;
         case "exam":
-          return -6;
+          return -5;
         case "higherstudy":
-          return -7;
+          return -6;
         default:
-          return day;
+          return -7;
       }
     }
 
@@ -123,11 +120,11 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
                     day !== 0 ? (
                       day === -1 ? 'M' :
                         day === -2 ? 'V' :
-                          day === -3 ? 'E' :
-                            day === -4 ? 'CL' :
-                              day === -5 ? 'OF' :
-                                day === -6 ? 'EX' :
-                                  day === -7 ? 'HS' :
+                            day === -3 ? 'CL' :
+                              day === -4 ? 'OF' :
+                                day === -5 ? 'EX' :
+                                  day === -6 ? 'HS' :
+                                  day === -7 ? 'O' :
                                     day
                     ) : ' '
                   }

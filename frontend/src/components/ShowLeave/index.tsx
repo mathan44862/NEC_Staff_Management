@@ -8,13 +8,13 @@ import { useMediaQuery } from "@mui/material";
 
 interface ApiResponse {
   data?: {
-    Monthly: number;
+    Medical: number;
     Vacation: number;
-    Emergency: number;
     Casual : number,
     Official : number,
     Exam : number,
-    Higherstudy : number
+    Higherstudy : number,
+    Others : number
   };
   error?: {
     // Adjust the properties based on your actual error structure
@@ -56,18 +56,17 @@ const ShowLeave: React.FC<ShowLeaveProps> = ({ year,month }) => {
       <br />
         <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'4%'}} >
           <CardContent>
-              <Typography variant="h6" component="h6" >Monthly  : {userLeaveInfo?.data?.Monthly}</Typography><br />
               <Typography variant="h6" component="h6" >Vacation  : {userLeaveInfo?.data?.Vacation}</Typography><br />
-              <Typography variant="h6" component="h6" >Emergency  : {userLeaveInfo?.data?.Emergency}</Typography><br />
+              <Typography variant="h6" component="h6" >Medical  : {userLeaveInfo?.data?.Medical}</Typography><br />
               <Typography variant="h6" component="h6" >Casual Leave  : {userLeaveInfo?.data?.Casual}</Typography><br />
           </CardContent>
         </Card><br /><br />
         <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'4%'}} >
           <CardContent>
-          <Typography variant="h6" component="h6" >On-Duty </Typography><br />
           <Typography variant="h6" component="h6" >Official On-Duty  : {userLeaveInfo?.data?.Official}</Typography><br />
           <Typography variant="h6" component="h6" >Exam On-Duty : {userLeaveInfo?.data?.Exam}</Typography><br />
           <Typography variant="h6" component="h6" >Higher Study On-Duty : {userLeaveInfo?.data?.Higherstudy}</Typography><br />
+          <Typography variant="h6" component="h6" >Others :  {userLeaveInfo?.data?.Others}</Typography><br />
           </CardContent>
         </Card>
         <br /><br />

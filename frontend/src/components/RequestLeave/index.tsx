@@ -51,7 +51,7 @@ const RequestLeave = () => {
         <>
             {!reqRes ? (
                 <>
-                    <Card sx={{ minWidth: 250, minHeight: 100, maxHeight: 600, color: '#3a86ff', margin: 'auto', width: '80%' }}>
+                    <Card sx={{ minWidth: 250, minHeight: 100, maxHeight: 600, color: '#3a86ff', margin: 'auto', width: '80%', marginTop: '10%', boxShadow: 4 }}>
                         <CardContent>
                             <Stack sx={{ alignItems: 'center', marginTop: '1rem', color: 'black' }}>
                                 <Typography variant='h4' component='h1'>Send Leave Request</Typography><br />

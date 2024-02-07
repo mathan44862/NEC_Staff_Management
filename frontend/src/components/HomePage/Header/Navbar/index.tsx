@@ -1,4 +1,3 @@
-// NavBar.tsx
 import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -19,6 +18,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
+import PreviewIcon from '@mui/icons-material/Preview';
+
+
 
 interface UserDetails {
   role: string;
@@ -44,8 +46,8 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['Show Leave Details'], ['Profile', <PersonPinIcon />]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['Show Leave Details'], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>], ['Profile', <PersonPinIcon />]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />]];
   const drawerListAdmin = [['User', <PersonOutlineIcon />], ['AddUser', <PersonAddIcon />], ['Profile', <PersonPinIcon />]];
 
   return (
@@ -57,16 +59,16 @@ export default function NavBar() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 0.5 }} // Reduced marginRight
             onClick={handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
+            Dashboard 
           </Typography>
           <Tooltip title="Logout">
-            <IconButton onClick={handleLogOut}>
+            <IconButton onClick={handleLogOut} sx={{ ml: 0.5 }}> {/* Added marginLeft */}
               <LogoutRoundedIcon sx={{ color: 'white' }} />
             </IconButton>
           </Tooltip>

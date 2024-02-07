@@ -100,22 +100,22 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
   return (
     <TableContainer component={Paper} sx={{ maxWidth: isSmallScreen ? '80%' : '80%', margin: 'auto', border: '1px solid black' }}>
       <Table>
-        <TableHead>
+        <TableHead sx={{backgroundColor:"#3a86ff", color:"whitesmoke",fontSize:'80%'}}>
           <TableRow>
-            <TableCell align="center" sx={{ color: 'red' }}>Sun</TableCell>
-            <TableCell align="center">Mon</TableCell>
-            <TableCell align="center">Tue</TableCell>
-            <TableCell align="center">Wed</TableCell>
-            <TableCell align="center">Thu</TableCell>
-            <TableCell align="center">Fri</TableCell>
-            <TableCell align="center">Sat</TableCell>
+            <TableCell align="center" sx={{ color: 'white'}}>Sun</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Mon</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Tue</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Wed</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Thu</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Fri</TableCell>
+            <TableCell align="center" sx={{ color: 'white' }}>Sat</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody >
           {rows.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
+            <TableRow key={rowIndex} >
               {row.map((day, dayIndex) => (
-                <TableCell key={dayIndex} align="center" sx={{ color: day < 0 || dayIndex % 7 === 0 ? 'red' : 'black' }}>
+                <TableCell key={dayIndex} align="center" sx={{ color: day < 0 || dayIndex % 7 === 0 ? '#FF004D' : 'black', fontWeight: day < 0 ? 'bold' : 'normal' }}>
                   {
                     day !== 0 ? (
                       day === -1 ? 'M' :

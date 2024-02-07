@@ -58,7 +58,7 @@ const MyRoutes = () => {
       ),
     }, 
     {
-      path: '/Show Leave Details',
+      path: '/LeaveDetails',
       element: (
        <Header>
           <ShowLeaveDetails></ShowLeaveDetails>

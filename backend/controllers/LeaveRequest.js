@@ -37,13 +37,135 @@ const sendleaverequest = async (req, res) => {
       role:req.user.role,
       email:req.user.email
     });
-    const result = await leaveRequest.save();
-    let  RequestLeaveInfomation = await UserModel.findOne({
-      department: req.user.department,
-      role: 'hod'
-    });
-    mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
-    res.json({ message: "Leave Requested successfully" });
+    year  = req.body.year;
+    month= req.body.month;
+    var LeaveInfomation1;
+    var LeaveInfomation2;
+    var vacation = 0;
+    var medical = 0;
+    var casual = 0;
+    var official = 0;
+    var exam = 0;
+    var higherstudy = 0;
+    var others = 0;
+    if(month>=6){
+      LeaveInfomation1 = await LeaveInfoModel.find({
+        id: req.user.id,
+        year: year,
+        month: { $gte: 6, $lte:  12}
+      });
+      LeaveInfomation2 = await LeaveInfoModel.find({
+        id: req.user.id,
+        year: year+1,
+        month: { $gte: 1, $lte:  5}
+      });
+    }
+    if(month <6){
+      LeaveInfomation1 = await LeaveInfoModel.find({
+        id: req.user.id,
+        year: year-1,
+        month: { $gte: 6, $lte:  12}
+      });
+      LeaveInfomation2 = await LeaveInfoModel.find({
+        id: req.user.id,
+        year: year,
+        month: { $gte: 1, $lte:  5}
+      });
+    }
+    if (LeaveInfomation1 && LeaveInfomation1.length > 0) {
+      LeaveInfomation1.forEach((leave) => {
+        switch (leave.reason) {
+          case "vacation":
+            vacation++;
+            break;
+          case "medical":
+            medical++;
+            break;
+          case "casualleave":
+            casual++;
+            break;
+          case "official":
+            official++;
+            break;
+          case "exam":
+            exam++;
+            break;
+          case "higherstudy":
+            higherstudy++;
+            break;
+          default :
+            others++;
+            break;
+        }
+      });
+    }
+    if (LeaveInfomation2 && LeaveInfomation2.length > 0) {
+        LeaveInfomation2.forEach((leave) => {
+          switch (leave.reason) {
+            case "vacation":
+              vacation++;
+              break;
+            case "medical":
+              medical++;
+              break;
+            case "casualleave":
+              casual++;
+              break;
+            case "official":
+              official++;
+              break;
+            case "exam":
+              exam++;
+              break;
+            case "higherstudy":
+              higherstudy++;
+              break;
+            default :
+              others++;
+              break;
+          }
+        });
+    } 
+
+      if(req.body.reason == "vacation"){
+        if(vacation == 12){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else if(req.body.reason == "medical"){
+        if(medical == 1){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else if(req.body.reason == "casualleave"){
+        if(casual == 12){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else if(req.body.reason == "offical"){
+        if(official == 12){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else if(req.body.reason == "exam"){
+        if(exam == 12){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else if(req.body.reason == "higerstudy"){
+        if(higherstudy == 12){
+          res.json({Noleave:"No leave"})
+        }
+      }
+      else{
+        const result = await leaveRequest.save();
+        let  RequestLeaveInfomation = await UserModel.findOne({
+          department: req.user.department,
+          role: 'hod'
+        });
+        mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
+        res.json({ message: "Leave Requested successfully" });
+      }
   } 
   catch (error) { 
     res.status(500).json({ error: 'Internal Server Error' });

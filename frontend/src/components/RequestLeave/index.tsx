@@ -10,6 +10,7 @@ import { useSendRequestMutation } from "../../apis/userLogin";
 const RequestLeave = () => {
     const [date, setDate] = useState(null);
     const [reqRes, setReqRes] = useState(false);
+    const [responseleave, setResponseLeave] = useState(false);
     const [sendReq] = useSendRequestMutation();
     const [reason, setReason] = React.useState('');
     const [others, setOthers] = React.useState('');
@@ -27,6 +28,10 @@ const RequestLeave = () => {
                     reason: reason === 'Others' ? others : reason
                 });
                 if ('data' in response) {
+                    console.log(response);
+                    if ('Noleave' in response.data) {
+                        setResponseLeave(true);
+                    }
                     if ('message' in response.data) {
                         setReqRes(true);
                     }
@@ -56,8 +61,10 @@ const RequestLeave = () => {
                             <Stack sx={{ alignItems: 'center', marginTop: '1rem', color: 'black' }}>
                                 <Typography variant='h4' component='h1'>Send Leave Request</Typography><br />
                             </Stack>
+                            {responseleave ? <Typography>Your {reason} leave limit exit </Typography> : null}
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
+                                <br />
                                 <FormControl sx={{ width: '100%', marginBottom: '1rem' }}>
                                     <InputLabel id='demo-simple-select-label'>Reason</InputLabel>
                                     <Select

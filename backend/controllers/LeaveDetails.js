@@ -119,7 +119,19 @@ const userLeaveCount = async (req, res) => {
   }
 };
 
+const userLeaves = async (req,res)=>{
+  try {
+    const leaveInfo = await LeaveInfoModel.find({
+      id: req.user.id,
+    });
+    res.json(leaveInfo);
+  } catch (error) {
+    res.json(error);
+  }
+}
+
 module.exports = {
     userLeaveDatails,
-    userLeaveCount
+    userLeaveCount,
+    userLeaves
 };

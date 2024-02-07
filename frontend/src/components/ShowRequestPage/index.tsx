@@ -130,7 +130,7 @@ export const ShowRequestPage = () => {
       </Button>
     </StyledTableCell>
   </StyledTableRow>
-)) : <h1>No Leave Request</h1>}
+)) : <h1 style={{textAlign:'center'}}>No Leave Request</h1>}
         </TableBody>
       </Table>
     </TableContainer>

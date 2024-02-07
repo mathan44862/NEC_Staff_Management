@@ -79,6 +79,13 @@ interface Response{
   message:string
 } 
 
+interface ShowLeaves {
+  date : number;
+  month: number;
+  year: number;
+  reason: string;
+}
+
 export const userLogin = createApi({
     reducerPath:"userLogin",
     baseQuery:fetchBaseQuery({baseUrl:"http://localhost:5000",
@@ -158,9 +165,14 @@ export const userLogin = createApi({
   }),
   updateuser : builder.mutation<Response,UserDetails>({
     query: (payload) => ({
-      url: `/updateuser`,
+      url: `/updateuser`, 
       body: payload,
       method: 'POST'
+    })
+  }),
+  userLeaves : builder.query<ShowLeaves[],void>({
+    query: (payload) => ({
+      url: `/leavedetails`
     })
   }),
   }),  
@@ -169,5 +181,5 @@ export const { useLoginUserMutation ,
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation
+  useUpdateuserMutation,useUserLeavesQuery
 } = userLogin;

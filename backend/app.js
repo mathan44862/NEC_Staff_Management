@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 mongoose.connect("mongodb://127.0.0.1:27017/NECSTAFFS");
 
 app.use('/',user);
-app.use('/leavedetails',authenticationToken,leaveDetails);
+app.use('/leavedetails',authenticationToken,leaveDetails);  
 app.use('/leaverequest',authenticationToken,leaveRequest);
 
 

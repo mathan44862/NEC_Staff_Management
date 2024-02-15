@@ -1,21 +1,22 @@
-import React, { useState } from "react";
 import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import TextField from '@mui/material/TextField';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs from "dayjs";
-import TextField from '@mui/material/TextField';
+import React, { useState } from "react";
 import { useSendRequestMutation } from "../../apis/userLogin";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const RequestLeave = () => {
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState<dayjs.Dayjs | null>(null);
     const [reqRes, setReqRes] = useState(false);
     const [responseleave, setResponseLeave] = useState(false);
     const [sendReq] = useSendRequestMutation();
     const [reason, setReason] = React.useState('');
-    const [others, setOthers] = React.useState('');
+    const [reasonType, setReasonType] = React.useState('');
+    const currentDate = new Date();
 
-    const sendRequest = async (event: any) => {
+    const sendRequest = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         if (date) {
             const formattedDate = dayjs(date).format('YYYY MM DD');
@@ -25,7 +26,7 @@ const RequestLeave = () => {
                     date: parseInt(selectedDate[2]),
                     month: parseInt(selectedDate[1]),
                     year: parseInt(selectedDate[0]),
-                    reason: reason === 'Others' ? others : reason
+                    reason: reason
                 });
                 if ('data' in response) {
                     console.log(response);
@@ -44,12 +45,12 @@ const RequestLeave = () => {
         }
     };
 
-    const handleReasonChange = (event: SelectChangeEvent) => {
+    const handleReasonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setReason(event.target.value as string);
     };
     
-    const handleOthersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setOthers(event.target.value);
+    const handleReasonTypeChange = (event: SelectChangeEvent<string>) => {
+        setReasonType(event.target.value);
     };
 
     return (
@@ -63,16 +64,15 @@ const RequestLeave = () => {
                             </Stack>
                             {responseleave ? <Typography>Your {reason} leave limit exit </Typography> : null}
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
-                            <Stack sx={{ width: '100%', margin: 'auto' }}>
                                 <br />
                                 <FormControl sx={{ width: '100%', marginBottom: '1rem' }}>
-                                    <InputLabel id='demo-simple-select-label'>Reason</InputLabel>
+                                    <InputLabel id='demo-simple-select-label'>Leave-Type</InputLabel>
                                     <Select
                                         labelId='demo-simple-select-label'
                                         id='demo-simple-select'
-                                        value={reason}
+                                        value={reasonType}
                                         label='Reason'
-                                        onChange={handleReasonChange}
+                                        onChange={handleReasonTypeChange}
                                         inputProps={{
                                             style: {
                                                 borderColor: 'blue',
@@ -89,26 +89,26 @@ const RequestLeave = () => {
                                         <MenuItem value='Others'>Others</MenuItem>
                                     </Select>
                                 </FormControl>
-                                {reason === 'Others' && (
-                                    <TextField
-                                        id='outlined-basic'
-                                        label='Others'
-                                        variant='outlined'
-                                        value={others}
-                                        onChange={handleOthersChange}
-                                        sx={{ width: '100%', marginBottom: '1rem' }}
-                                    />
-                                )}
+                                <TextField
+                                    id='outlined-basic'
+                                    label='Leave - Reason'
+                                    variant='outlined'
+                                    value={reason}
+                                    onChange={handleReasonChange}
+                                    sx={{ width: '100%', marginBottom: '1rem' }}
+                                />
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DatePicker
-                                        label='Pick your date'
+                                        label={"Day"}
+                                        views={['day']}
+                                        minDate={dayjs(currentDate).startOf('month')}
+                                        maxDate={dayjs(currentDate).endOf('month')}
                                         value={date}
-                                        onChange={(newValue) => (setDate(newValue))}
+                                        onChange={(newDate) => setDate(newDate)}
                                     />
                                 </LocalizationProvider>
                                 <br />
                                 <Button variant='contained' sx={{ width: '30%', backgroundColor: '#ffffff', color: '#3a86ff' }} type='submit' onClick={sendRequest}>Send Request</Button>
-                            </Stack>
                             </Stack>
                         </CardContent>
                     </Card>

@@ -126,7 +126,6 @@ const sendleaverequest = async (req, res) => {
           }
         });
     } 
-
       if(req.body.reason == "vacation"){
         if(vacation == 12){
           res.json({Noleave:"No leave"})

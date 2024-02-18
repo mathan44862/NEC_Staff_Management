@@ -105,7 +105,7 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
             <TableCell align="center" sx={{ color: 'white'}}>Sun</TableCell>
             <TableCell align="center" sx={{ color: 'white' }}>Mon</TableCell>
             <TableCell align="center" sx={{ color: 'white' }}>Tue</TableCell>
-            <TableCell align="center" sx={{ color: 'white' }}>Wed</TableCell>+
+            <TableCell align="center" sx={{ color: 'white' }}>Wed</TableCell>
             <TableCell align="center" sx={{ color: 'white' }}>Thu</TableCell>
             <TableCell align="center" sx={{ color: 'white' }}>Fri</TableCell>
             <TableCell align="center" sx={{ color: 'white' }}>Sat</TableCell>

@@ -10,6 +10,7 @@ import Profile from '../components/Profile';
 import AddUser from '../components/Admin/AddUser';
 import UpdateUser from '../components/Admin/UpdateUser';
 import ShowLeaveDetails from '../components/ShowLeaveDetails';
+import Todos from '../components/Todos';
 
 const MyRoutes = () => {
   let element = useRoutes([
@@ -62,6 +63,14 @@ const MyRoutes = () => {
       element: (
        <Header>
           <ShowLeaveDetails></ShowLeaveDetails>
+       </Header>
+      ),
+    }, 
+    {
+      path: '/Todos',
+      element: (
+       <Header>
+          <Todos></Todos>
        </Header>
       ),
     }, 

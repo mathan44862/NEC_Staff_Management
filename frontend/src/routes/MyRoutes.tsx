@@ -6,7 +6,7 @@ import ProtectedRouter from './ProtectedRouter';
 import ShowLeaveDate from '../components/ShowLeaveDate';
 import Header from '../components/HomePage/Header';
 import RequestLeave from '../components/RequestLeave';
-import Profile from '../components/Profile';
+// import Profile from '../components/Profile';
 import AddUser from '../components/Admin/AddUser';
 import UpdateUser from '../components/Admin/UpdateUser';
 import ShowLeaveDetails from '../components/ShowLeaveDetails';
@@ -39,14 +39,6 @@ const MyRoutes = () => {
       element: (
        <Header>
         <RequestLeave></RequestLeave>
-       </Header>
-      ),
-    }, 
-    {
-      path: '/Profile',
-      element: (
-       <Header>
-        <Profile></Profile>
        </Header>
       ),
     },  

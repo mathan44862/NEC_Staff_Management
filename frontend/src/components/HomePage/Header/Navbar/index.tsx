@@ -13,12 +13,13 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import IosShareIcon from '@mui/icons-material/IosShare';
-import Person2Icon from '@mui/icons-material/Person2';
+// import Person2Icon from '@mui/icons-material/Person2';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+// import PersonPinIcon from '@mui/icons-material/PersonPin';
 import PreviewIcon from '@mui/icons-material/Preview';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 
 
@@ -46,9 +47,9 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>], ['Profile', <PersonPinIcon />],['Todos', <PersonPinIcon />]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />],['Todos',, <PersonPinIcon />]];
-  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['AddUser', <PersonAddIcon />], ['Profile', <PersonPinIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon />]];
+  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['AddUser', <PersonAddIcon />]];
 
   return (
     <Box sx={{ flexGrow: 1 }}>

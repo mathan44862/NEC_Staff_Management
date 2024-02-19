@@ -39,6 +39,7 @@ interface ResponseGetUser{
     month: number;
     year: number;
     reason: string;
+    reasonType:String
   }
 interface ResponseSendRequest{
     message:String,
@@ -54,6 +55,7 @@ interface ShowLeaveRequest {
     id: string;
     _id: string;
     reason: string;
+    reasonType:String
 }
 interface ApprovalRequest{
   _id:string
@@ -84,6 +86,14 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
+  reasonType:string
+}
+interface Todostatus {
+  task:String,
+  status:String,
+  department:String,
+  name:String,
+  id:String
 }
 
 export const userLogin = createApi({
@@ -175,11 +185,16 @@ export const userLogin = createApi({
       url: `/leavedetails`
     })
   }),
+  todostatus : builder.query<Todostatus[],void>({
+    query: (payload) => ({
+      url: `/todos/status`
+    })
+  }),
   }),  
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery
 } = userLogin;

@@ -47,9 +47,9 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon />]];
-  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['AddUser', <PersonAddIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>], ['Profile', <PersonPinIcon />],['Todos', <PersonPinIcon />]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />],['Todos', <PersonPinIcon />],['Todos Status',<PersonPinIcon />]];
+  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />], ['Profile', <PersonPinIcon />]];
 
   return (
     <Box sx={{ flexGrow: 1 }}>

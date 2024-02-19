@@ -8,6 +8,7 @@ const user = require('./routes/User')
 const authenticationToken = require('./authentication/authenticationToken')
 const leaveDetails = require('./routes/LeaveDetails')
 const leaveRequest = require('./routes/LeaveRequest')
+const todos = require('./routes/Todos')
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +18,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/NECSTAFFS");
 app.use('/',user);
 app.use('/leavedetails',authenticationToken,leaveDetails);  
 app.use('/leaverequest',authenticationToken,leaveRequest);
+app.use('/todos',authenticationToken,todos);
 
 
 app.listen(5000, () => {

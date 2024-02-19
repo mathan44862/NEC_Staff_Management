@@ -6,7 +6,7 @@ const mailer = require('../mailer/index');
 const leaveRequest = async(req,res)=>{
     try {
       let RequestLeaveInfomation;
-      if (req.user.role === "principal") {
+      if (req.user.role === "admin") {
         RequestLeaveInfomation = await LeaveRequestModel.find();
       } else {
         RequestLeaveInfomation = await LeaveRequestModel.find({
@@ -26,6 +26,7 @@ const leaveRequest = async(req,res)=>{
 
 const sendleaverequest = async (req, res) => {
   try {
+    const {reasonType}=req.body;
     const leaveRequest = new LeaveRequestModel({
       id: req.user.id,
       name:req.user.name,
@@ -35,8 +36,10 @@ const sendleaverequest = async (req, res) => {
       year: req.body.year,
       reason: req.body.reason,
       role:req.user.role,
-      email:req.user.email
+      email:req.user.email,
+      reasonType:reasonType
     });
+    console.log(reasonType);
     year  = req.body.year;
     month= req.body.month;
     var LeaveInfomation1;
@@ -74,7 +77,7 @@ const sendleaverequest = async (req, res) => {
     }
     if (LeaveInfomation1 && LeaveInfomation1.length > 0) {
       LeaveInfomation1.forEach((leave) => {
-        switch (leave.reason) {
+        switch (leave.reasonType) {
           case "vacation":
             vacation++;
             break;
@@ -101,7 +104,7 @@ const sendleaverequest = async (req, res) => {
     }
     if (LeaveInfomation2 && LeaveInfomation2.length > 0) {
         LeaveInfomation2.forEach((leave) => {
-          switch (leave.reason) {
+          switch (leave.reasonType) {
             case "vacation":
               vacation++;
               break;
@@ -126,32 +129,32 @@ const sendleaverequest = async (req, res) => {
           }
         });
     } 
-      if(req.body.reason == "vacation"){
+      if(req.body.reasonType == "vacation"){
         if(vacation == 12){
           res.json({Noleave:"No leave"})
         }
       }
-      else if(req.body.reason == "medical"){
-        if(medical == 1){
+      else if(req.body.reasonType == "medical"){
+        if(medical == 2){
           res.json({Noleave:"No leave"})
         }
       }
-      else if(req.body.reason == "casualleave"){
+      else if(req.body.reasonType == "casualleave"){
         if(casual == 12){
           res.json({Noleave:"No leave"})
         }
       }
-      else if(req.body.reason == "offical"){
+      else if(req.body.reasonType == "offical"){
         if(official == 12){
           res.json({Noleave:"No leave"})
         }
       }
-      else if(req.body.reason == "exam"){
+      else if(req.body.reasonType == "exam"){
         if(exam == 12){
           res.json({Noleave:"No leave"})
         }
       }
-      else if(req.body.reason == "higerstudy"){
+      else if(req.body.reasonType == "higerstudy"){
         if(higherstudy == 12){
           res.json({Noleave:"No leave"})
         }
@@ -174,6 +177,7 @@ const approvalleaverequest = async(req,res)=>{
   try {
     const idToDelete = req.body._id;
     const leaveinfo = await LeaveRequestModel.findOne({ _id: idToDelete });
+    console.log(leaveinfo);
     const result = await LeaveRequestModel.deleteOne({ _id: idToDelete });
     if (result.deletedCount === 1) {
       const leave = new LeaveInfoModel({
@@ -184,7 +188,8 @@ const approvalleaverequest = async(req,res)=>{
         year: leaveinfo.year,
         reason: leaveinfo.reason,
         role:leaveinfo.role,
-        name:leaveinfo.name 
+        name:leaveinfo.name ,
+        reasonType:leaveinfo.reasonType
       });
       const result1 = await leave.save();
       mailer('21it027@nandhaengg.org','Your leave request on '+ leaveinfo.date+'/'+leaveinfo.month+'/'+leaveinfo.year+' is approved ');

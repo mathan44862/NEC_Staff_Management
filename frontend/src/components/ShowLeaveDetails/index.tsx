@@ -9,6 +9,7 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
+  reasonType:string
 }
 
 
@@ -55,6 +56,7 @@ const ShowLeaveDetails: React.FC = () => {
       <Table sx={{ minWidth: 300, marginTop: '0%' }} aria-label="customized table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'blueviolet' }}>
+          <StyledTableCell align="center">ReasonType</StyledTableCell>
             <StyledTableCell align="center">Reason</StyledTableCell>
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Month</StyledTableCell>
@@ -65,6 +67,7 @@ const ShowLeaveDetails: React.FC = () => {
           {userLeaveInfo.length > 0 ? (
             userLeaveInfo.map((row, index) => (
               <StyledTableRow key={index}>
+                <StyledTableCell align="center">{row.reasonType}</StyledTableCell>
                 <StyledTableCell align="center">{row.reason}</StyledTableCell>
                 <StyledTableCell align="center">{row.date}</StyledTableCell>
                 <StyledTableCell align="center">{row.month}</StyledTableCell>

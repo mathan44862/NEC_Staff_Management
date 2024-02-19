@@ -9,7 +9,8 @@ const RequestLeaveInfoModel = mongoose.model('RequestLeaveInfo', new mongoose.Sc
     year: Number,
     reason: String,
     role :String,
-    email:String
+    email:String,
+    reasonType:String
 })); 
 
 module.exports = RequestLeaveInfoModel;

@@ -47,9 +47,9 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>], ['Profile', <PersonPinIcon />],['Todos', <PersonPinIcon />]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />], ['Profile', <PersonPinIcon />],['Todos', <PersonPinIcon />],['Todos Status',<PersonPinIcon />]];
-  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />], ['Profile', <PersonPinIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>],['Todos', <PlaylistAddIcon />]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon/>],['Todos Status',<PlaylistAddIcon />]];
+  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />]];
 
   return (
     <Box sx={{ flexGrow: 1 }}>

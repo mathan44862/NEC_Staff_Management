@@ -14,6 +14,7 @@ interface LeaveInfo {
   year: number;
   reason: string;
   _id: string;
+  reasonType:string
 }
 
 const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
@@ -42,7 +43,7 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
   const getUserLeaveType = (day: number): number => {
     const leaveInfo = userLeave.find((leave) => leave.date === day);
     if (leaveInfo) {
-      switch (leaveInfo.reason) {
+      switch (leaveInfo.reasonType) {
         case "medical":
           return -1;
         case "vacation":

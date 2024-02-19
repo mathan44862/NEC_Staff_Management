@@ -26,15 +26,20 @@ const RequestLeave = () => {
                     date: parseInt(selectedDate[2]),
                     month: parseInt(selectedDate[1]),
                     year: parseInt(selectedDate[0]),
-                    reason: reason
+                    reason: reason,
+                    reasonType : reasonType
                 });
+                console.log(response);
                 if ('data' in response) {
-                    console.log(response);
                     if ('Noleave' in response.data) {
+                        console.log("hi");
                         setResponseLeave(true);
                     }
                     if ('message' in response.data) {
                         setReqRes(true);
+                        setReasonType('');
+                        setReason('');
+                        setDate(null);
                     }
                 }
             } catch (error) {
@@ -86,7 +91,7 @@ const RequestLeave = () => {
                                         <MenuItem value='casualleave'>Casual Leave</MenuItem>
                                         <MenuItem value='medical'>Medical</MenuItem>
                                         <MenuItem value='vacation'>Vacation</MenuItem>
-                                        <MenuItem value='Others'>Others</MenuItem>
+                                        <MenuItem value='others'>Others</MenuItem>
                                     </Select>
                                 </FormControl>
                                 <TextField

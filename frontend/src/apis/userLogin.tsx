@@ -39,6 +39,7 @@ interface ResponseGetUser{
     month: number;
     year: number;
     reason: string;
+    reasonType:String
   }
 interface ResponseSendRequest{
     message:String,
@@ -54,6 +55,7 @@ interface ShowLeaveRequest {
     id: string;
     _id: string;
     reason: string;
+    reasonType:String
 }
 interface ApprovalRequest{
   _id:string
@@ -84,6 +86,7 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
+  reasonType:string
 }
 interface Todostatus {
   task:String,

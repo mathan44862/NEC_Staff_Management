@@ -53,7 +53,7 @@ const userLeaveCount = async (req, res) => {
     }
     if (LeaveInfomation1 && LeaveInfomation1.length > 0) {
       LeaveInfomation1.forEach((leave) => {
-        switch (leave.reason) {
+        switch (leave.reasonType) {
           case "vacation":
             vacation++;
             break;
@@ -80,7 +80,7 @@ const userLeaveCount = async (req, res) => {
     }
     if (LeaveInfomation2 && LeaveInfomation2.length > 0) {
         LeaveInfomation2.forEach((leave) => {
-          switch (leave.reason) {
+          switch (leave.reasonType) {
             case "vacation":
               vacation++;
               break;

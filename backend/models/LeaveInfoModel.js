@@ -8,7 +8,8 @@ const LeaveSchema = new mongoose.Schema({
     department:String,
     role :String,
     name:String,
-    email:String
+    email:String,
+    reasonType:String
 });
 const LeaveInfoModel = mongoose.model('LeaveInfo', LeaveSchema);
 module.exports = LeaveInfoModel;

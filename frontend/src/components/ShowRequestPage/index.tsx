@@ -40,6 +40,7 @@ interface ShowLeaveRequest {
   reason: string;
   _id: string; 
   id: string;
+  reasonType:String
   // Add this line if id is optional
 }
 
@@ -98,6 +99,7 @@ export const ShowRequestPage = () => {
             <StyledTableCell align="center">Staff Id</StyledTableCell>
             <StyledTableCell align="center">Staff Name</StyledTableCell>
             <StyledTableCell align="center">Reason</StyledTableCell>
+            <StyledTableCell align="center">Reason Type</StyledTableCell>
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Month</StyledTableCell>
             <StyledTableCell align="center">Year</StyledTableCell>
@@ -117,6 +119,9 @@ export const ShowRequestPage = () => {
     </StyledTableCell>
     <StyledTableCell scope="row" align="center">
       {row.reason}
+    </StyledTableCell>
+    <StyledTableCell scope="row" align="center">
+      {row.reasonType}
     </StyledTableCell>
     <StyledTableCell align="center">{row.date}</StyledTableCell>
     <StyledTableCell align="center">{row.month}</StyledTableCell>

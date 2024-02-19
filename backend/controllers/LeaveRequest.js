@@ -26,7 +26,7 @@ const leaveRequest = async(req,res)=>{
 
 const sendleaverequest = async (req, res) => {
   try {
-    const {reasonType}=req.body;
+    const {reasonType} = req.body;
     const leaveRequest = new LeaveRequestModel({
       id: req.user.id,
       name:req.user.name,
@@ -129,6 +129,7 @@ const sendleaverequest = async (req, res) => {
           }
         });
     } 
+    console.log("hi");
       if(req.body.reasonType == "vacation"){
         if(vacation == 12){
           res.json({Noleave:"No leave"})
@@ -159,7 +160,7 @@ const sendleaverequest = async (req, res) => {
           res.json({Noleave:"No leave"})
         }
       }
-      else{
+      else{   
         const result = await leaveRequest.save();
         let  RequestLeaveInfomation = await UserModel.findOne({
           department: req.user.department,

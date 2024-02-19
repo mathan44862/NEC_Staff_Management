@@ -33,7 +33,7 @@ const Todos = async(req,res)=>{
         const UserTodos = await TodosModel.find({
             id:'21it031'
         })
-        res.send(UserTodos);
+        res.json(UserTodos);
     }
     catch(error){
         res.json(error);

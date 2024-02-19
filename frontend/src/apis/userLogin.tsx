@@ -85,6 +85,13 @@ interface ShowLeaves {
   year: number;
   reason: string;
 }
+interface Todostatus {
+  task:String,
+  status:String,
+  department:String,
+  name:String,
+  id:String
+}
 
 export const userLogin = createApi({
     reducerPath:"userLogin",
@@ -175,11 +182,16 @@ export const userLogin = createApi({
       url: `/leavedetails`
     })
   }),
+  todostatus : builder.query<Todostatus[],void>({
+    query: (payload) => ({
+      url: `/todos/status`
+    })
+  }),
   }),  
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery
 } = userLogin;

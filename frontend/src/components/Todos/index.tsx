@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell, TableHead } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import { useTodouserQuery, useUserDetailsQuery } from '../../apis/userLogin';
+import Todostatus from '../Todostatus';
 
 interface TodosProps {
   selectedItems: string[];
   handleCheckboxChange: (id: string) => void;
 }
 
+interface UserDetails{
+  _id:string;
+  email:String,
+  password:String,
+  role:String,
+  id:String,
+  department:String,
+  name:String
+}
+
 function Todos() {
   const [showTable, setShowTable] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  
+  
 
   const handleAssignWork = () => {
     setShowTable(true);
@@ -27,6 +41,10 @@ function Todos() {
     });
   };
 
+  
+    
+
+  
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5%' }}>
       <div style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '10px', padding: '20px', maxWidth: '400px', width: '100%' }}>
@@ -44,6 +62,22 @@ function Todos() {
 }
 
 function CustomTable({ selectedItems, handleCheckboxChange }: TodosProps) {
+  const [user, setUser] = useState<UserDetails[]>([]);
+  const {data,refetch} = useTodouserQuery();
+
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          await refetch(); 
+          if (data && Array.isArray(data)) {
+            setUser(data);
+          }
+        } catch (error) {
+          console.error('Error fetching leave data:', error);
+        }
+      };
+      fetchData();
+  }, [data, refetch]);
   return (
     <div style={{ paddingTop: '50px', paddingBottom: '50px', textAlign: 'center' }}>
       <TableContainer component={Paper}>
@@ -58,20 +92,20 @@ function CustomTable({ selectedItems, handleCheckboxChange }: TodosProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow style={{ textAlign: 'center' }}>
+          {user.length > 0 && user.map((userData) => (
+              <TableRow key={userData._id}>
               <TableCell align="center">
-                <Checkbox
-                  checked={selectedItems.includes("ID")}
-                  onChange={() => handleCheckboxChange("ID")}
-                  inputProps={{ 'aria-label': 'Select ID' }}
-                />
-              </TableCell>
-              <TableCell align="center">ID</TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Department</TableCell>
-            </TableRow>
-            {/* Render more rows as needed */}
+              <Checkbox
+                checked={selectedItems.includes(userData._id)}
+                onChange={() => handleCheckboxChange(userData._id)}
+              />
+            </TableCell>
+            <TableCell align="center">{userData.id}</TableCell>
+            <TableCell align="center">{userData.name}</TableCell>
+            <TableCell align="center">{userData.email}</TableCell>
+            <TableCell align="center">{userData.department}</TableCell>
+          </TableRow>
+        ))}
           </TableBody>
         </Table>
       </TableContainer>

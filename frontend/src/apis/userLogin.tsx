@@ -95,6 +95,15 @@ interface Todostatus {
   name:String,
   id:String
 }
+interface DepartmentStaff{
+  _id:string;
+  email:String,
+  password:String,
+  role:String,
+  id:String,
+  department:String,
+  name:String
+}
 
 export const userLogin = createApi({
     reducerPath:"userLogin",
@@ -190,11 +199,16 @@ export const userLogin = createApi({
       url: `/todos/status`
     })
   }),
+  todouser : builder.query<DepartmentStaff[],void>({
+    query: (payload) => ({
+      url: `/todos/user`
+    })
+  }),
   }),  
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery
 } = userLogin;

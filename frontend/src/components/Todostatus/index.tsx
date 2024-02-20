@@ -20,21 +20,21 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       border: 0,
     },
   }));
-  interface Todostatus {
+interface Todostatus {
     task:String,
     status:String,
     department:String,
     name:String,
     id:String
-  }
+}
 
 export default function Todostatus() {
     const {data,refetch} = useTodostatusQuery();
     const [userTodo, setUserTodo] = useState<Todostatus[]>([]);
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
-        await refetch(); // Correctly call refetch as a function
+        await refetch(); 
         console.log(data);
         if (data && Array.isArray(data)) {
           setUserTodo(data);

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell, TableHead } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
@@ -30,9 +29,12 @@ function Todos() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5%' }}>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-        <TextField id="filled-basic" label="Enter the Work" variant="filled" />
-        <Button variant="contained" onClick={handleAssignWork}>Assign Work</Button>
+      <div style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '10px', padding: '20px', maxWidth: '400px', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <TextField id="outlined-basic" label="Enter Task Name" variant="outlined" style={{ marginBottom: '20px', width: '100%' }} />
+          <TextField id="filled-basic" label="Enter the Task" variant="filled" style={{ marginBottom: '20px', width: '100%' }} />
+          <Button variant="contained" onClick={handleAssignWork} style={{ width: '100%' }}>Select Staff</Button>
+        </div>
       </div>
       <br />
       <br />
@@ -78,4 +80,3 @@ function CustomTable({ selectedItems, handleCheckboxChange }: TodosProps) {
 }
 
 export default Todos;
-

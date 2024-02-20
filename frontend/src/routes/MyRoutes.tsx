@@ -12,6 +12,7 @@ import UpdateUser from '../components/Admin/UpdateUser';
 import ShowLeaveDetails from '../components/ShowLeaveDetails';
 import Todos from '../components/Todos';
 import Todostatus from '../components/Todostatus';
+import Todosforstaff from '../components/Todosforstaff';
 
 const MyRoutes = () => {
   let element = useRoutes([
@@ -72,6 +73,14 @@ const MyRoutes = () => {
       element: (
        <Header>
           <Todostatus></Todostatus>
+       </Header>
+      ),
+    },
+    {
+      path: '/Todosforstaff',
+      element: (
+       <Header>
+          <Todosforstaff></Todosforstaff>
        </Header>
       ),
     }, 

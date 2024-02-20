@@ -39,7 +39,6 @@ const sendleaverequest = async (req, res) => {
       email:req.user.email,
       reasonType:reasonType
     });
-    console.log(reasonType);
     year  = req.body.year;
     month= req.body.month;
     var LeaveInfomation1;
@@ -129,7 +128,6 @@ const sendleaverequest = async (req, res) => {
           }
         });
     } 
-    console.log("hi");
       if(req.body.reasonType == "vacation"){
         if(vacation == 12){
           res.json({Noleave:"No leave"})
@@ -159,16 +157,18 @@ const sendleaverequest = async (req, res) => {
         if(higherstudy == 12){
           res.json({Noleave:"No leave"})
         }
-      }
-      else{   
-        const result = await leaveRequest.save();
+      }  
+
+      const result = await leaveRequest.save();
+      if(req.body.role == "staff"){
         let  RequestLeaveInfomation = await UserModel.findOne({
           department: req.user.department,
           role: 'hod'
-        });
-        mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
-        res.json({ message: "Leave Requested successfully" });
+      });
+      mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
       }
+      res.json({ message: "Leave Requested successfully" });
+      
   } 
   catch (error) { 
     res.status(500).json({ error: 'Internal Server Error' });

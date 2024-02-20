@@ -47,7 +47,7 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>],['Task', <PlaylistAddIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>],['Todos', <PlaylistAddIcon />]];
   const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon/>],['Todos Status',<PlaylistAddIcon />]];
   const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />]];
 

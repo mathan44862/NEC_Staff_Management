@@ -1,11 +1,10 @@
 const UserModel = require('../models/UserModel');
 const TodosModel  = require('../models/Todos')
 const SendTodos = async(req,res)=>{
-    res.send("SendTodos");
+    console.log(req.body);
 }
 const User = async(req,res)=>{
     try{
-        req.user.role = "hod";
         console.log(req.user.department);
         const User = await UserModel.find({
             department: req.user.department,
@@ -20,7 +19,7 @@ const User = async(req,res)=>{
 const Status = async(req,res)=>{
     try{
         const Todos = await TodosModel.find({
-            department: "IT"
+            department: req.user.department
         })
         res.send(Todos);
     }
@@ -31,7 +30,7 @@ const Status = async(req,res)=>{
 const Todos = async(req,res)=>{
     try{
         const UserTodos = await TodosModel.find({
-            id:'21it031'
+            id:req.user.id
         })
         res.json(UserTodos);
     }
@@ -41,8 +40,9 @@ const Todos = async(req,res)=>{
 }
 const ChangeStatus = async(req,res)=>{
     try {
-        const UserTodos = await TodosModel.find({ id: '21it031' });
-    
+        console.log(req.body);
+        const UserTodos = await TodosModel.find({ _id: req.body._id });
+
         for (const todo of UserTodos) {
             if (todo.status === "not started") {
                 await TodosModel.updateOne({ _id: todo._id }, { $set: { status: "progress" } });

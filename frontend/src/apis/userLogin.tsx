@@ -90,10 +90,12 @@ interface ShowLeaves {
 }
 interface Todostatus {
   task:String,
+  taskdescription:String
   status:String,
   department:String,
   name:String,
-  id:String
+  id:String,
+  _id:String
 }
 interface DepartmentStaff{
   _id:string;
@@ -103,6 +105,9 @@ interface DepartmentStaff{
   id:String,
   department:String,
   name:String
+}
+interface ChangeStatus{
+  _id:String
 }
 
 export const userLogin = createApi({
@@ -204,11 +209,23 @@ export const userLogin = createApi({
       url: `/todos/user`
     })
   }),
-  }),  
+  todo : builder.query<Todostatus[],void>({
+    query: (payload) => ({
+      url: `/todos`
+    })
+  }),
+  todochangestatus : builder.mutation<Response , ChangeStatus>({
+    query: (payload) => ({
+      url: `/todos/changestatus`,
+      body: payload,
+      method: 'POST'
+    })
+  }),
+  }),   
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation
 } = userLogin;

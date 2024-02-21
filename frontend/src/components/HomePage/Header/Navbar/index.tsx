@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -7,21 +7,22 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Tooltip from '@mui/material/Tooltip';
-import { useState } from 'react';
-import TemporaryDrawer from '../Sidebar';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import IosShareIcon from '@mui/icons-material/IosShare';
-// import Person2Icon from '@mui/icons-material/Person2';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-// import PersonPinIcon from '@mui/icons-material/PersonPin';
 import PreviewIcon from '@mui/icons-material/Preview';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-
-
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 interface UserDetails {
   role: string;
@@ -29,6 +30,7 @@ interface UserDetails {
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [pageTitle, setPageTitle] = useState<string>('Dashboard'); // State to hold page title
   const navigate = useNavigate();
   let hasToken = localStorage.getItem('accessToken');
   let user: UserDetails = hasToken ? jwtDecode(hasToken) : {
@@ -47,9 +49,24 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>],['Todos', <PlaylistAddIcon />],['Todosforstaff',<PlaylistAddIcon/>]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon/>],['Todos Status',<PlaylistAddIcon />]];
-  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />]];
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon/>], ['LeaveRequest', <IosShareIcon/>],['LeaveDetails',< PreviewIcon/>],['Todosforstaff', <PlaylistAddIcon/>]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon/>], ['ShowRequest',< VisibilityIcon/>],['LeaveDetails', < PreviewIcon/>], ['LeaveRequest', <IosShareIcon/>],['Todos', <PlaylistAddCheckIcon/>],['Todos Status',< FormatListNumberedIcon/>]];
+  const drawerListAdmin = [['User',<PersonOutlineIcon/>], ['ShowRequest', < VisibilityIcon/>], ['AddUser', <PersonAddIcon />]];
+
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+  const handleItemClick = (title: any) => {
+    setPageTitle(title);
+    setDrawerOpen(false);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -66,7 +83,7 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard 
+            {pageTitle}
           </Typography>
           <Tooltip title="Logout">
             <IconButton onClick={handleLogOut} sx={{ ml: 0.5 }}> {/* Added marginLeft */}
@@ -75,24 +92,23 @@ export default function NavBar() {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      {user.role === "staff" ? 
-        <TemporaryDrawer
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerList={drawerListStaff} // Pass the array list as a prop
-        /> :
-        user.role === "hod" ? 
-        <TemporaryDrawer
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerList={drawerListHod} // Pass the array list as a prop
-        /> :
-        <TemporaryDrawer
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerList={drawerListAdmin} // Pass the array list as a prop
-        />
-      }
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+      >
+       <List>
+  {(user.role === "staff" ? drawerListStaff :
+    user.role === "hod" ? drawerListHod :
+    drawerListAdmin).map((item, index) => (
+    <ListItem button key={index} onClick={() => handleItemClick(item[0])}> {/* Change item[1] to item[0] */}
+      <ListItemIcon>{item[1]}</ListItemIcon>
+      <ListItemText primary={item[0]} />
+    </ListItem>
+  ))}
+</List>
+
+      </Drawer>
     </Box>
   );
 }

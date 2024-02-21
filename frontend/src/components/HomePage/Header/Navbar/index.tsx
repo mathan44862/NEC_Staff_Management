@@ -49,24 +49,9 @@ export default function NavBar() {
     }
   }
 
-  const drawerListStaff = [['Calendar', <CalendarMonthIcon/>], ['LeaveRequest', <IosShareIcon/>],['LeaveDetails',< PreviewIcon/>],['Todosforstaff', <PlaylistAddIcon/>]];
-  const drawerListHod = [['Calendar', <CalendarMonthIcon/>], ['ShowRequest',< VisibilityIcon/>],['LeaveDetails', < PreviewIcon/>], ['LeaveRequest', <IosShareIcon/>],['Todos', <PlaylistAddCheckIcon/>],['Todos Status',< FormatListNumberedIcon/>]];
-  const drawerListAdmin = [['User',<PersonOutlineIcon/>], ['ShowRequest', < VisibilityIcon/>], ['AddUser', <PersonAddIcon />]];
-
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
-  const handleItemClick = (title: any) => {
-    setPageTitle(title);
-    setDrawerOpen(false);
-  };
+  const drawerListStaff = [['Calendar', <CalendarMonthIcon />], ['LeaveRequest', <IosShareIcon />],['LeaveDetails',<PreviewIcon/>],['Todos', <PlaylistAddIcon />],['Todosforstaff',<PlaylistAddIcon/>]];
+  const drawerListHod = [['Calendar', <CalendarMonthIcon />], ['ShowRequest', <VisibilityIcon />],['LeaveDetails',<PreviewIcon/>], ['LeaveRequest', <IosShareIcon />],['Todos', <PlaylistAddIcon/>],['Todos Status',<PlaylistAddIcon />]];
+  const drawerListAdmin = [['User', <PersonOutlineIcon />], ['ShowRequest', <VisibilityIcon />], ['AddUser', <PersonAddIcon />]];
 
   return (
     <Box sx={{ flexGrow: 1 }}>

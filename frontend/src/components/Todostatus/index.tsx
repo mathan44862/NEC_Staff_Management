@@ -25,7 +25,9 @@ interface Todostatus {
     status:String,
     department:String,
     name:String,
-    id:String
+    id:String,
+    _id:String,
+    taskdescription:String
 }
 
 export default function Todostatus() {
@@ -54,6 +56,7 @@ export default function Todostatus() {
                 <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Task</StyledTableCell>
+                <StyledTableCell align="center">Task Description</StyledTableCell>
                 <StyledTableCell align="center">Department</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
             </TableRow>
@@ -66,6 +69,7 @@ export default function Todostatus() {
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
                     <StyledTableCell align="center">{row.id}</StyledTableCell>
                     <StyledTableCell align="center">{row.task}</StyledTableCell>
+                    <StyledTableCell align="center">{row.taskdescription}</StyledTableCell>
                     <StyledTableCell align="center">{row.department}</StyledTableCell>
                     <StyledTableCell align="center">{row.status}</StyledTableCell>
                 </StyledTableRow>

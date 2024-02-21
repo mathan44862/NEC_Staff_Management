@@ -54,14 +54,14 @@ const ShowLeave: React.FC<ShowLeaveProps> = ({ year,month }) => {
             gap={isSmallScreen ? '5%' : '10%'}
     >
       <br />
-        <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'4%'}} >
+        <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'1%'}} >
           <CardContent>
               <Typography variant="h6" component="h6" >Vacation  : {userLeaveInfo?.data?.Vacation}</Typography><br />
               <Typography variant="h6" component="h6" >Medical  : {userLeaveInfo?.data?.Medical}</Typography><br />
               <Typography variant="h6" component="h6" >Casual Leave  : {userLeaveInfo?.data?.Casual}</Typography><br />
           </CardContent>
         </Card><br /><br />
-        <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'4%'}} >
+        <Card  sx={{ minWidth: 275 , minHeight:100,maxHeight:500 ,backgroundColor:'#3a86ff',color:'#ffffff' ,width:'30%',alignItems:"center",textAlign:"center",borderRadius:'1%'}} >
           <CardContent>
           <Typography variant="h6" component="h6" >Official On-Duty  : {userLeaveInfo?.data?.Official}</Typography><br />
           <Typography variant="h6" component="h6" >Exam On-Duty : {userLeaveInfo?.data?.Exam}</Typography><br />

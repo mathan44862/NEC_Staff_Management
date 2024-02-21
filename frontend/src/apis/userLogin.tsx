@@ -109,6 +109,19 @@ interface DepartmentStaff{
 interface ChangeStatus{
   _id:String
 }
+interface SendTodos{
+  task:String;
+  taskdescription:String,
+  User:{
+    _id:string;
+    email:String,
+    password:String,
+    role:String,
+    id:String,
+    department:String,
+    name:string
+  }[];
+}
 
 export const userLogin = createApi({
     reducerPath:"userLogin",
@@ -221,11 +234,18 @@ export const userLogin = createApi({
       method: 'POST'
     })
   }),
+  todosendtodos : builder.mutation<Response , SendTodos>({
+    query: (payload) => ({
+      url: `/todos/sendtodos`,
+      body: payload,
+      method: 'POST'
+    })
+  }),
   }),   
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation,useTodosendtodosMutation
 } = userLogin;

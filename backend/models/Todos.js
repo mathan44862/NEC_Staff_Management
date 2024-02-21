@@ -6,7 +6,7 @@ const TodosSchema = new mongoose.Schema({
     department:String,
     name:String,
     id:String,
-    tododescription:String
+    taskdescription:String
 });
 
 const TodosModel = mongoose.model("todos", TodosSchema);

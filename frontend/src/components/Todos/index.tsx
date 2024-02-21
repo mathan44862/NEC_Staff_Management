@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell, TableHead } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-import { useTodouserQuery } from '../../apis/userLogin';
+import { useTodochangestatusMutation, useTodosendtodosMutation, useTodouserQuery } from '../../apis/userLogin';
 
 interface TodosProps {
   selectedItems: UserDetails[];
@@ -28,6 +28,8 @@ function Todos() {
   const [staffSelected, setStaffSelected] = useState(false);
   const { data, refetch } = useTodouserQuery();
   const tableRef = useRef<HTMLDivElement>(null);
+  const [task, setTask] = useState('');
+  const [taskdescription, setTaskdescription] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,19 +66,50 @@ function Todos() {
     }
   };
 
-  const handleAssignTask = () => {
-    console.log("Selected items:", selectedItems);
+  const [sendTodosMutation] = useTodosendtodosMutation();
+
+const handleAssignTask = async () => {
+  try {
+    console.log(selectedItems);
+    const response = await sendTodosMutation({
+      task,
+      taskdescription,
+      User: selectedItems 
+    });
+    if ('data' in response) {
+      if ('message' in response.data) {
+        window.location.reload();
+      }
+    }
+  } catch (error) {
+    console.error('Error sending todos:', error);
+  }
   };
+
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
       <div style={{ maxWidth: '100%', padding: '20px', borderRadius: '8px', backgroundColor: '#FFFFFF', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ marginBottom: '20px', maxWidth: '400px', width: '100%', padding: '0 10px' }}>
-          <TextField id="outlined-basic" label="Enter Task Name" variant="outlined" style={{ marginBottom: '10px', width: '100%' }} />
-          <TextField id="outlined-basic" label="Enter the Task" variant="outlined" style={{ marginBottom: '10px', width: '100%' }} />
-          <Button variant="contained" onClick={handleAssignWork} disabled={staffSelected} style={{ width: '100%' }}>Select Staff</Button>   
+          <TextField
+            id="outlined-basic"
+            label="Enter Task Name"
+            variant="outlined"
+            style={{ marginBottom: '10px', width: '100%' }}
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Enter the Task"
+            variant="outlined"
+            style={{ marginBottom: '10px', width: '100%' }}
+            value={taskdescription}
+            onChange={(e) => setTaskdescription(e.target.value)}
+          />
+          <Button variant="contained" onClick={handleAssignWork} disabled={staffSelected} style={{ width: '100%' }}>Select Staff</Button>
         </div>
-        {showTable && 
+        {showTable &&
           <div ref={tableRef} style={{ overflowX: 'auto', padding: '0 10px', marginTop: '20px' }}>
             <CustomTable selectedItems={selectedItems} handleCheckboxChange={handleCheckboxChange} user={user} handleAssignTask={handleAssignTask} />
           </div>
@@ -85,6 +118,7 @@ function Todos() {
     </div>
   );
 }
+
 
 function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTask }: TodosProps & { user: UserDetails[] }) {
   return (
@@ -126,3 +160,5 @@ function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTa
 }
 
 export default Todos;
+
+

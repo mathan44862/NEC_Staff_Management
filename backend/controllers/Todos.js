@@ -1,7 +1,21 @@
 const UserModel = require('../models/UserModel');
-const TodosModel  = require('../models/Todos')
+const TodosModel  = require('../models/Todos');
+const mailer = require('../mailer/index');
 const SendTodos = async(req,res)=>{
-    console.log(req.body);
+    const {task,taskdescription,User}= req.body;
+    console.log(taskdescription);
+    User.map(async (user)=>{
+        const Todos = new TodosModel({
+            task:task,
+            taskdescription,
+            name:user.name,
+            id:user.id,
+            department:user.department,
+            status:"not started"
+        })
+        const result = await Todos.save();
+    })
+    res.json({"message":"Todo send"});
 }
 const User = async(req,res)=>{
     try{
@@ -46,9 +60,11 @@ const ChangeStatus = async(req,res)=>{
         for (const todo of UserTodos) {
             if (todo.status === "not started") {
                 await TodosModel.updateOne({ _id: todo._id }, { $set: { status: "progress" } });
+                mailer('21it027@nandhaengg.org','Task is started by ' +req.user.name);
             }
             else if(todo.status === "progress"){
                 await TodosModel.updateOne({ _id: todo._id }, { $set: { status: "finished" } });
+                mailer('21it027@nandhaengg.org','Task is finished by ' +req.user.name);
             }
         }
         res.json({message:"Todos updated successfully!"});

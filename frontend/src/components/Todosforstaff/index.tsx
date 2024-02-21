@@ -4,6 +4,9 @@ import { useTodoQuery, useTodochangestatusMutation } from '../../apis/userLogin'
 
 interface Todostatus {
     task: String,
+    date:number,
+    month:number,
+    year:number,
     taskdescription: String
     status: String,
     department: String,
@@ -14,14 +17,12 @@ interface Todostatus {
 
 export default function Todosforstaff() {
     const { data, refetch } = useTodoQuery();
-    console.log(data);
     const [todo, setTodo] = useState<Todostatus[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await refetch();
-                console.log(data);
                 if (data && Array.isArray(data)) {
                     setTodo(data);
                 }
@@ -45,17 +46,22 @@ export default function Todosforstaff() {
         }
     }
 
+    // Filter todo items based on status
+    const notStartedTodos = todo.filter(item => item.status === "not started");
+    const inProgressTodos = todo.filter(item => item.status === "progress");
+    const finishedTodos = todo.filter(item => item.status === "finished");
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '2%' }}>
-            {todo.length > 0 ? todo.map((item, index) => (
+            {notStartedTodos.length > 0 && notStartedTodos.map((item, index) => (
                 <Card key={index} sx={{ minWidth: 275, minHeight: 100, backgroundColor: '#ffffff', color: 'black', width: '30%', alignItems: "center", borderRadius: '1%', marginBottom: '20px', border: '2px solid #3a86ff' }}>
                     <CardContent>
                         <Typography variant='h4' component='h2'>{item.task}</Typography>
                         <br />
                         <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
                         <Button
                             variant="contained"
-                            disabled={item.status === "finished"}
                             onClick={handleStatus(item._id)}
                             sx={{
                                 color: '#ffffff',
@@ -67,15 +73,65 @@ export default function Todosforstaff() {
                                 }
                             }}
                         >
-                            {
-                                item.status === "not started" ? "Start" : item.status === "progess" ? "Finish" : "Finished"
-                            }
+                            Start
                         </Button>
                     </CardContent>
                 </Card>
-            )) :
+            ))}
+            {inProgressTodos.length > 0 && inProgressTodos.map((item, index) => (
+                <Card key={index} sx={{ minWidth: 275, minHeight: 100, backgroundColor: '#ffffff', color: 'black', width: '30%', alignItems: "center", borderRadius: '1%', marginBottom: '20px', border: '2px solid #3a86ff' }}>
+                    <CardContent>
+                        <Typography variant='h4' component='h2'>{item.task}</Typography>
+                        <br />
+                        <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Button
+                            variant="contained"
+                            onClick={handleStatus(item._id)}
+                            sx={{
+                                color: '#ffffff',
+                                backgroundColor: '#3a86ff',
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    borderColor: '#a3b18a',
+                                    color: '#3a86ff',
+                                }
+                            }}
+                        >
+                            Finish
+                        </Button>
+                    </CardContent>
+                </Card>
+            ))}
+            {finishedTodos.length > 0 && finishedTodos.map((item, index) => (
+                <Card key={index} sx={{ minWidth: 275, minHeight: 100, backgroundColor: '#ffffff', color: 'black', width: '30%', alignItems: "center", borderRadius: '1%', marginBottom: '20px', border: '2px solid #3a86ff' }}>
+                    <CardContent>
+                        <Typography variant='h4' component='h2'>{item.task}</Typography>
+                        <br />
+                        <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Button
+                            variant="contained"
+                            disabled
+                            sx={{
+                                color: '#ffffff',
+                                backgroundColor: '#3a86ff',
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    borderColor: '#a3b18a',
+                                    color: '#3a86ff',
+                                }
+                            }}
+                        >
+                            Finished
+                        </Button>
+                    </CardContent>
+                </Card>
+            ))}
+            {notStartedTodos.length === 0 && inProgressTodos.length === 0 && finishedTodos.length === 0 &&
                 <Typography variant="h4" component="h1">No tasks assigned</Typography>
             }
         </Box>
     );
 }
+

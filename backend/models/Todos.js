@@ -6,7 +6,10 @@ const TodosSchema = new mongoose.Schema({
     department:String,
     name:String,
     id:String,
-    taskdescription:String
+    taskdescription:String,
+    date:Number,
+    month:Number,
+    year:Number
 });
 
 const TodosModel = mongoose.model("todos", TodosSchema);

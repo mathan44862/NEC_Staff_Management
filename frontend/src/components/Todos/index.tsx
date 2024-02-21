@@ -4,6 +4,10 @@ import Button from '@mui/material/Button';
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell, TableHead } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import { useTodochangestatusMutation, useTodosendtodosMutation, useTodouserQuery } from '../../apis/userLogin';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 interface TodosProps {
   selectedItems: UserDetails[];
@@ -30,6 +34,9 @@ function Todos() {
   const tableRef = useRef<HTMLDivElement>(null);
   const [task, setTask] = useState('');
   const [taskdescription, setTaskdescription] = useState('');
+  const currentDate = new Date();
+  const [date, setDate] = useState<dayjs.Dayjs | null>(null);
+  const [inputEntered, setInputEntered] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +51,10 @@ function Todos() {
     };
     fetchData();
   }, [data, refetch]);
+
+  useEffect(() => {
+    setInputEntered(task !== '' && taskdescription !== '' && date !== null);
+  }, [task, taskdescription, date]);
 
   const handleAssignWork = () => {
     setShowTable(true);
@@ -71,10 +82,16 @@ function Todos() {
   const handleAssignTask = async () => {
     try {
       console.log(selectedItems);
+      const formattedDate = dayjs(date).format('YYYY MM DD');
+      const selectedDate = formattedDate.split(" ");
+      console.log(selectedDate);
       const response = await sendTodosMutation({
         task,
         taskdescription,
-        User: selectedItems 
+        User: selectedItems ,
+        date: parseInt(selectedDate[2]),
+        month: parseInt(selectedDate[1]),
+        year: parseInt(selectedDate[0]),
       });
       if ('data' in response) {
         if ('message' in response.data) {
@@ -85,7 +102,6 @@ function Todos() {
       console.error('Error sending todos:', error);
     }
   };
-
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
@@ -108,7 +124,19 @@ function Todos() {
             value={taskdescription}
             onChange={(e) => setTaskdescription(e.target.value)}
           />
-          <Button variant="contained" onClick={handleAssignWork} disabled={staffSelected} style={{ width: '100%' }}>Select Staff</Button>
+          <br />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label={"Day"}
+              views={['day']}
+              minDate={dayjs(currentDate).startOf('month')}
+              value={date}
+              onChange={(newDate) => setDate(newDate)}
+           />
+           <br />
+          </LocalizationProvider>
+          <br />
+          <Button variant="contained" onClick={handleAssignWork} disabled={!inputEntered || staffSelected} style={{ width: '100%' }}>Select Staff</Button>
         </div>
         {showTable &&
           <div ref={tableRef} style={{ overflowX: 'auto', padding: '0 10px', marginTop: '20px' }}>
@@ -119,7 +147,6 @@ function Todos() {
     </div>
   );
 }
-
 
 function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTask }: TodosProps & { user: UserDetails[] }) {
   return (

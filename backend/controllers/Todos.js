@@ -2,8 +2,8 @@ const UserModel = require('../models/UserModel');
 const TodosModel  = require('../models/Todos');
 const mailer = require('../mailer/index');
 const SendTodos = async(req,res)=>{
-    const {task,taskdescription,User}= req.body;
-    console.log(taskdescription);
+    const {task,taskdescription,date,month,year,User}= req.body;
+    console.log(req.body);
     User.map(async (user)=>{
         const Todos = new TodosModel({
             task:task,
@@ -11,7 +11,10 @@ const SendTodos = async(req,res)=>{
             name:user.name,
             id:user.id,
             department:user.department,
-            status:"not started"
+            status:"not started",
+            date:date,
+            month:month,
+            year:year
         })
         const result = await Todos.save();
     })

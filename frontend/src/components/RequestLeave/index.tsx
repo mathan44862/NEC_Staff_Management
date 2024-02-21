@@ -14,11 +14,12 @@ const RequestLeave = () => {
     const [sendReq] = useSendRequestMutation();
     const [reason, setReason] = React.useState('');
     const [reasonType, setReasonType] = React.useState('');
+    const [validation, setValidation] = React.useState(false);
     const currentDate = new Date();
 
     const sendRequest = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
-        if (date) {
+        if (date && reason.length>0 && reasonType.length>0) {
             const formattedDate = dayjs(date).format('YYYY MM DD');
             const selectedDate = formattedDate.split(" ");
             try {
@@ -40,13 +41,14 @@ const RequestLeave = () => {
                         setReasonType('');
                         setReason('');
                         setDate(null);
+                        setValidation(false);
                     }
                 }
             } catch (error) {
                 console.error('Unexpected error during send request:', error);
             }
         } else {
-            console.log("Error");
+            setValidation(true);
         }
     };
 
@@ -68,6 +70,7 @@ const RequestLeave = () => {
                                 <Typography variant='h4' component='h1'>Send Leave Request</Typography><br />
                             </Stack>
                             {responseleave ? <Typography>Your {reason} leave limit exit </Typography> : null}
+                            {validation ? <Typography sx={{color:'red'}}>All field required </Typography> : null}
                             <Stack sx={{ width: '100%', margin: 'auto' }}>
                                 <br />
                                 <FormControl sx={{ width: '100%', marginBottom: '1rem' }}>

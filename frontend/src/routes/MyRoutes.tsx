@@ -30,7 +30,7 @@ const MyRoutes = () => {
       ]
     },  
     {
-      path: '/showrequest',
+      path: '/show request',
       element: (
          <Header>
            <ShowRequestPage></ShowRequestPage>
@@ -38,7 +38,7 @@ const MyRoutes = () => {
       ),
     }, 
     {
-      path: '/LeaveRequest',
+      path: '/Leave Request',
       element: (
        <Header>
         <RequestLeave></RequestLeave>
@@ -46,7 +46,7 @@ const MyRoutes = () => {
       ),
     },  
     {
-      path: '/AddUser',
+      path: '/Add User',
       element: (
        <Header>
         <AddUser></AddUser>
@@ -54,7 +54,7 @@ const MyRoutes = () => {
       ),
     }, 
     {
-      path: '/LeaveDetails',
+      path: '/Leave Details',
       element: (
        <Header>
           <ShowLeaveDetails></ShowLeaveDetails>

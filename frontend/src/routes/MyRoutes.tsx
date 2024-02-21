@@ -13,6 +13,7 @@ import ShowLeaveDetails from '../components/ShowLeaveDetails';
 import Todos from '../components/Todos';
 import Todostatus from '../components/Todostatus';
 import Todosforstaff from '../components/Todosforstaff';
+import Profile from '../components/Profile';
 
 const MyRoutes = () => {
   let element = useRoutes([
@@ -90,6 +91,14 @@ const MyRoutes = () => {
        <Header>
           <Todosforstaff></Todosforstaff>
        </Header>
+      ),
+    }, 
+    {
+      path: '/Profile',
+      element: (
+       <Header>
+          <Profile/>
+        </Header>
       ),
     }, 
   ]);

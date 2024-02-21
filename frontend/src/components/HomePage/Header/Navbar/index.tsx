@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import { jwtDecode } from 'jwt-decode';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -96,7 +97,7 @@ function ResponsiveAppBar() {
             NEC
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none',gap:'15%' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -186,12 +187,15 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{
-                    handleProfile(setting);
-                    handleCloseUserMenu();
-                }}>
-                  <Typography textAlign="center" >{setting}</Typography>
-                </MenuItem>
+                <div key={setting}>
+                  <MenuItem onClick={()=>{
+                      handleProfile(setting);
+                      handleCloseUserMenu();
+                  }}>
+                    <Typography textAlign="center" >{setting}</Typography>
+                  </MenuItem>
+                  {setting === 'Profile' && <Divider />}
+                </div>
               ))}
             </Menu>
           </Box>

@@ -68,27 +68,27 @@ function Todos() {
 
   const [sendTodosMutation] = useTodosendtodosMutation();
 
-const handleAssignTask = async () => {
-  try {
-    console.log(selectedItems);
-    const response = await sendTodosMutation({
-      task,
-      taskdescription,
-      User: selectedItems 
-    });
-    if ('data' in response) {
-      if ('message' in response.data) {
-        window.location.reload();
+  const handleAssignTask = async () => {
+    try {
+      console.log(selectedItems);
+      const response = await sendTodosMutation({
+        task,
+        taskdescription,
+        User: selectedItems 
+      });
+      if ('data' in response) {
+        if ('message' in response.data) {
+          window.location.reload();
+        }
       }
+    } catch (error) {
+      console.error('Error sending todos:', error);
     }
-  } catch (error) {
-    console.error('Error sending todos:', error);
-  }
   };
 
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
       <div style={{ maxWidth: '100%', padding: '20px', borderRadius: '8px', backgroundColor: '#FFFFFF', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ marginBottom: '20px', maxWidth: '400px', width: '100%', padding: '0 10px' }}>
           <TextField
@@ -100,10 +100,11 @@ const handleAssignTask = async () => {
             onChange={(e) => setTask(e.target.value)}
           />
           <TextField
-            id="outlined-basic"
+            id="outlined-multiline-static"
             label="Enter the Task"
-            variant="outlined"
+            multiline
             style={{ marginBottom: '10px', width: '100%' }}
+            rows={4}
             value={taskdescription}
             onChange={(e) => setTaskdescription(e.target.value)}
           />
@@ -160,5 +161,3 @@ function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTa
 }
 
 export default Todos;
-
-

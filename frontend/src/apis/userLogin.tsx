@@ -95,7 +95,10 @@ interface Todostatus {
   department:String,
   name:String,
   id:String,
-  _id:String
+  _id:String,
+  date: number;
+  month: number;
+  year: number;
 }
 interface DepartmentStaff{
   _id:string;
@@ -109,19 +112,23 @@ interface DepartmentStaff{
 interface ChangeStatus{
   _id:String
 }
-interface SendTodos{
-  task:String;
-  taskdescription:String,
-  User:{
-    _id:string;
-    email:String,
-    password:String,
-    role:String,
-    id:String,
-    department:String,
-    name:string
+interface SendTodos {
+  task: string;
+  taskdescription: string;
+  date: number;
+  month: number;
+  year: number; 
+  User: {
+    _id: string;
+    email: string;
+    password: string;
+    role: string;
+    id: string;
+    department: string;
+    name: string;
   }[];
 }
+
 
 export const userLogin = createApi({
     reducerPath:"userLogin",

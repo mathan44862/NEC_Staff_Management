@@ -14,8 +14,12 @@ import Todos from '../components/Todos';
 import Todostatus from '../components/Todostatus';
 import Todosforstaff from '../components/Todosforstaff';
 import Profile from '../components/Profile';
+import { jwtDecode } from 'jwt-decode';
+import RestrictionRouter from './RestrictionRouter';
 
 const MyRoutes = () => {
+  let hasToken = localStorage.getItem('accessToken');
+  let user: {role:String} = hasToken ? jwtDecode(hasToken) : {role: ''};
   let element = useRoutes([
     {
       path: '/',
@@ -32,49 +36,43 @@ const MyRoutes = () => {
     {
       path: '/show request',
       element: (
-           <ShowRequestPage></ShowRequestPage>
+        user.role === "hod" && user.role === "principal" ? <ShowRequestPage></ShowRequestPage>:<RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Leave Request',
       element: (
-        <RequestLeave></RequestLeave>
+        user.role==="staff" && user.role!=="hod" ? <RequestLeave></RequestLeave> :<RestrictionRouter></RestrictionRouter>
       ),
     },  
     {
       path: '/Add User',
       element: (
-        <AddUser></AddUser>
+        user.role==="admin" ? <AddUser></AddUser>:<RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Leave Details',
       element: (
-          <ShowLeaveDetails></ShowLeaveDetails>
+          user.role!=="principal" ? <ShowLeaveDetails></ShowLeaveDetails> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Todos',
       element: (
-        <Todos></Todos>
+        user.role === "hod" ?<Todos></Todos> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Todos Status',
       element: (
-          <Todostatus></Todostatus>
-      ),
-    },
-    {
-      path: '/Todosforstaff',
-      element: (
-          <Todosforstaff></Todosforstaff>
+        user.role === "hod" ? <Todostatus></Todostatus> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Task',
       element: (
-          <Todosforstaff></Todosforstaff>
+        user.role === "hod" ? <Todosforstaff></Todosforstaff> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {

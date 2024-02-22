@@ -6,7 +6,7 @@ const mailer = require('../mailer/index');
 const leaveRequest = async(req,res)=>{
     try {
       let RequestLeaveInfomation;
-      if (req.user.role === "admin") {
+      if (req.user.role === "principal") {
         RequestLeaveInfomation = await LeaveRequestModel.find();
       } else {
         RequestLeaveInfomation = await LeaveRequestModel.find({

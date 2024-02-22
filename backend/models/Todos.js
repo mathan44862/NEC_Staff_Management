@@ -9,7 +9,8 @@ const TodosSchema = new mongoose.Schema({
     taskdescription:String,
     date:Number,
     month:Number,
-    year:Number
+    year:Number,
+    role:String
 });
 
 const TodosModel = mongoose.model("todos", TodosSchema);

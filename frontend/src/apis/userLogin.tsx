@@ -86,7 +86,9 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
-  reasonType:string
+  reasonType:string;
+  department:string;
+  role:string;
 }
 interface Todostatus {
   task:String,
@@ -248,11 +250,17 @@ export const userLogin = createApi({
       method: 'POST'
     })
   }),
+  todayleave : builder.query<ShowLeaves,void>({
+    query: (payload) => ({
+      url: `/leavedetails/staffsleavedetails`,
+      body: payload,
+    })
+  }),
   }),   
 })  
 export const { useLoginUserMutation , 
   useUserLeaveDetailsMutation,useUserLeaveMutation,useSendRequestMutation,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
-  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation,useTodosendtodosMutation
+  useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation,useTodosendtodosMutation,useTodayleaveQuery
 } = userLogin;

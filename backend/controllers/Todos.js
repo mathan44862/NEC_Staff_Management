@@ -13,7 +13,8 @@ const SendTodos = async(req,res)=>{
             status:"not started",
             date:date,
             month:month,
-            year:year
+            year:year,
+            role:user.role
         })
         const result = await Todos.save();
     })
@@ -42,10 +43,16 @@ const User = async(req,res)=>{
 }
 const Status = async(req,res)=>{
     try{
-        const Todos = await TodosModel.find({
-            department: req.user.department
-        })
-        res.send(Todos);
+        let Todos;
+        if(req.user.role === "hod"){
+            Todos = await TodosModel.find({
+                department: req.user.department
+            })
+        }
+        else if(req.user.role === "principal"){
+            Todos = await TodosModel.find();
+        }
+        res.send(Todos.reverse());
     }
     catch(error){
         res.json(error);

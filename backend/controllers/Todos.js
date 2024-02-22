@@ -3,7 +3,6 @@ const TodosModel  = require('../models/Todos');
 const mailer = require('../mailer/index');
 const SendTodos = async(req,res)=>{
     const {task,taskdescription,date,month,year,User}= req.body;
-    console.log(req.body);
     User.map(async (user)=>{
         const Todos = new TodosModel({
             task:task,
@@ -23,10 +22,18 @@ const SendTodos = async(req,res)=>{
 const User = async(req,res)=>{
     try{
         console.log(req.user.department);
-        const User = await UserModel.find({
-            department: req.user.department,
-            role: { $ne: req.user.role }
-        });
+        let User ;
+        if(req.user.role === "hod"){
+            User = await UserModel.find({
+                department: req.user.department,
+                role: { $ne: req.user.role }
+            });
+        }
+        else if(req.user.role === "principal"){
+            User = await UserModel.find({
+                role: { $ne: req.user.role }
+            });
+        }
         res.send(User);
     }
     catch(error){

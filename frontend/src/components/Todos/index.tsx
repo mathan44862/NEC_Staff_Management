@@ -37,6 +37,7 @@ function Todos() {
   const currentDate = new Date();
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
   const [inputEntered, setInputEntered] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,15 +104,21 @@ function Todos() {
     }
   };
 
+  // Filter users based on the search query
+  const filteredUsers = user.filter(userData =>
+    userData.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
       <div style={{ maxWidth: '100%', padding: '20px', borderRadius: '8px', backgroundColor: '#FFFFFF', width: '100%', boxSizing: 'border-box' }}>
-        <div style={{ marginBottom: '20px', maxWidth: '400px', width: '100%', padding: '0 10px' }}>
+        <div style={{ marginBottom: '20px', maxWidth: '400px', width: '100%', padding: '0 10px', display: 'flex', flexDirection: 'column' }}>
+          
           <TextField
             id="outlined-basic"
             label="Enter Task Name"
             variant="outlined"
-            style={{ marginBottom: '10px', width: '100%' }}
+            style={{ marginBottom: '10px' }}
             value={task}
             onChange={(e) => setTask(e.target.value)}
           />
@@ -119,28 +126,41 @@ function Todos() {
             id="outlined-multiline-static"
             label="Enter the Task"
             multiline
-            style={{ marginBottom: '10px', width: '100%' }}
+            style={{ marginBottom: '10px' }}
             rows={4}
             value={taskdescription}
             onChange={(e) => setTaskdescription(e.target.value)}
           />
-          <br />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label={"Day"}
-              views={['day']}
-              minDate={dayjs(currentDate).startOf('month')}
-              value={date}
-              onChange={(newDate) => setDate(newDate)}
-           />
-           <br />
-          </LocalizationProvider>
-          <br />
-          <Button variant="contained" onClick={handleAssignWork} disabled={!inputEntered || staffSelected} style={{ width: '100%' }}>Select Staff</Button>
+          <div style={{ marginBottom: '10px' }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label={"Day"}
+                views={['day']}
+                minDate={dayjs(currentDate).startOf('month')}
+                value={date}
+                onChange={(newDate) => setDate(newDate)}
+              />
+            </LocalizationProvider>
+          </div>
+          <Button variant="contained" onClick={handleAssignWork} disabled={!inputEntered || staffSelected} style={{ marginBottom: '10px' }}>Select Staff</Button>
+          {staffSelected && (
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <TextField
+                id="outlined-basic"
+                label="Search"
+                variant="outlined"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button variant="contained" onClick={handleAssignTask} style={{ marginLeft: '10px' }}>Assign Task</Button>
+            </div>
+          )}
         </div>
         {showTable &&
           <div ref={tableRef} style={{ overflowX: 'auto', padding: '0 10px', marginTop: '20px' }}>
-            <CustomTable selectedItems={selectedItems} handleCheckboxChange={handleCheckboxChange} user={user} handleAssignTask={handleAssignTask} />
+            <CustomTable selectedItems={selectedItems} handleCheckboxChange={handleCheckboxChange} users={filteredUsers} handleAssignTask={function (): void {
+              throw new Error('Function not implemented.');
+            } } />
           </div>
         }
       </div>
@@ -148,10 +168,9 @@ function Todos() {
   );
 }
 
-function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTask }: TodosProps & { user: UserDetails[] }) {
+function CustomTable({ selectedItems, handleCheckboxChange, users }: TodosProps & { users: UserDetails[] }) {
   return (
     <div>
-      <Button variant="contained" style={{ marginBottom: '10px', width: '20%', marginLeft: '0%' }} onClick={handleAssignTask}>Assign Task</Button>
       <div style={{ overflowX: 'auto' }}>
         <TableContainer component={Paper} style={{ width: '100%', padding: '0 0px', marginBottom: '-17px' }}>
           <Table aria-label="customized table" size="small">
@@ -165,7 +184,7 @@ function CustomTable({ selectedItems, handleCheckboxChange, user, handleAssignTa
               </TableRow>
             </TableHead>
             <TableBody>
-              {user.map((userData) => (
+              {users.map((userData) => (
                 <TableRow key={userData._id}>
                   <TableCell align="center">
                     <Checkbox

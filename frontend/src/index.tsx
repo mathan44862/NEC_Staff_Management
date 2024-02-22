@@ -3,16 +3,19 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import MyRoutes from './routes/MyRoutes';
+
 import { store } from './store';
+
+import HomePage from './components/HomePage';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
+
 root.render(
   <BrowserRouter >
       <Provider store={store}>
-          <MyRoutes />
+          <HomePage></HomePage>
       </Provider>
     </BrowserRouter>
 );

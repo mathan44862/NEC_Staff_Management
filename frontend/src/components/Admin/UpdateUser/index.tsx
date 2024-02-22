@@ -55,6 +55,7 @@ export default function UpdateUser({ user }: UpdateUserProps) {
   });
   const handleSubmit = async ()=>{
     try {
+      console.log(user._id);
       const response = await apis({
         email: formik.values.email,
         _id: user._id,

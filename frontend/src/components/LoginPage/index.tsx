@@ -10,7 +10,7 @@ interface accessToken {
     accessToken: string;
 }
 
-const HomePage = () => {
+const LoginPage = () => {
     const navigate = useNavigate();
     const [accountNotFound, setAccountNotFound] = useState(false);
     const [signIn] = useLoginUserMutation();
@@ -24,7 +24,7 @@ const HomePage = () => {
                 } else if ('accessToken' in response.data) {
                     const accessKey: accessToken = response.data;
                     localStorage.setItem('accessToken', accessKey.accessToken);
-                    navigate('/');
+                    window.location.reload();
                 }
             }
         } catch (error) {
@@ -104,4 +104,4 @@ const HomePage = () => {
     );
 }
 
-export default HomePage;
+export default LoginPage;

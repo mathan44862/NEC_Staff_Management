@@ -8,8 +8,8 @@ const ProtectedRouter = () => {
   let hasToken = localStorage.getItem('accessToken');
   let user: {role:String} = hasToken ? jwtDecode(hasToken) : {role: ''};
   return (
-    hasToken ? (user.role=="hod" || user.role=="staff") ? <Header><ShowLeaveDate></ShowLeaveDate></Header>  : 
-    (user.role == "admin") ? <Header><ShowStaff></ShowStaff></Header>:null:<LoginPage></LoginPage> 
+    (user.role=="hod" || user.role=="staff") ?<ShowLeaveDate></ShowLeaveDate> : 
+    (user.role == "admin") ? <ShowStaff></ShowStaff>:null
   )
 }
 

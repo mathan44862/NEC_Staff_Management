@@ -20,7 +20,7 @@ const MyRoutes = () => {
     {
       path: '/',
       element: (
-          <ProtectedRouter></ProtectedRouter>
+        <ProtectedRouter></ProtectedRouter>
       ),
       children: [
         {
@@ -32,73 +32,55 @@ const MyRoutes = () => {
     {
       path: '/show request',
       element: (
-         <Header>
            <ShowRequestPage></ShowRequestPage>
-         </Header>
       ),
     }, 
     {
       path: '/Leave Request',
       element: (
-       <Header>
         <RequestLeave></RequestLeave>
-       </Header>
       ),
     },  
     {
       path: '/Add User',
       element: (
-       <Header>
         <AddUser></AddUser>
-       </Header>
       ),
     }, 
     {
       path: '/Leave Details',
       element: (
-       <Header>
           <ShowLeaveDetails></ShowLeaveDetails>
-       </Header>
       ),
     }, 
     {
       path: '/Todos',
       element: (
-       <Header>
-          <Todos></Todos>
-       </Header>
+        <Todos></Todos>
       ),
     }, 
     {
       path: '/Todos Status',
       element: (
-       <Header>
           <Todostatus></Todostatus>
-       </Header>
       ),
     },
     {
       path: '/Todosforstaff',
       element: (
-       <Header>
           <Todosforstaff></Todosforstaff>
-       </Header>
       ),
     }, 
     {
       path: '/Task',
       element: (
-       <Header>
           <Todosforstaff></Todosforstaff>
-       </Header>
       ),
     }, 
     {
       path: '/Profile',
       element: (
-       <Header>
           <Profile/>
-        </Header>
       ),
     }, 
   ]);

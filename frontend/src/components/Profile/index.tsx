@@ -1,7 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
 import UpdateUser from '../Admin/UpdateUser';
 
 interface UserDetails {
@@ -15,13 +14,12 @@ interface UserDetails {
 }
 
 const Profile = () => {
-    const navigate = useNavigate();
     const deleteDataFromLocalStorage = () => {
         const keyToDelete = 'accessToken';
 
         if (localStorage.getItem(keyToDelete)) {
             localStorage.removeItem(keyToDelete);
-            navigate('/');
+            window.location.reload();
         }
     };
 
@@ -35,6 +33,7 @@ const Profile = () => {
         department: 'nodepartmentfound',
         name: 'nouserfound'
     };
+    console.log(user._id);
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
@@ -54,9 +53,6 @@ const Profile = () => {
                 <Button variant="contained" sx={{ width: '20ch', backgroundColor: "#3a86ff" }} onClick={deleteDataFromLocalStorage}>Log out</Button>
             </Stack>
             <Stack>
-                <Stack marginTop={'17%'}>
-                <UpdateUser user={user} ></UpdateUser>
-                </Stack>
             </Stack>
         </Stack>
     );

@@ -2,16 +2,17 @@
 import React, { ReactNode } from 'react';
 import NavBar from '../Header/Navbar';
 import ResponsiveAppBar from './Navbar';
+import MyRoutes from '../../../routes/MyRoutes';
 
 interface HeaderProps {
   children: ReactNode;
 }
 
-const Header: React.FC<HeaderProps> = ({ children }) => {
+const Header= () => {
   return (
     <>
       <ResponsiveAppBar/>
-      {children}
+      <MyRoutes></MyRoutes>
     </>
   );
 };

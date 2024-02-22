@@ -76,7 +76,7 @@ const ShowLeaveDetails: React.FC = () => {
             ))
           ) : (
             <StyledTableRow>
-              <StyledTableCell colSpan={4} align="center">
+              <StyledTableCell colSpan={5} align="center">
                 No Leave
               </StyledTableCell>
             </StyledTableRow>

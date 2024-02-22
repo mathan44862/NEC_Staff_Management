@@ -47,7 +47,7 @@ interface ShowLeaveRequest {
 
 
 export const ShowRequestPage = () => {
-  const { data, error, isLoading } = useShowLeaveRequestQuery();
+  const { data, error, isLoading ,refetch} = useShowLeaveRequestQuery();
   const [userLeaveInfo, setUserLeaveInfo] = useState<ShowLeaveRequest[]>([]);
   const [sendReq] = useApprovalLeaveRequestMutation();
   const [decReq] = useDeclineLeaveRequestMutation();
@@ -65,7 +65,7 @@ export const ShowRequestPage = () => {
       });
       if ('data' in response) {
         if ('message' in response.data) {
-          window.location.reload();
+          refetch();
         }
       }
     } catch (error) {
@@ -80,7 +80,7 @@ export const ShowRequestPage = () => {
       });
       if ('data' in response) {
         if ('message' in response.data) {
-          window.location.reload();
+          refetch();
         }
       }
     } catch (error) {
@@ -135,7 +135,13 @@ export const ShowRequestPage = () => {
       </Button>
     </StyledTableCell>
   </StyledTableRow>
-)) : <h1 style={{textAlign:'center'}}>No Leave Request</h1>}
+)) : (
+  <StyledTableRow>
+    <StyledTableCell colSpan={9} align="center">
+      No Request
+    </StyledTableCell>
+  </StyledTableRow>
+)}
         </TableBody>
       </Table>
     </TableContainer>

@@ -72,6 +72,7 @@ const deleteuser = async(req,res)=>{
 
 const updateuser = async(req,res)=>{
     const {_id,name,department,id,email,role} = req.body;
+    console.log(req.body);
     try{
         const filter = { _id: _id };
         const updateData = { $set: {  role,name,department,id,email} };

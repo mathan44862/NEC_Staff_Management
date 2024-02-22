@@ -97,7 +97,7 @@ function ResponsiveAppBar() {
       const keyToDelete = 'accessToken';
       if (localStorage.getItem(keyToDelete)) {
         localStorage.removeItem(keyToDelete);
-        navigate('/');
+        window.location.reload();
       }
     } else {
       navigate('/' + option.toLowerCase());

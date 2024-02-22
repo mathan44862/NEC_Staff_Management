@@ -56,13 +56,13 @@ function ResponsiveAppBar() {
     { icon: <PersonAddIcon/>, text: 'Add User' }
   ];
   const drawerListPrincipal = [
-    { icon: <PeopleIcon />, text: 'user'},
+    { icon: <PeopleIcon />, text: 'today leave'},
     { icon: <VisibilityIcon />, text: 'Show Request' },
     { icon: <PlaylistAddIcon />, text: 'Todos' },
     { icon: <AssignmentIcon />, text: 'Todos Status' }
     
   ];
-  const pages = user.role === "admin" ? [...drawerListAdmin] : user.role === "hod" ? [...drawerListHod] :user.role=="principal"?[...drawerListPrincipal] :  [...drawerListStaff];
+  const pages = user.role === "admin" ? [...drawerListAdmin] : user.role === "hod" ? [...drawerListHod] :user.role==="principal"?[...drawerListPrincipal] :  [...drawerListStaff];
   const settings = ['Profile', 'Logout'];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -76,11 +76,16 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = (page: string | { icon: JSX.Element, text: string }) => {
     setAnchorElNav(null);
     if (typeof page === 'string') {
+      console.log(page.toLowerCase());
       if (page.toLowerCase() === "calendar") {
         navigate('/');
       } else if (page.toLowerCase() === "user") {
         navigate('/');
-      } else {
+      }
+      else if (page.toLowerCase() === "today leave") {
+        navigate('/');
+      } 
+      else {
         navigate('/' + page.toLowerCase());
       }
     } else {
@@ -89,7 +94,11 @@ function ResponsiveAppBar() {
         navigate('/');
       } else if (page.text.toLowerCase() === "user") {
         navigate('/');
-      } else {
+      }
+      else if (page.text.toLowerCase() === "today leave") {
+        navigate('/');
+      }  
+      else {
         navigate('/' + page.text.toLowerCase());
       }
     }

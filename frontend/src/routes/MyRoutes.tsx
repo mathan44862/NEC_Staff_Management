@@ -60,15 +60,15 @@ const MyRoutes = () => {
     {
       path: '/Todos',
       element: (
-        user.role === "hod" ?<Todos></Todos> : <RestrictionRouter></RestrictionRouter>
+        user.role === "hod" || user.role ==="principal" ?<Todos></Todos> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
       path: '/Todos Status',
       element: (
-        user.role === "hod" ? <Todostatus></Todostatus> : <RestrictionRouter></RestrictionRouter>
+        user.role === "hod" || user.role ==="principal"  ? <Todostatus></Todostatus> : <RestrictionRouter></RestrictionRouter>
       ),
-    }, 
+    },
     {
       path: '/Task',
       element: (

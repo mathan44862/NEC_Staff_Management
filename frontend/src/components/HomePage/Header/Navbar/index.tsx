@@ -23,6 +23,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PeopleIcon from '@mui/icons-material/People';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 interface UserDetails {
   role: string;
@@ -52,10 +53,16 @@ function ResponsiveAppBar() {
   ];
   const drawerListAdmin = [
     { icon: <PeopleIcon />, text: 'user'},
-    { icon: <VisibilityIcon />, text: 'Show Request' },
     { icon: <PersonAddIcon/>, text: 'Add User' }
   ];
-  const pages = user.role === "admin" ? [...drawerListAdmin] : user.role === "hod" ? [...drawerListHod] : [...drawerListStaff];
+  const drawerListPrincipal = [
+    { icon: <PeopleIcon />, text: 'user'},
+    { icon: <VisibilityIcon />, text: 'Show Request' },
+    { icon: <PlaylistAddIcon />, text: 'Todos' },
+    { icon: <AssignmentIcon />, text: 'Todos Status' }
+    
+  ];
+  const pages = user.role === "admin" ? [...drawerListAdmin] : user.role === "hod" ? [...drawerListHod] :user.role=="principal"?[...drawerListPrincipal] :  [...drawerListStaff];
   const settings = ['Profile', 'Logout'];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -202,9 +209,10 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon sx={{color:'white'}}/>
+                <AccountCircleIcon sx={{color:'white', gap:"15%"}}/>
               </IconButton>
             </Tooltip>
             <Menu

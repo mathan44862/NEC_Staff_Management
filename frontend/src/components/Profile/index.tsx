@@ -43,6 +43,7 @@ const Profile = () => {
             justifyContent="center"
             direction={isSmallScreen ? 'column' : 'row'}
             gap={isSmallScreen ? '5%' : '10%'}
+            marginTop={'5%'}
         >
             <Stack alignItems={"center"}>
                 <br />

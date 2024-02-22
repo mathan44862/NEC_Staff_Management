@@ -156,6 +156,7 @@ export default function UpdateUser({ user }: UpdateUserProps) {
           >
             <MenuItem value="hod">HOD</MenuItem>
             <MenuItem value="staff">Staff</MenuItem>
+            <MenuItem value="principal">Principal</MenuItem>
           </Select>
         </FormControl>
         <br />

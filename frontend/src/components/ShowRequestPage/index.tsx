@@ -40,7 +40,9 @@ interface ShowLeaveRequest {
   reason: string;
   _id: string; 
   id: string;
-  reasonType:String
+  reasonType:String;
+  role:string;
+  department:string;
   // Add this line if id is optional
 }
 
@@ -98,6 +100,8 @@ export const ShowRequestPage = () => {
           <TableRow sx={{backgroundColor:'blueviolet'}}>
             <StyledTableCell align="center">Staff Id</StyledTableCell>
             <StyledTableCell align="center">Staff Name</StyledTableCell>
+            <StyledTableCell align="center">Department</StyledTableCell>
+            <StyledTableCell align="center">Role</StyledTableCell>
             <StyledTableCell align="center">Reason</StyledTableCell>
             <StyledTableCell align="center">Reason Type</StyledTableCell>
             <StyledTableCell align="center">Date</StyledTableCell>
@@ -116,6 +120,12 @@ export const ShowRequestPage = () => {
     </StyledTableCell>
     <StyledTableCell scope="row" align="center">
       {row.name}
+    </StyledTableCell>
+    <StyledTableCell scope="row" align="center">
+      {row.department}
+    </StyledTableCell>
+    <StyledTableCell scope="row" align="center">
+      {row.role}
     </StyledTableCell>
     <StyledTableCell scope="row" align="center">
       {row.reason}

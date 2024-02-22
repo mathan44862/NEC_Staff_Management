@@ -55,7 +55,9 @@ interface ShowLeaveRequest {
     id: string;
     _id: string;
     reason: string;
-    reasonType:String
+    reasonType:String;
+    role:string;
+    department:string;
 }
 interface ApprovalRequest{
   _id:string

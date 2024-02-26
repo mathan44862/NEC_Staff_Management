@@ -42,7 +42,7 @@ const MyRoutes = () => {
     {
       path: '/Leave Request',
       element: (
-        user.role==="staff" || user.role!=="hod" ? <RequestLeave></RequestLeave> :<RestrictionRouter></RestrictionRouter>
+        user.role==="staff" || user.role==="hod" ? <RequestLeave></RequestLeave> :<RestrictionRouter></RestrictionRouter>
       ),
     },  
     {
@@ -72,7 +72,7 @@ const MyRoutes = () => {
     {
       path: '/Task',
       element: (
-        user.role === "staff" ? <Todosforstaff></Todosforstaff> : <RestrictionRouter></RestrictionRouter>
+        user.role === "staff" || user.role==="hod" ? <Todosforstaff></Todosforstaff> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {

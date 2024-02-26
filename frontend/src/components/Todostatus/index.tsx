@@ -43,7 +43,8 @@ interface Todostatus {
   id: string;
   _id: string;
   taskdescription: string;
-  role:string
+  role:string;
+  taskby:string
 }
 
 export default function Todostatus() {
@@ -85,6 +86,7 @@ export default function Todostatus() {
               <StyledTableCell align="center">Department</StyledTableCell>
               <StyledTableCell align="center">Status</StyledTableCell>
               <StyledTableCell align="center">Role</StyledTableCell>
+              <StyledTableCell align="center">Assigned By</StyledTableCell>
               <StyledTableCell align="center">Target Date</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -99,6 +101,7 @@ export default function Todostatus() {
                   <StyledTableCell align="center">{row.department}</StyledTableCell>
                   <StyledTableCell align="center">{row.status}</StyledTableCell>
                   <StyledTableCell align="center">{row.role}</StyledTableCell>
+                  <StyledTableCell align="center">{row.taskby}</StyledTableCell>
                   <StyledTableCell align="center" style={{ color: isDatePastOrToday(row.date, row.month, row.year) ? 'red' : 'initial' }}>
                     {row.date + '/' + row.month + '/' + row.year}
                   </StyledTableCell>

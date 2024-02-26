@@ -11,8 +11,9 @@ interface Todostatus {
     status: String,
     department: String,
     name: String,
-    id: String
-    _id: String
+    id: String,
+    _id: String,
+    taskby:String
 }
 
 export default function Todosforstaff() {
@@ -59,7 +60,8 @@ export default function Todosforstaff() {
                         <Typography variant='h4' component='h2'>{item.task}</Typography>
                         <br />
                         <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
-                        <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Target Date : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Assigned by : "+item.taskby}</Typography><br />
                         <Button
                             variant="contained"
                             onClick={handleStatus(item._id)}
@@ -85,6 +87,7 @@ export default function Todosforstaff() {
                         <br />
                         <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
                         <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Assigned by : "+item.taskby}</Typography><br />
                         <Button
                             variant="contained"
                             onClick={handleStatus(item._id)}
@@ -109,7 +112,7 @@ export default function Todosforstaff() {
                         <Typography variant='h4' component='h2'>{item.task}</Typography>
                         <br />
                         <Typography variant='h6' component='h2'>{item.taskdescription}</Typography><br />
-                        <Typography variant='h6' component='h2'>{"Dead Line : "+item.date + "/"+item.month+"/"+item.year}</Typography><br />
+                        <Typography variant='h6' component='h2'>{"Assigned by : "+item.taskby}</Typography><br />       
                         <Button
                             variant="contained"
                             disabled

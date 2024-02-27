@@ -1,4 +1,4 @@
-import { Button, Select, MenuItem, Stack } from '@mui/material';
+import { Button, Select, MenuItem, Stack, InputLabel } from '@mui/material'; // Import InputLabel
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { styled } from '@mui/material/styles';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { Chip } from '@mui/material'; // Import Chip
 import { useEffect, useState } from 'react';
 import { useApprovalLeaveRequestMutation, useDeclineLeaveRequestMutation } from '../../apis/userLogin';
 import { useShowLeaveRequestQuery } from '../../apis/userLogin';
@@ -98,22 +99,24 @@ export const ShowRequestPage = () => {
   );
 
   return (
-    <><Select  sx={{ margin: '20px auto',marginLeft:'10%'}}
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
-      label="Age"
-      value={selectedRole}
-      onChange={handleRoleChange}
-      displayEmpty
-      renderValue={(value) => (value === 'All' ? 'Role' : value)}
-      inputProps={{ 'aria-label': 'Select role' }}
-      style={{ marginBottom: '20px', width: '100px' }}
-    >
-      <MenuItem value="All">All Roles</MenuItem>
-      <MenuItem value="hod">HOD</MenuItem>
-      <MenuItem value="staff">Staff</MenuItem>
-    </Select>
-    <Stack sx={{ margin: '20px auto', alignItems: 'center' }}>
+    <div> 
+      <Select
+        sx={{ margin: '20px auto', marginLeft: '10%' }}
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        label="Role"
+        value={selectedRole}
+        onChange={handleRoleChange}
+        displayEmpty
+        renderValue={(value) => (value === 'All' ? 'Role' : value)}
+        inputProps={{ 'aria-label': 'Select role' }}
+        style={{ marginBottom: '20px', width: '100px' }}
+      >
+        <MenuItem value="All">All Roles</MenuItem>
+        <MenuItem value="hod">HOD</MenuItem>
+        <MenuItem value="staff">Staff</MenuItem>
+      </Select>
+      <Stack sx={{ margin: '20px auto', alignItems: 'center' }}>
         <TableContainer component={Paper} sx={{ width: '80%' }}>
           <Table sx={{ minWidth: 300 }} aria-label="customized table">
             <TableHead>
@@ -168,6 +171,8 @@ export const ShowRequestPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </Stack></>
+      </Stack>
+    </div>
   );
+  
 };

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTodostatusQuery } from '../../apis/userLogin';
 import {
+  MenuItem,
   Paper,
+  Select,
+  SelectChangeEvent,
   Table,
   TableBody,
   TableCell,
@@ -36,26 +39,27 @@ interface Todostatus {
   date: number;
   month: number;
   year: number;
-  task: string; // Corrected to use primitive type 'string'
+  task: string;
   status: string;
   department: string;
   name: string;
   id: string;
   _id: string;
   taskdescription: string;
-  role:string;
-  taskby:string
+  role: string;
+  taskby: string;
 }
 
-export default function Todostatus() {
+const Todostatus = () => {
   const { data, refetch } = useTodostatusQuery();
   const [userTodo, setUserTodo] = useState<Todostatus[]>([]);
+  const [selectedRole, setSelectedRole] = useState('All');
+  const [filteredTodo, setFilteredTodo] = useState<Todostatus[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await refetch(); 
-        console.log(data);
+        await refetch();
         if (data && Array.isArray(data)) {
           setUserTodo(data as Todostatus[]);
         }
@@ -66,6 +70,14 @@ export default function Todostatus() {
     fetchData();
   }, [data, refetch]);
 
+  useEffect(() => {
+    const filteredData = userTodo.filter((todo) => selectedRole === 'All' || todo.role === selectedRole);
+    setFilteredTodo(filteredData);
+  }, [selectedRole, userTodo]);
+
+  const handleRoleChange = (event: SelectChangeEvent<string>) => {
+    setSelectedRole(event.target.value);
+  };
 
   const isDatePastOrToday = (date: number, month: number, year: number): boolean => {
     const currentDate = dayjs();
@@ -75,6 +87,22 @@ export default function Todostatus() {
 
   return (
     <div>
+      <Select
+        sx={{ margin: '20px auto', marginLeft: '10%' }}
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        label="Role"
+        value={selectedRole}
+        onChange={handleRoleChange}
+        displayEmpty
+        renderValue={(value) => (value === 'All' ? 'Role' : value)}
+        inputProps={{ 'aria-label': 'Select role' }}
+        style={{ marginBottom: '20px', width: '100px' }}
+      >
+        <MenuItem value="All">All Roles</MenuItem>
+        <MenuItem value="hod">HOD</MenuItem>
+        <MenuItem value="staff">Staff</MenuItem>
+      </Select>
       <TableContainer component={Paper} sx={{ width: '80%', margin: '0 auto', borderRadius: '8px', marginTop: '3%' }}>
         <Table sx={{ minWidth: 300, marginTop: '0%' }} aria-label="customized table">
           <TableHead>
@@ -91,26 +119,26 @@ export default function Todostatus() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userTodo.length > 0 ? (
-              userTodo.map((row, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell align="center">{row.name}</StyledTableCell>
-                  <StyledTableCell align="center">{row.id}</StyledTableCell>
-                  <StyledTableCell align="center">{row.task}</StyledTableCell>
-                  <StyledTableCell align="center">{row.taskdescription}</StyledTableCell>
-                  <StyledTableCell align="center">{row.department}</StyledTableCell>
-                  <StyledTableCell align="center">{row.status}</StyledTableCell>
-                  <StyledTableCell align="center">{row.role}</StyledTableCell>
-                  <StyledTableCell align="center">{row.taskby}</StyledTableCell>
-                  <StyledTableCell align="center" style={{ color: isDatePastOrToday(row.date, row.month, row.year) ? 'red' : 'initial' }}>
-                    {row.date + '/' + row.month + '/' + row.year}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))
-            ) : null}
+            {filteredTodo.map((row, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell align="center">{row.name}</StyledTableCell>
+                <StyledTableCell align="center">{row.id}</StyledTableCell>
+                <StyledTableCell align="center">{row.task}</StyledTableCell>
+                <StyledTableCell align="center">{row.taskdescription}</StyledTableCell>
+                <StyledTableCell align="center">{row.department}</StyledTableCell>
+                <StyledTableCell align="center">{row.status}</StyledTableCell>
+                <StyledTableCell align="center">{row.role}</StyledTableCell>
+                <StyledTableCell align="center">{row.taskby}</StyledTableCell>
+                <StyledTableCell align="center" style={{ color: isDatePastOrToday(row.date, row.month, row.year) ? 'red' : 'initial' }}>
+                  {row.date + '/' + row.month + '/' + row.year}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
     </div>
   );
-}
+};
+
+export default Todostatus;

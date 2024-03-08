@@ -12,6 +12,19 @@ import { useEffect, useState } from 'react';
 import { useApprovalLeaveRequestMutation, useDeclineLeaveRequestMutation } from '../../apis/userLogin';
 import { useShowLeaveRequestQuery } from '../../apis/userLogin';
 
+interface ShowLeaveRequest {
+  name: string;
+  date: number;
+  month: number;
+  year: number;
+  reason: string;
+  _id: string;
+  id: string;
+  reasonType: any; // Change 'String' to 'string'
+  role: string;
+  department: string;
+}
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -31,39 +44,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-interface ShowLeaveRequest {
-  name: string;
-  date: number;
-  month: number;
-  year: number;
-  reason: string;
-  _id: string;
-  id: string;
-  reasonType: any; // Change 'String' to 'string'
-  role: string;
-  department: string;
-}
-
 export const ShowRequestPage = () => {
   const { data, error, isLoading, refetch } = useShowLeaveRequestQuery();
   const [userLeaveInfo, setUserLeaveInfo] = useState<ShowLeaveRequest[]>([]);
   const [page, setPage] = useState<number>(0);
   const [sendReq] = useApprovalLeaveRequestMutation();
   const [decReq] = useDeclineLeaveRequestMutation();
-  const [selectedRole, setSelectedRole] = useState('All');
+  const [selectedRole, setSelectedRole] = useState<string>('All');
 
   useEffect(() => {
     if (data) {
-      setUserLeaveInfo(data);
+      if (Array.isArray(data)) {
+        setUserLeaveInfo(data);
+      } else if (typeof data === 'object') {
+        setUserLeaveInfo([data]); // If data is an object, wrap it in an array
+      } else {
+        console.error('Invalid data format:', data);
+      }
     }
   }, [data]);
+  
 
   const handleRoleChange = (event: SelectChangeEvent<string>) => {
     setSelectedRole(event.target.value);
     setPage(0);
   };
 
-  const approvalRequest = async (id: any) => {
+  const approvalRequest = async (id: string) => {
     try {
       const response = await sendReq({
         _id: id,
@@ -78,7 +85,7 @@ export const ShowRequestPage = () => {
     }
   };
 
-  const declineRequest = async (id: any) => {
+  const declineRequest = async (id: string) => {
     try {
       const response = await decReq({
         _id: id,
@@ -98,22 +105,24 @@ export const ShowRequestPage = () => {
   );
 
   return (
-    <><Select  sx={{ margin: '20px auto',marginLeft:'10%'}}
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
-      label="Age"
-      value={selectedRole}
-      onChange={handleRoleChange}
-      displayEmpty
-      renderValue={(value) => (value === 'All' ? 'Role' : value)}
-      inputProps={{ 'aria-label': 'Select role' }}
-      style={{ marginBottom: '20px', width: '100px' }}
-    >
-      <MenuItem value="All">All Roles</MenuItem>
-      <MenuItem value="hod">HOD</MenuItem>
-      <MenuItem value="staff">Staff</MenuItem>
-    </Select>
-    <Stack sx={{ margin: '20px auto', alignItems: 'center' }}>
+    <>
+      <Select
+        sx={{ margin: '20px auto', marginLeft: '10%' }}
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        label="Age"
+        value={selectedRole}
+        onChange={handleRoleChange}
+        displayEmpty
+        renderValue={(value) => (value === 'All' ? 'Role' : value)}
+        inputProps={{ 'aria-label': 'Select role' }}
+        style={{ marginBottom: '20px', width: '100px' }}
+      >
+        <MenuItem value="All">All Roles</MenuItem>
+        <MenuItem value="hod">HOD</MenuItem>
+        <MenuItem value="staff">Staff</MenuItem>
+      </Select>
+      <Stack sx={{ margin: '20px auto', alignItems: 'center' }}>
         <TableContainer component={Paper} sx={{ width: '80%' }}>
           <Table sx={{ minWidth: 300 }} aria-label="customized table">
             <TableHead>
@@ -168,6 +177,7 @@ export const ShowRequestPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </Stack></>
+      </Stack>
+    </>
   );
 };

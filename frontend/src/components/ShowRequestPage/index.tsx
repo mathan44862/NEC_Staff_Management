@@ -1,5 +1,6 @@
-import { Button, Select, MenuItem, Stack, InputLabel } from '@mui/material'; // Import InputLabel
+import { Button, MenuItem, Select, Stack } from '@mui/material'; // Import InputLabel
 import Paper from '@mui/material/Paper';
+import { SelectChangeEvent } from '@mui/material/Select';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -7,11 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { styled } from '@mui/material/styles';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { Chip } from '@mui/material'; // Import Chip
 import { useEffect, useState } from 'react';
-import { useApprovalLeaveRequestMutation, useDeclineLeaveRequestMutation } from '../../apis/userLogin';
-import { useShowLeaveRequestQuery } from '../../apis/userLogin';
+import { useApprovalLeaveRequestMutation, useDeclineLeaveRequestMutation, useShowLeaveRequestQuery } from '../../apis/Apis';
 
 interface ShowLeaveRequest {
   name: string;
@@ -21,7 +19,7 @@ interface ShowLeaveRequest {
   reason: string;
   _id: string;
   id: string;
-  reasonType: any; // Change 'String' to 'string'
+  reasonType: any; 
   role: string;
   department: string;
 }

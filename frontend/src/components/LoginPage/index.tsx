@@ -1,10 +1,11 @@
-import { Button, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, Paper, Stack, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginUserMutation } from "../../apis/userLogin";
+import { useLoginUserMutation } from "../../apis/Apis";
 import Logo from './NandhaLogo.png';
-import validate from "./utils";
+import * as Yup from 'yup';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface accessToken {
     accessToken: string;
@@ -13,6 +14,7 @@ interface accessToken {
 const LoginPage = () => {
     const navigate = useNavigate();
     const [accountNotFound, setAccountNotFound] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [signIn] = useLoginUserMutation();
 
     const userSignIn = async () => {
@@ -32,16 +34,25 @@ const LoginPage = () => {
         }
     };
 
+    const validationSchema = Yup.object({
+        email: Yup.string().email('Invalid email address').required('Email is required'),
+        password: Yup.string().required('Password is required'),
+    });
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        validate,
+        validationSchema, // Set the validation schema
         onSubmit: (values) => {
             // Custom logic for form submission if needed
         },
     });
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     return (
         <Stack
@@ -90,9 +101,22 @@ const LoginPage = () => {
                         label="Password"
                         variant="outlined"
                         name="password"
+                        type={passwordVisible ? 'text' : 'password'}
                         sx={{ width: '100%' }}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={togglePasswordVisibility}
+                                        edge="end"
+                                    >
+                                        {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                     {formik.touched.password && formik.errors.password && <span style={{ color: 'red' }}><br />{formik.errors.password}</span>}
                     <br />

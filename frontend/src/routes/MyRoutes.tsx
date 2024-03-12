@@ -3,12 +3,8 @@ import HomePage from '../components/LoginPage';
 
 import { ShowRequestPage } from '../components/ShowRequestPage';
 import ProtectedRouter from './ProtectedRouter';
-import ShowLeaveDate from '../components/ShowLeaveDate';
-import Header from '../components/HomePage/Header';
 import RequestLeave from '../components/RequestLeave';
-// import Profile from '../components/Profile';
 import AddUser from '../components/Admin/AddUser';
-import UpdateUser from '../components/Admin/UpdateUser';
 import ShowLeaveDetails from '../components/ShowLeaveDetails';
 import Todos from '../components/Todos';
 import Todostatus from '../components/Todostatus';

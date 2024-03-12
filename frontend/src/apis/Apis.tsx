@@ -135,7 +135,7 @@ interface SendTodos {
 }
 
 
-export const userLogin = createApi({
+export const Apis = createApi({
     reducerPath:"userLogin",
     baseQuery:fetchBaseQuery({baseUrl:"http://localhost:5000",
     prepareHeaders: (headers, { getState }) => {
@@ -266,4 +266,4 @@ export const { useLoginUserMutation ,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
   useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation,useTodosendtodosMutation,useTodayleaveQuery
-} = userLogin;
+} = Apis;

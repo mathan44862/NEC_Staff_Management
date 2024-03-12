@@ -51,6 +51,7 @@ const Profile = () => {
                 <Typography variant="h6" component="h1">{user.name}</Typography>
                 <Typography variant="h6" component="h6">{user.department}</Typography>
                 <Typography variant="h6" component="h6">{user.id}</Typography>
+                
                 <Button variant="contained" sx={{ width: '20ch', backgroundColor: "#3a86ff" }} onClick={deleteDataFromLocalStorage}>Log out</Button>
             </Stack>
             <Stack>

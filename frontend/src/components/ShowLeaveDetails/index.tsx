@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useUserDetailsQuery, useUserLeavesQuery } from '../../apis/userLogin';
-import { ref } from 'yup';
+import React, { useEffect, useState } from 'react';
+import { useUserLeavesQuery } from '../../apis/Apis';
 
 interface ShowLeaves {
   date: number;

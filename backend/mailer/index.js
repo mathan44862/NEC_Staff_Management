@@ -4,7 +4,7 @@ const mailer = (reciever,body) =>{
     console.log(reciever);
     const emailConfig = {
         user: 'nec.staff.attendance@gmail.com', 
-        pass: 'qjdcecvlfottrnhl', 
+        pass: 'mljpnfbsfiwfnsad', 
     };
     const transporter = nodemailer.createTransport({
         service: 'gmail',

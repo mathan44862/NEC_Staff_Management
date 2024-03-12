@@ -17,7 +17,7 @@ import {
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
-import { useDeleteuserMutation, useUserDetailsQuery } from '../../../apis/userLogin';
+import { useDeleteuserMutation, useUserDetailsQuery } from '../../../apis/Apis';
 import UpdateUser from '../UpdateUser';
 
 

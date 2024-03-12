@@ -164,9 +164,9 @@ const sendleaverequest = async (req, res) => {
         let  RequestLeaveInfomation = await UserModel.findOne({
           department: req.user.department,
           role: 'hod'
-      });
-      mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
+        });
       }
+      mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
       res.json({ message: "Leave Requested successfully" });
       
   } 

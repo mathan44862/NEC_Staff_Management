@@ -1,9 +1,8 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
-import { useUserLeaveDetailsMutation } from "../../apis/userLogin";
-import { useMediaQuery } from "@mui/material";
+import { useUserLeaveDetailsMutation } from "../../apis/Apis";
 
 
 interface ApiResponse {

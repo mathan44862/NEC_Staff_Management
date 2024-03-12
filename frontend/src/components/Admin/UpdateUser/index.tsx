@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import * as yup from 'yup';
-import { useUpdateuserMutation } from '../../../apis/userLogin';
+import { useUpdateuserMutation } from '../../../apis/Apis';
 
 interface UserDetails {
   _id: string;

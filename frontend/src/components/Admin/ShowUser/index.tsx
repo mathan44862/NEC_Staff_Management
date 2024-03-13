@@ -73,8 +73,7 @@ const ShowStaff = () => {
   }, [data, refetch]);
   const filteredUserInfo = userInfo
     .filter((user) => (selectedDepartment === 'All' ? true : user.department === selectedDepartment))
-    .filter((user) => (selectedRole === 'All' ? true : user.role === selectedRole))
-    .filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((user) => (selectedRole === 'All' ? true : user.role === selectedRole));
 
   const [page, setPage] = useState(0);
 
@@ -114,7 +113,7 @@ const ShowStaff = () => {
   return (
     <>
     {
-      updateUser ?  <UpdateUser id={updateUser.id}></UpdateUser> :
+      updateUser ?  <UpdateUser id={updateUser._id}></UpdateUser> :
       <>
       <br />
       <div style={{ marginLeft: '5%', gap: '5%', display: 'flex' }}>
@@ -133,24 +132,24 @@ const ShowStaff = () => {
                 inputProps={{ 'aria-label': 'Select department' }}
               >
                 <MenuItem value="All">All Departments</MenuItem>
-                <MenuItem value="IT ">IT Department</MenuItem>
+                <MenuItem value="IT">IT Department</MenuItem>
                 <MenuItem value="CSE">CSE Department</MenuItem>
                 <MenuItem value="AGRI">AGRI Department</MenuItem>
                 <MenuItem value="AI & DS ">AI & DS  Department</MenuItem>
                 <MenuItem value="BME ">BME  Department</MenuItem>
                 <MenuItem value="CHEMICAL "> CHEMICAL  Department</MenuItem>
-                <MenuItem value="CIVIL "> CIVIL  Department</MenuItem>
-                <MenuItem value="IOT ">  IOT Department</MenuItem>
-                <MenuItem value="ECE "> ECE Department</MenuItem>
-                <MenuItem value="MBA "> MBA  Department</MenuItem>
-                <MenuItem value="MECH ">MECH  Department</MenuItem>
-                <MenuItem value="EEE "> ECE Department</MenuItem>
-                <MenuItem value="S & H - ENGLISH "> S & H - ENGLISH Department</MenuItem>
-                <MenuItem value="S & H - MATHEMATICS "> S & H - MATHEMATICS Department</MenuItem>
-                <MenuItem value="S & H - PHYSICS "> S & H - PHYSICS Department</MenuItem>
+                <MenuItem value="CIVIL"> CIVIL  Department</MenuItem>
+                <MenuItem value="IOT">  IOT Department</MenuItem>
+                <MenuItem value="ECE"> ECE Department</MenuItem>
+                <MenuItem value="MBA"> MBA  Department</MenuItem>
+                <MenuItem value="MECH">MECH  Department</MenuItem>
+                <MenuItem value="EEE"> ECE Department</MenuItem>
+                <MenuItem value="S & H - ENGLISH"> S & H - ENGLISH Department</MenuItem>
+                <MenuItem value="S & H - MATHEMATICS"> S & H - MATHEMATICS Department</MenuItem>
+                <MenuItem value="S & H - PHYSICS"> S & H - PHYSICS Department</MenuItem>
                 <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
                 <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
-                <MenuItem value="S&H PHY.ED ">S&H PHY.ED  Department</MenuItem>
+                <MenuItem value="S&H PHY.ED">S&H PHY.ED  Department</MenuItem>
 
               </Select>
             </FormControl>

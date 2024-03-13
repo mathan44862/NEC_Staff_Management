@@ -225,6 +225,7 @@ function ResponsiveAppBar() {
                 <AccountCircleIcon sx={{color:'white', gap:"15%"}}/>
               </IconButton>
             </Tooltip>
+            {user.role=="hod" ? "  HOD": user.role=="staff" ? "  STAFF": user.role=="principal" ? "  PRINCIPAL":user.role=="admin" ? "  ADMIN":null}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

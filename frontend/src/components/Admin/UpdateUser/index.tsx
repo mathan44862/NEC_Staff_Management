@@ -35,6 +35,7 @@ export default function UpdateUser({id}:{id:String}) {
       name: users?.name || '',
       id: users?.id || '',
       email: users?.email || '',
+      password: users?.password || '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -48,6 +49,7 @@ export default function UpdateUser({id}:{id:String}) {
         name: users?.name || '',
         id: users?.id || '',
         email: users?.email || '',
+        password:users?.password || '',
       });
       setSelectedDepartment(users?.department);
       setSelectedRole(users?.role);
@@ -60,7 +62,7 @@ export default function UpdateUser({id}:{id:String}) {
         _id:users?._id,
         email: formik.values.email ,
         name: formik.values.name,
-        password: 'Mathan@22',
+        password: formik.values.password,
         role: selectedRole,
         id: formik.values.id,
         department: selectedDepartment
@@ -76,7 +78,8 @@ export default function UpdateUser({id}:{id:String}) {
   }
 
   return (
-    <><Stack alignItems={"center"} margin={'6%'}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+      <Stack alignItems={"center"} margin={'6%'}>
         <br />
         <br />
         <TextField
@@ -110,6 +113,15 @@ export default function UpdateUser({id}:{id:String}) {
           sx={{width:'35ch'}}
         />
         <br />
+        <TextField
+          id="outlined-helperText"
+          label="password"
+          defaultValue="Default Value"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          sx={{width:'35ch'}}
+        />
+        <br />
         <FormControl>
           <InputLabel id="demo-simple-select-label">Department</InputLabel>
           <Select
@@ -122,24 +134,24 @@ export default function UpdateUser({id}:{id:String}) {
             inputProps={{ 'aria-label': 'Select department' }}
             sx={{ width: '310px' }}
           >
-             <MenuItem value="IT ">IT Department</MenuItem>
+           <MenuItem value="IT">IT Department</MenuItem>
             <MenuItem value="CSE">CSE Department</MenuItem>
             <MenuItem value="AGRI">AGRI Department</MenuItem>
-            <MenuItem value="AI & DS ">AI & DS  Department</MenuItem>
-            <MenuItem value="BME ">BME  Department</MenuItem>
-            <MenuItem value="CHEMICAL "> CHEMICAL  Department</MenuItem>
-            <MenuItem value="CIVIL "> CIVIL  Department</MenuItem>
-            <MenuItem value="IOT ">  IOT Department</MenuItem>
-            <MenuItem value="ECE "> ECE Department</MenuItem>
-            <MenuItem value="MBA "> MBA  Department</MenuItem>
-            <MenuItem value="MECH ">MECH  Department</MenuItem>
-            <MenuItem value="EEE "> ECE Department</MenuItem>
-            <MenuItem value="S & H - ENGLISH "> S & H - ENGLISH Department</MenuItem>
-            <MenuItem value="S & H - MATHEMATICS "> S & H - MATHEMATICS Department</MenuItem>
-            <MenuItem value="S & H - PHYSICS "> S & H - PHYSICS Department</MenuItem>
+            <MenuItem value="AI & DS">AI & DS  Department</MenuItem>
+            <MenuItem value="BME">BME  Department</MenuItem>
+            <MenuItem value="CHEMICAL"> CHEMICAL  Department</MenuItem>
+            <MenuItem value="CIVIL"> CIVIL  Department</MenuItem>
+            <MenuItem value="IOT">  IOT Department</MenuItem>
+            <MenuItem value="ECE"> ECE Department</MenuItem>
+            <MenuItem value="MBA"> MBA  Department</MenuItem>
+            <MenuItem value="MECH">MECH  Department</MenuItem>
+            <MenuItem value="EEE"> ECE Department</MenuItem>
+            <MenuItem value="S & H - ENGLISH"> S & H - ENGLISH Department</MenuItem>
+            <MenuItem value="S & H - MATHEMATICS"> S & H - MATHEMATICS Department</MenuItem>
+            <MenuItem value="S & H - PHYSICS"> S & H - PHYSICS Department</MenuItem>
             <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
             <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
-            <MenuItem value="S&H PHY.ED ">S&H PHY.ED  Department</MenuItem> 
+            <MenuItem value="S&H PHY.ED">S&H PHY.ED  Department</MenuItem>
           </Select>
         </FormControl>
         <br />
@@ -162,7 +174,8 @@ export default function UpdateUser({id}:{id:String}) {
         </FormControl>
         <br />
         <Button variant="contained" onClick={handleSubmit}>Update</Button>
-      </Stack></>
-    
+      </Stack>
+    </div>
   );
+  
 }

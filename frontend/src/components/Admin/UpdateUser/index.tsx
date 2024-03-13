@@ -116,13 +116,30 @@ export default function UpdateUser({id}:{id:String}) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={selectedDepartment}
-            label={user?.department}
+            label="Department"
             onChange={handleDepartmentChange}
             renderValue={(value) => (value === 'All' ? 'All Departments' : value)}
             inputProps={{ 'aria-label': 'Select department' }}
             sx={{ width: '310px' }}
           >
-            {/* Menu items */}
+             <MenuItem value="IT ">IT Department</MenuItem>
+            <MenuItem value="CSE">CSE Department</MenuItem>
+            <MenuItem value="AGRI">AGRI Department</MenuItem>
+            <MenuItem value="AI & DS ">AI & DS  Department</MenuItem>
+            <MenuItem value="BME ">BME  Department</MenuItem>
+            <MenuItem value="CHEMICAL "> CHEMICAL  Department</MenuItem>
+            <MenuItem value="CIVIL "> CIVIL  Department</MenuItem>
+            <MenuItem value="IOT ">  IOT Department</MenuItem>
+            <MenuItem value="ECE "> ECE Department</MenuItem>
+            <MenuItem value="MBA "> MBA  Department</MenuItem>
+            <MenuItem value="MECH ">MECH  Department</MenuItem>
+            <MenuItem value="EEE "> ECE Department</MenuItem>
+            <MenuItem value="S & H - ENGLISH "> S & H - ENGLISH Department</MenuItem>
+            <MenuItem value="S & H - MATHEMATICS "> S & H - MATHEMATICS Department</MenuItem>
+            <MenuItem value="S & H - PHYSICS "> S & H - PHYSICS Department</MenuItem>
+            <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
+            <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
+            <MenuItem value="S&H PHY.ED ">S&H PHY.ED  Department</MenuItem> 
           </Select>
         </FormControl>
         <br />
@@ -131,14 +148,16 @@ export default function UpdateUser({id}:{id:String}) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Age"
+            label="Role"
             value={selectedRole}
             onChange={handleRoleChange}
             renderValue={(value) => (value === 'All' ? 'All Roles' : value)}
             inputProps={{ 'aria-label': 'Select role' }}
             sx={{ width: '310px' }}
           >
-            {/* Menu items */}
+            <MenuItem value="hod">HOD</MenuItem>
+            <MenuItem value="staff">Staff</MenuItem>
+            <MenuItem value="principal">Principal</MenuItem>
           </Select>
         </FormControl>
         <br />

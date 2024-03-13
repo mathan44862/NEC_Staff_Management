@@ -59,6 +59,11 @@ const RequestLeave = () => {
     const handleReasonTypeChange = (event: SelectChangeEvent<string>) => {
         setReasonType(event.target.value);
     };
+    const [sesson, setsesson] = React.useState('');
+    const handleChange = (event: SelectChangeEvent) => {
+        setsesson(event.target.value as string);
+      };
+
 
     return (
         <>
@@ -105,17 +110,38 @@ const RequestLeave = () => {
                                     onChange={handleReasonChange}
                                     sx={{ width: '100%', marginBottom: '1rem' }}
                                 />
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        label={"Day"}
-                                        views={['day']}
-                                        minDate={dayjs(currentDate).startOf('month')}
-                                        maxDate={dayjs(currentDate).endOf('month')}
-                                        value={date}
-                                        onChange={(newDate) => setDate(newDate)}
-                                    />
-                                </LocalizationProvider>
-                                <br />
+                                <div style={{ display: 'flex', gap: '16px' }}> {/* Add gap between the components */}
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <div style={{ flex: 1 }}> {/* Flex to take available space */}
+                                                <DatePicker
+                                                    label={"Date"}
+                                                    views={['day', 'month']}
+                                                    minDate={dayjs(currentDate).startOf('month')}
+                                                    value={date}
+                                                    onChange={(newDate) => setDate(newDate)}
+                                                />
+                                            </div>
+                                        </LocalizationProvider>
+
+                                        <FormControl style={{ flex: 1 }}> {/* Flex to take available space */}
+                                            <InputLabel id="demo-simple-select-label">Session</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={sesson}
+                                                label="sesson"
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value={10}>FN</MenuItem>
+                                                <MenuItem value={20}>AN</MenuItem>
+                                                <MenuItem value={30}>FULL DAY</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+
+
+
+                                    <br/>
                                 <Button variant='contained' sx={{ width: '30%', backgroundColor: '#ffffff', color: '#3a86ff' }} type='submit' onClick={sendRequest}>Send Request</Button>
                             </Stack>
                         </CardContent>

@@ -3,7 +3,7 @@ import HomePage from '../components/LoginPage';
 
 import { ShowRequestPage } from '../components/ShowRequestPage';
 import ProtectedRouter from './ProtectedRouter';
-import RequestLeave from '../components/RequestLeave';
+
 import AddUser from '../components/Admin/AddUser';
 import ShowLeaveDetails from '../components/ShowLeaveDetails';
 import Todos from '../components/Todos';
@@ -12,6 +12,7 @@ import Todosforstaff from '../components/Todosforstaff';
 import Profile from '../components/Profile';
 import { jwtDecode } from 'jwt-decode';
 import RestrictionRouter from './RestrictionRouter';
+import RequestLeave from '../components/RequestLeave';
 
 const MyRoutes = () => {
   let hasToken = localStorage.getItem('accessToken');

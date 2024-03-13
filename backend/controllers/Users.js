@@ -9,8 +9,8 @@ const signin = async (req, res) => {
     try {
         const foundUser = await UserModel.findOne({ email });
         if (foundUser) {
-            const { email, role, id, department, name, joiningdate } = foundUser;
-            const userid = { email: email, role: role || 'staff', id: id, department: department, name: name };
+            const { email, role, id, department, name,_id } = foundUser;
+            const userid = { email: email, role: role || 'staff', id: id, department: department, name: name ,_id:_id};
             const accessToken = jwt.sign(userid, process.env.ACCESS_TOKEN);
 
             res.json({ accessToken: accessToken });
@@ -25,6 +25,17 @@ const signin = async (req, res) => {
 const users = async(req,res)=>{
     try {
       const Users = await UserModel.find();
+      res.json(Users);
+    } catch (error) {
+      res.json(error);
+    }
+}
+
+const userById = async(req,res)=>{
+    try {
+    const id = req.params.id;
+      const Users = await UserModel.find({_id:id});
+      console.log(Users);
       res.json(Users);
     } catch (error) {
       res.json(error);
@@ -71,15 +82,15 @@ const deleteuser = async(req,res)=>{
 }
 
 const updateuser = async(req,res)=>{
-    const {_id,name,department,id,email,role} = req.body;
-    console.log(req.body);
+    const {name,department,id,email,role} = req.body;
     try{
-        const filter = { _id: _id };
+        const filter = { id: id };
         const updateData = { $set: {  role,name,department,id,email} };
         const result = await UserModel.updateOne(filter, updateData);
         if (result.matchedCount > 0) {
             res.json({ message: "Updated successfully" });
-        } else {
+        } 
+        else {
             res.status(404).json({ error: "User not found" });
         }
        
@@ -94,5 +105,6 @@ module.exports = {
     users,
     adduser,
     deleteuser,
-    updateuser
+    updateuser,
+    userById
 };

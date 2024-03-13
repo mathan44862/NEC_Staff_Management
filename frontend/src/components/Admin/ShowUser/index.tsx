@@ -114,7 +114,7 @@ const ShowStaff = () => {
   return (
     <>
     {
-      updateUser ?  <UpdateUser user={updateUser}></UpdateUser> :
+      updateUser ?  <UpdateUser id={updateUser.id}></UpdateUser> :
       <>
       <br />
       <div style={{ marginLeft: '5%', gap: '5%', display: 'flex' }}>

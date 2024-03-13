@@ -24,6 +24,7 @@ const LoginPage = () => {
                 if ('error' in response.data) {
                     setAccountNotFound(true);
                 } else if ('accessToken' in response.data) {
+                    console.log(response.data);
                     const accessKey: accessToken = response.data;
                     localStorage.setItem('accessToken', accessKey.accessToken);
                     window.location.reload();

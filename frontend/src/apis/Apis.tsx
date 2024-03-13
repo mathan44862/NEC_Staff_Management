@@ -205,7 +205,12 @@ export const Apis = createApi({
       method: 'POST'
     })
   }),
-  deleteuser : builder.mutation<Response,{_id:string}>({
+  getUserByID : builder.query<any,{ id: String; payload: any }>({
+    query: ({id,payload}) => ({
+      url: `/user/${id}`
+    })
+  }),
+  deleteuser : builder.mutation<Response,{_id:String}>({
     query: (payload) => ({
       url: `/deleteuser`,
       body: payload,
@@ -266,4 +271,5 @@ export const { useLoginUserMutation ,
   useShowLeaveRequestQuery,useApprovalLeaveRequestMutation,useUserDetailsQuery,
   useDeclineLeaveRequestMutation,useAdduserMutation,useDeleteuserMutation,
   useUpdateuserMutation,useUserLeavesQuery,useTodostatusQuery,useTodouserQuery,useTodoQuery,useTodochangestatusMutation,useTodosendtodosMutation,useTodayleaveQuery
+  ,useGetUserByIDQuery
 } = Apis;

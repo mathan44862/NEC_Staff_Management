@@ -2,23 +2,9 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } f
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useUpdateuserMutation } from '../../../apis/Apis';
-
-interface UserDetails {
-  _id: string;
-  email: String;
-  password: String;
-  role: String;
-  id: String;
-  department: String;
-  name: String;
-}
-
-interface UpdateUserProps {
-  user: UserDetails;
-}
+import { useGetUserByIDQuery, useUpdateuserMutation } from '../../../apis/Apis';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -28,9 +14,12 @@ const validationSchema = yup.object({
   role: yup.string().required('Role is required'),
 });
 
-export default function UpdateUser({ user }: UpdateUserProps) {
-  const [selectedDepartment, setSelectedDepartment] = useState(String(user.department));
-  const [selectedRole, setSelectedRole] = useState(String(user.role));
+export default function UpdateUser({id}:{id:String}) {
+  const { data: user } = useGetUserByIDQuery({ id: id || 'null', payload: {} });
+  const users = user && user.length > 0 ? user[0] : null;
+  console.log(users);
+  const [selectedDepartment, setSelectedDepartment] = useState(String(users?.department));
+  const [selectedRole, setSelectedRole] = useState(String(users?.role));
   const [apis] = useUpdateuserMutation();
 
   const handleDepartmentChange = (event: SelectChangeEvent<string>) => {
@@ -43,28 +32,39 @@ export default function UpdateUser({ user }: UpdateUserProps) {
 
   const formik = useFormik({
     initialValues: {
-      name: user.name,
-      id: user.id,
-      email: user.email,
+      name: users?.name || '',
+      id: users?.id || '',
+      email: users?.email || '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-
+      console.log("hi");
+      handleSubmit();
     },
   });
-  const handleSubmit = async ()=>{
+  useEffect(() => {
+    if (users) {
+      formik.setValues({
+        name: users?.name || '',
+        id: users?.id || '',
+        email: users?.email || '',
+      });
+      setSelectedDepartment(users?.department);
+      setSelectedRole(users?.role);
+    }
+  }, [users]);
+  const handleSubmit = async () => {
     try {
-      console.log(user._id);
+      console.log(user?._id);
       const response = await apis({
-        email: formik.values.email,
-        _id: user._id,
+        _id:users?._id,
+        email: formik.values.email ,
         name: formik.values.name,
         password: 'Mathan@22',
         role: selectedRole,
         id: formik.values.id,
         department: selectedDepartment
-      }
-      );
+      });
       if ('data' in response) {
         if ('message' in response.data) {
           window.location.reload();
@@ -74,6 +74,7 @@ export default function UpdateUser({ user }: UpdateUserProps) {
       console.error('Unexpected error during sign-in:', error);
     }
   }
+
   return (
     <><Stack alignItems={"center"} margin={'6%'}>
         <br />
@@ -86,7 +87,7 @@ export default function UpdateUser({ user }: UpdateUserProps) {
           onBlur={formik.handleBlur}
           error={formik.touched.name && Boolean(formik.errors.name)}
           sx={{width:'35ch'}}
-           />
+        />
         <br />
         
         <TextField
@@ -96,7 +97,8 @@ export default function UpdateUser({ user }: UpdateUserProps) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.id && Boolean(formik.errors.id)}
-          sx={{width:'35ch'}} />
+          sx={{width:'35ch'}}
+        />
         <br />
         <TextField
           id="email"
@@ -105,8 +107,8 @@ export default function UpdateUser({ user }: UpdateUserProps) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.email && Boolean(formik.errors.email)}
-
-          sx={{width:'35ch'}} />
+          sx={{width:'35ch'}}
+        />
         <br />
         <FormControl>
           <InputLabel id="demo-simple-select-label">Department</InputLabel>
@@ -114,30 +116,13 @@ export default function UpdateUser({ user }: UpdateUserProps) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={selectedDepartment}
-            label={user.department}
+            label={user?.department}
             onChange={handleDepartmentChange}
             renderValue={(value) => (value === 'All' ? 'All Departments' : value)}
             inputProps={{ 'aria-label': 'Select department' }}
             sx={{ width: '310px' }}
           >
-            <MenuItem value="IT ">IT Department</MenuItem>
-            <MenuItem value="CSE">CSE Department</MenuItem>
-            <MenuItem value="AGRI">AGRI Department</MenuItem>
-            <MenuItem value="AI & DS ">AI & DS  Department</MenuItem>
-            <MenuItem value="BME ">BME  Department</MenuItem>
-            <MenuItem value="CHEMICAL "> CHEMICAL  Department</MenuItem>
-            <MenuItem value="CIVIL "> CIVIL  Department</MenuItem>
-            <MenuItem value="IOT ">  IOT Department</MenuItem>
-            <MenuItem value="ECE "> ECE Department</MenuItem>
-            <MenuItem value="MBA "> MBA  Department</MenuItem>
-            <MenuItem value="MECH ">MECH  Department</MenuItem>
-            <MenuItem value="EEE "> ECE Department</MenuItem>
-            <MenuItem value="S & H - ENGLISH "> S & H - ENGLISH Department</MenuItem>
-            <MenuItem value="S & H - MATHEMATICS "> S & H - MATHEMATICS Department</MenuItem>
-            <MenuItem value="S & H - PHYSICS "> S & H - PHYSICS Department</MenuItem>
-            <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
-            <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
-            <MenuItem value="S&H PHY.ED ">S&H PHY.ED  Department</MenuItem>
+            {/* Menu items */}
           </Select>
         </FormControl>
         <br />
@@ -153,9 +138,7 @@ export default function UpdateUser({ user }: UpdateUserProps) {
             inputProps={{ 'aria-label': 'Select role' }}
             sx={{ width: '310px' }}
           >
-            <MenuItem value="hod">HOD</MenuItem>
-            <MenuItem value="staff">Staff</MenuItem>
-            <MenuItem value="principal">Principal</MenuItem>
+            {/* Menu items */}
           </Select>
         </FormControl>
         <br />

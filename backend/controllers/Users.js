@@ -11,9 +11,15 @@ const signin = async (req, res) => {
         if (foundUser) {
             const { email, role, id, department, name,_id } = foundUser;
             const userid = { email: email, role: role || 'staff', id: id, department: department, name: name ,_id:_id};
-            const accessToken = jwt.sign(userid, process.env.ACCESS_TOKEN);
-
-            res.json({ accessToken: accessToken });
+            if (password == foundUser.password) {
+                const { email, role, id, department, name, _id } = foundUser;
+                const user = { email, role: role || 'staff', id, department, name, _id };
+                const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN);
+                
+                return res.json({ accessToken });
+            } else {
+                res.json({ error: 'Account not found' });
+            }
         } else {
             res.json({ error: 'Account not found' });
         }
@@ -24,7 +30,7 @@ const signin = async (req, res) => {
 
 const users = async(req,res)=>{
     try {
-      const Users = await UserModel.find();
+    const Users = await UserModel.find({ role: { $ne: "admin" }});
       res.json(Users);
     } catch (error) {
       res.json(error);
@@ -43,7 +49,7 @@ const userById = async(req,res)=>{
 }
 
 const adduser = async(req,res)=>{
-    const {name,department,id,email,role} = req.body;
+    const {name,department,id,email,role,password} = req.body;
     try{
         const Search = await UserModel.find({id});
         if(Search.length>0){
@@ -55,7 +61,8 @@ const adduser = async(req,res)=>{
             department,
             id,
             email,
-            role
+            role,
+            password
         });
         const result1 = await User.save();
         res.json({ message: "Added successful" });
@@ -82,10 +89,10 @@ const deleteuser = async(req,res)=>{
 }
 
 const updateuser = async(req,res)=>{
-    const {name,department,id,email,role} = req.body;
+    const {name,department,id,email,role,password} = req.body;
     try{
         const filter = { id: id };
-        const updateData = { $set: {  role,name,department,id,email} };
+        const updateData = { $set: {  role,name,department,id,email,password} };
         const result = await UserModel.updateOne(filter, updateData);
         if (result.matchedCount > 0) {
             res.json({ message: "Updated successfully" });

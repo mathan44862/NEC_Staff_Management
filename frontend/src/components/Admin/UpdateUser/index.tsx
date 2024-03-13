@@ -114,9 +114,9 @@ export default function UpdateUser({id}:{id:String}) {
         />
         <br />
         <TextField
-          id="outlined-helperText"
-          label="password"
-          defaultValue="Default Value"
+          id="password"
+          label="Password"
+          value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           sx={{width:'35ch'}}

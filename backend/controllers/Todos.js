@@ -15,7 +15,7 @@ const SendTodos = async(req,res)=>{
             month:month,
             year:year,
             role:user.role,
-            taskby:req.user.name
+            taskby:req.user.role
         })
         const result = await Todos.save();
     })

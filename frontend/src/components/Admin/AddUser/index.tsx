@@ -1,4 +1,4 @@
-import { IconButton, InputAdornment, Stack, Typography } from '@mui/material';
+import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -40,7 +40,6 @@ const AddUser: React.FC = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
   const formik = useFormik<UserDetails>({
     initialValues: {
       _id: '',
@@ -71,6 +70,14 @@ const AddUser: React.FC = () => {
     },
   });
 
+  const handleDepartmentChange = (event: SelectChangeEvent<string>) => {
+    formik.setFieldValue('department', event.target.value);
+  };
+  
+  const handleRoleChange = (event: SelectChangeEvent<string>) => {
+    formik.setFieldValue('role', event.target.value);
+  };
+  
   return (
     <>
       {accountAdded ? (
@@ -99,19 +106,55 @@ const AddUser: React.FC = () => {
               helperText={formik.touched.name && formik.errors.name}
             />
             <br />
-            <TextField
-              id="department"
-              name="department"
-              label="Department"
-              variant="outlined"
-              sx={{ width: '35ch' }}
+            <FormControl>
+          <InputLabel id="demo-simple-select-label">Department</InputLabel>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={formik.values.department}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.department && Boolean(formik.errors.department)}
-              helperText={formik.touched.department && formik.errors.department}
-            />
-            <br />
+              onChange={handleDepartmentChange}
+              renderValue={(value) => (value === 'All' ? 'All Departments' : value)}
+              inputProps={{ 'aria-label': 'Select department' }}
+              sx={{ width: '310px' }}
+            >
+           <MenuItem value="IT">IT Department</MenuItem>
+            <MenuItem value="CSE">CSE Department</MenuItem>
+            <MenuItem value="AGRI">AGRI Department</MenuItem>
+            <MenuItem value="AI & DS">AI & DS  Department</MenuItem>
+            <MenuItem value="BME">BME  Department</MenuItem>
+            <MenuItem value="CHEMICAL"> CHEMICAL  Department</MenuItem>
+            <MenuItem value="CIVIL"> CIVIL  Department</MenuItem>
+            <MenuItem value="IOT">  IOT Department</MenuItem>
+            <MenuItem value="ECE"> ECE Department</MenuItem>
+            <MenuItem value="MBA"> MBA  Department</MenuItem>
+            <MenuItem value="MECH">MECH  Department</MenuItem>
+            <MenuItem value="EEE"> ECE Department</MenuItem>
+            <MenuItem value="S & H - ENGLISH"> S & H - ENGLISH Department</MenuItem>
+            <MenuItem value="S & H - MATHEMATICS"> S & H - MATHEMATICS Department</MenuItem>
+            <MenuItem value="S & H - PHYSICS"> S & H - PHYSICS Department</MenuItem>
+            <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
+            <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
+            <MenuItem value="S&H PHY.ED">S&H PHY.ED  Department</MenuItem>
+          </Select>
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={formik.values.role}
+            onChange={handleRoleChange}
+            renderValue={(value) => (value === 'All' ? 'All Roles' : value)}
+            inputProps={{ 'aria-label': 'Select role' }}
+            sx={{ width: '310px' }}
+          >
+            <MenuItem value="hod">HOD</MenuItem>
+            <MenuItem value="staff">Staff</MenuItem>
+            <MenuItem value="principal">Principal</MenuItem>
+          </Select>
+        </FormControl>
+        <br />
             <TextField
               id="id"
               name="id"
@@ -163,19 +206,6 @@ const AddUser: React.FC = () => {
                   </InputAdornment>
                 ),
               }}
-            />
-            <br />
-            <TextField
-              id="role"
-              name="role"
-              label="Role"
-              variant="outlined"
-              sx={{ width: '35ch' }}
-              value={formik.values.role}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.role && Boolean(formik.errors.role)}
-              helperText={formik.touched.role && formik.errors.role}
             />
             <br />
             <Button type="submit" variant="contained" disabled={!(formik.isValid && formik.dirty)}>

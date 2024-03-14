@@ -90,6 +90,7 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
+  session:string;
   reasonType:string;
   department:string;
   role:string;

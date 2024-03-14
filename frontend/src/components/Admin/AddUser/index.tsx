@@ -135,6 +135,7 @@ const AddUser: React.FC = () => {
             <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
             <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
             <MenuItem value="S&H PHY.ED">S&H PHY.ED  Department</MenuItem>
+            <MenuItem value="NEC">NEC</MenuItem>
           </Select>
         </FormControl>
         <br />

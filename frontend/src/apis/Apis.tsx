@@ -177,7 +177,7 @@ export const Apis = createApi({
             method: 'POST'
           })
       }),
-      showLeaveRequest : builder.query<ShowLeaveRequest[],void>({
+      showLeaveRequest : builder.query<any,void>({
         query: (payload) => ({
           url: `/leaverequest`,
           body: payload

@@ -50,9 +50,16 @@ export const ShowRequestPage = () => {
   const [sendReq] = useApprovalLeaveRequestMutation();
   const [decReq] = useDeclineLeaveRequestMutation();
   const [selectedRole, setSelectedRole] = useState<string>('All');
+  const [filteredLeaveInfo, setFilteredLeaveInfo] = useState<ShowLeaveRequest[]>([]);
 
+  useEffect(() => {
+    if (Array.isArray(userLeaveInfo)) {
+      // Filter userLeaveInfo based on selectedRole or any other condition
+      const filteredData = userLeaveInfo.filter(item => selectedRole === 'All' || item.role === selectedRole);
+      setFilteredLeaveInfo(filteredData);
+    }
+  }, [userLeaveInfo, selectedRole]);
 
-  
   if (!Array.isArray(userLeaveInfo)) {
     return <p>No Leave Request</p>;
   }

@@ -94,7 +94,6 @@ interface ShowLeaves {
   reasonType:string;
   department:string;
   role:string;
-  sesson:string;
 }
 interface Todostatus {
   task:String,

@@ -93,75 +93,82 @@ export const ShowRequestPage = () => {
   };
 
 
-    return (
-      <Stack sx={{ margin: '20px auto', alignItems: 'center', textAlign: 'center', justifyContent: 'center'  }}>
-        {userLeaveInfo?.length === 0 && (
-          <p>No Leave Request</p>
-        )}
-
-
-        {userLeaveInfo?.length > 0 && (
-            <TableContainer component={Paper} sx={{ width: '80%' }} >
-        <Table sx={{ minWidth: 300 }} aria-label="customized table">
-          <TableHead>
-            <TableRow sx={{ backgroundColor: 'blueviolet' }}>
-              <StyledTableCell align="center">Staff Id</StyledTableCell>
-              <StyledTableCell align="center">Staff Name</StyledTableCell>
-              <StyledTableCell align="center">Department</StyledTableCell>
-              <StyledTableCell align="center">Role</StyledTableCell>
-              <StyledTableCell align="center">Reason</StyledTableCell>
-              <StyledTableCell align="center">Reason Type</StyledTableCell>
-              <StyledTableCell align='center'>Session</StyledTableCell>
-              <StyledTableCell align="center">Date</StyledTableCell>
-              <StyledTableCell align="center">Month</StyledTableCell>
-              <StyledTableCell align="center">Year</StyledTableCell>
-              <StyledTableCell align="center">Approval Request</StyledTableCell>
-              <StyledTableCell align="center">Decline Request</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            
-            {userLeaveInfo?.map((row:any) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell scope="row" align="center">
-                  {row.id}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.department}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.role}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.reason}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.reasonType}
-                </StyledTableCell>
-                <StyledTableCell scope="row" align="center">
-                  {row.session}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.date}</StyledTableCell>
-                <StyledTableCell align="center">{row.month}</StyledTableCell>
-                <StyledTableCell align="center">{row.year}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Button onClick={() => approvalRequest(row._id)}>Approval</Button>
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Button onClick={() => declineRequest(row._id)} sx={{ color: 'red' }}>
-                    Decline
-                  </Button>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-        )}
-      </Stack>
-    );
-    
+  return (
+    <><Select  sx={{ margin: '20px auto',marginLeft:'10%'}}
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      label="Age"
+      value={selectedRole}
+      onChange={handleRoleChange}
+      displayEmpty
+      renderValue={(value) => (value === 'All' ? 'Role' : value)}
+      inputProps={{ 'aria-label': 'Select role' }}
+      style={{ marginBottom: '20px', width: '100px' }}
+    >
+      <MenuItem value="All">All Roles</MenuItem>
+      <MenuItem value="hod">HOD</MenuItem>
+      <MenuItem value="staff">Staff</MenuItem>
+    </Select>
+    <Stack sx={{ margin: '20px auto', alignItems: 'center' }}>
+        <TableContainer component={Paper} sx={{ width: '80%' }}>
+          <Table sx={{ minWidth: 300 }} aria-label="customized table">
+            <TableHead>
+              <TableRow sx={{ backgroundColor: 'blueviolet' }}>
+                <StyledTableCell align="center">Staff Id</StyledTableCell>
+                <StyledTableCell align="center">Staff Name</StyledTableCell>
+                <StyledTableCell align="center">Department</StyledTableCell>
+                <StyledTableCell align="center">Role</StyledTableCell>
+                <StyledTableCell align="center">Reason</StyledTableCell>
+                <StyledTableCell align="center">Reason Type</StyledTableCell>
+                <StyledTableCell align='center'>Session</StyledTableCell>
+                <StyledTableCell align="center">Date</StyledTableCell>
+                <StyledTableCell align="center">Month</StyledTableCell>
+                <StyledTableCell align="center">Year</StyledTableCell>
+                <StyledTableCell align="center">Approval Request</StyledTableCell>
+                <StyledTableCell align="center">Decline Request</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredLeaveInfo.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell scope="row" align="center">
+                    {row.id}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.name}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.department}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.role}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.reason}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.reasonType}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.session}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.date}</StyledTableCell>
+                  <StyledTableCell align="center">{row.month}</StyledTableCell>
+                  <StyledTableCell align="center">{row.year}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button onClick={() => approvalRequest(row._id)}>Approval</Button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button onClick={() => declineRequest(row._id)} sx={{ color: 'red' }}>
+                      Decline
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Stack></>
+  );
+  
 };

@@ -14,7 +14,8 @@ interface LeaveInfo {
   year: number;
   reason: string;
   _id: string;
-  reasonType:string
+  reasonType:string;
+  session:String
 }
 
 const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
@@ -43,21 +44,15 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
   const getUserLeaveType = (day: number): number => {
     const leaveInfo = userLeave.find((leave) => leave.date === day);
     if (leaveInfo) {
-      switch (leaveInfo.reasonType) {
-        case "medical":
+      switch (leaveInfo.session) {
+        case "AN":
           return -1;
-        case "vacation":
+        case "FN":
           return -2;
-        case "casualleave":
+        case "Day":
           return -3;
-        case "official":
-          return -4;
-        case "exam":
-          return -5;
-        case "higherstudy":
-          return -6;
         default:
-          return -7;
+          return -4;
       }
     }
 
@@ -117,19 +112,14 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
             <TableRow key={rowIndex} >
               {row.map((day, dayIndex) => (
                 <TableCell key={dayIndex} align="center" sx={{ color: day < 0 || dayIndex % 7 === 0 ? '#FF004D' : 'black', fontWeight: day < 0 ? 'bold' : 'normal' }}>
-                  {
-                    day !== 0 ? (
-                      day === -1 ? 'M' :
-                        day === -2 ? 'V' :
-                            day === -3 ? 'CL' :
-                              day === -4 ? 'OF' :
-                                day === -5 ? 'EX' :
-                                  day === -6 ? 'HS' :
-                                  day === -7 ? 'O' :
-                                    day
-                    ) : ' '
-                  }
-                </TableCell>
+                {day !== 0 ? 
+                  (day === -1 ? 'AN' :
+                    (day === -2 ? 'FN' :
+                      (day === -3 ? 'DAY' : day)
+                    )
+                  )
+                : ''}
+              </TableCell>                
               ))}
             </TableRow>
           ))}

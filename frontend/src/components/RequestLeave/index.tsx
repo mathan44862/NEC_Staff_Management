@@ -139,9 +139,6 @@ const RequestLeave = () => {
                                             </Select>
                                         </FormControl>
                                     </div>
-
-
-
                                     <br/>
                                 <Button variant='contained' sx={{ width: '30%', backgroundColor: '#ffffff', color: '#3a86ff' }} type='submit' onClick={sendRequest}>Send Request</Button>
                             </Stack>

@@ -9,6 +9,7 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
+  session:string;
   reasonType:string;
   role:string,
   name:string,
@@ -64,6 +65,7 @@ const TodayLeave: React.FC = () => {
             <StyledTableCell align="center">Role</StyledTableCell>
             <StyledTableCell align="center">ReasonType</StyledTableCell>
             <StyledTableCell align="center">Reason</StyledTableCell>
+            <StyledTableCell align="center">Session</StyledTableCell>
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Month</StyledTableCell>
             <StyledTableCell align="center">Year</StyledTableCell>
@@ -78,6 +80,7 @@ const TodayLeave: React.FC = () => {
                 <StyledTableCell align="center">{row.role}</StyledTableCell>
                 <StyledTableCell align="center">{row.reasonType}</StyledTableCell>
                 <StyledTableCell align="center">{row.reason}</StyledTableCell>
+                <StyledTableCell align="center">{row.session}</StyledTableCell>
                 <StyledTableCell align="center">{row.date}</StyledTableCell>
                 <StyledTableCell align="center">{row.month}</StyledTableCell>
                 <StyledTableCell align="center">{row.year}</StyledTableCell>

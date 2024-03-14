@@ -10,7 +10,8 @@ const RequestLeaveInfoModel = mongoose.model('RequestLeaveInfo', new mongoose.Sc
     reason: String,
     role :String,
     email:String,
-    reasonType:String
+    reasonType:String,
+    session:String
 })); 
 
 module.exports = RequestLeaveInfoModel;

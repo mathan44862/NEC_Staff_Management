@@ -6,8 +6,7 @@ const UserSchema = new mongoose.Schema({
     role: String,
     id: String,
     department: String,
-    name: String,
-    joiningdate: String
+    name: String
 });
 
 const UserModel = mongoose.model("staff", UserSchema);

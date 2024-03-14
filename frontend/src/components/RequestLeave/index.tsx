@@ -28,7 +28,8 @@ const RequestLeave = () => {
                     month: parseInt(selectedDate[1]),
                     year: parseInt(selectedDate[0]),
                     reason: reason,
-                    reasonType : reasonType
+                    reasonType : reasonType,    
+                    session:session
                 });
                 console.log(response);
                 if ('data' in response) {
@@ -59,9 +60,9 @@ const RequestLeave = () => {
     const handleReasonTypeChange = (event: SelectChangeEvent<string>) => {
         setReasonType(event.target.value);
     };
-    const [sesson, setsesson] = React.useState('');
+    const [session, setsession] = React.useState('');
     const handleChange = (event: SelectChangeEvent) => {
-        setsesson(event.target.value as string);
+        setsession(event.target.value as string);
       };
 
 
@@ -127,14 +128,14 @@ const RequestLeave = () => {
                                             <InputLabel id="demo-simple-select-label">Session</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={sesson}
-                                                label="sesson"
+                                                id="session"
+                                                value={session}
+                                                label="session"
                                                 onChange={handleChange}
                                             >
-                                                <MenuItem value={10}>FN</MenuItem>
-                                                <MenuItem value={20}>AN</MenuItem>
-                                                <MenuItem value={30}>FULL DAY</MenuItem>
+                                                <MenuItem value={'FN'}>FN</MenuItem>
+                                                <MenuItem value={'AN'}>AN</MenuItem>
+                                                <MenuItem value={'Day'}>FULL DAY</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </div>

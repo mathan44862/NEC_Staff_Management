@@ -45,25 +45,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const ShowRequestPage = () => {
-  const { data, error, isLoading, refetch } = useShowLeaveRequestQuery();
-  const [userLeaveInfo, setUserLeaveInfo] = useState<ShowLeaveRequest[]>([]);
+  const { data:userLeaveInfo, error, isLoading, refetch } = useShowLeaveRequestQuery();
   const [page, setPage] = useState<number>(0);
   const [sendReq] = useApprovalLeaveRequestMutation();
   const [decReq] = useDeclineLeaveRequestMutation();
   const [selectedRole, setSelectedRole] = useState<string>('All');
+  const [filteredLeaveInfo, setFilteredLeaveInfo] = useState<ShowLeaveRequest[]>([]);
 
   useEffect(() => {
-    if (data) {
-      if (Array.isArray(data)) {
-        setUserLeaveInfo(data);
-      } else if (typeof data === 'object') {
-        setUserLeaveInfo([data]); // If data is an object, wrap it in an array
-      } else {
-        console.error('Invalid data format:', data);
-      }
+    if (Array.isArray(userLeaveInfo)) {
+      // Filter userLeaveInfo based on selectedRole or any other condition
+      const filteredData = userLeaveInfo.filter(item => selectedRole === 'All' || item.role === selectedRole);
+      setFilteredLeaveInfo(filteredData);
     }
-  }, [data]);
-  
+  }, [userLeaveInfo, selectedRole]);
+
+  if (!Array.isArray(userLeaveInfo)) {
+    return <p>No Leave Request</p>;
+  }
 
   const handleRoleChange = (event: SelectChangeEvent<string>) => {
     setSelectedRole(event.target.value);
@@ -92,7 +91,7 @@ export const ShowRequestPage = () => {
       });
       if ('data' in response) {
         if ('message' in response.data) {
-          refetch();
+            refetch();
         }
       }
     } catch (error) {
@@ -100,9 +99,6 @@ export const ShowRequestPage = () => {
     }
   };
 
-  const filteredLeaveInfo = userLeaveInfo.filter(
-    (row) => selectedRole === 'All' || row.role === selectedRole
-  );
 
   return (
     <><Select  sx={{ margin: '20px auto',marginLeft:'10%'}}
@@ -181,4 +177,5 @@ export const ShowRequestPage = () => {
         </TableContainer>
       </Stack></>
   );
+  
 };

@@ -106,7 +106,7 @@ function Todos() {
 
   // Filter users based on the search query
   const filteredUsers = user.filter(userData =>
-    userData.name.toLowerCase().includes(searchQuery.toLowerCase())
+     userData.name && userData.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (

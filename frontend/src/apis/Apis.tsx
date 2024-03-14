@@ -51,6 +51,7 @@ interface ResponseSendRequest{
 interface ShowLeaveRequest {
     name: string;
     date: number;
+    session:string;
     month: number;
     year: number;
     id: string;
@@ -92,6 +93,7 @@ interface ShowLeaves {
   reasonType:string;
   department:string;
   role:string;
+  sesson:string;
 }
 interface Todostatus {
   task:String,

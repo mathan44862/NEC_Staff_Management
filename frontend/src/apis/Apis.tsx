@@ -39,7 +39,8 @@ interface ResponseGetUser{
     month: number;
     year: number;
     reason: string;
-    reasonType:String
+    reasonType:String;
+    session:String;
   }
 interface ResponseSendRequest{
     message:String,

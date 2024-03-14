@@ -15,7 +15,7 @@ const mailer = (reciever,body) =>{
     });  
     const mailOptions = {
         from: emailConfig.user,
-        to: '21it027@nandhaengg.org',
+        to: reciever,
         subject: 'Leave Requested',
         text: body,
     };    

@@ -26,7 +26,7 @@ const leaveRequest = async(req,res)=>{
 
 const sendleaverequest = async (req, res) => {
   try {
-    const {reasonType} = req.body;
+    const {reasonType,session} = req.body;
     const leaveRequest = new LeaveRequestModel({
       id: req.user.id,
       name:req.user.name,
@@ -37,7 +37,8 @@ const sendleaverequest = async (req, res) => {
       reason: req.body.reason,
       role:req.user.role,
       email:req.user.email,
-      reasonType:reasonType
+      reasonType:reasonType,
+      session:session
     });
     year  = req.body.year;
     month= req.body.month;
@@ -160,13 +161,14 @@ const sendleaverequest = async (req, res) => {
       }  
 
       const result = await leaveRequest.save();
-      if(req.body.role == "staff"){
+      if(req.user.role == "staff"){
         let  RequestLeaveInfomation = await UserModel.findOne({
           department: req.user.department,
           role: 'hod'
         });
+        console.log(RequestLeaveInfomation);
+        mailer(RequestLeaveInfomation.email,'Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
       }
-      mailer('21it027@nandhaengg.org','Leave on '+req.body.date+'/'+req.body.month+'/'+req.body.year+' is requested by '+req.user.name);
       res.json({ message: "Leave Requested successfully" });
       
   } 
@@ -190,10 +192,11 @@ const approvalleaverequest = async(req,res)=>{
         reason: leaveinfo.reason,
         role:leaveinfo.role,
         name:leaveinfo.name ,
-        reasonType:leaveinfo.reasonType
+        reasonType:leaveinfo.reasonType,
+        session:leaveinfo.session
       });
       const result1 = await leave.save();
-      mailer('21it027@nandhaengg.org','Your leave request on '+ leaveinfo.date+'/'+leaveinfo.month+'/'+leaveinfo.year+' is approved ');
+      mailer(leaveinfo.email,'Your leave request on '+ leaveinfo.date+'/'+leaveinfo.month+'/'+leaveinfo.year+' is approved ');
       res.json({ message: "Approved successfully" });
     } else {
       res.status(404).json({ error: "Document not found" });
@@ -210,7 +213,7 @@ const declineleaverequest = async(req,res)=>{
     const leaveinfo = await LeaveRequestModel.findOne({ _id: idToDelete });
     const result = await LeaveRequestModel.deleteOne({ _id: idToDelete });
     if (result.deletedCount === 1) {
-      mailer('21it027@nandhaengg.org','Your leave request on '+ leaveinfo.date+'/'+leaveinfo.month+'/'+leaveinfo.year+' is declined ');
+      mailer(leaveinfo.email  ,'Your leave request on '+ leaveinfo.date+'/'+leaveinfo.month+'/'+leaveinfo.year+' is declined ');
       res.json({ message: "Approved successfully" });
     } else {
       res.status(404).json({ error: "Document not found" });

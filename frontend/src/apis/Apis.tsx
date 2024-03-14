@@ -12,7 +12,7 @@ interface ResponseGetUser{
       status : string
     }
 }
-  interface ApiResponse {
+interface ApiResponse {
     data?: {
       Medical: number;
       Vacation: number;

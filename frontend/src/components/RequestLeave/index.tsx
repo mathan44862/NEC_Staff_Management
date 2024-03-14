@@ -116,7 +116,7 @@ const RequestLeave = () => {
                                             <div style={{ flex: 1 }}> {/* Flex to take available space */}
                                                 <DatePicker
                                                     label={"Date"}
-                                                    views={['day', 'month']}
+                                                    views={['year', 'month', 'day']}
                                                     minDate={dayjs(currentDate).startOf('month')}
                                                     value={date}
                                                     onChange={(newDate) => setDate(newDate)}

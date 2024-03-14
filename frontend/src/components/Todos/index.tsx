@@ -134,8 +134,8 @@ function Todos() {
           <div style={{ marginBottom: '10px' }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                label={"Day"}
-                views={['day']}
+                label={'Date'}
+                views={['year', 'month', 'day']}
                 minDate={dayjs(currentDate).startOf('month')}
                 value={date}
                 onChange={(newDate) => setDate(newDate)}

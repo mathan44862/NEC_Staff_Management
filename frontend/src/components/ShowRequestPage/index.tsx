@@ -15,6 +15,7 @@ interface ShowLeaveRequest {
   name: string;
   date: number;
   month: number;
+  session:string;
   year: number;
   reason: string;
   _id: string;
@@ -130,6 +131,7 @@ export const ShowRequestPage = () => {
                 <StyledTableCell align="center">Role</StyledTableCell>
                 <StyledTableCell align="center">Reason</StyledTableCell>
                 <StyledTableCell align="center">Reason Type</StyledTableCell>
+                <StyledTableCell align='center'>Session</StyledTableCell>
                 <StyledTableCell align="center">Date</StyledTableCell>
                 <StyledTableCell align="center">Month</StyledTableCell>
                 <StyledTableCell align="center">Year</StyledTableCell>
@@ -157,6 +159,9 @@ export const ShowRequestPage = () => {
                   </StyledTableCell>
                   <StyledTableCell scope="row" align="center">
                     {row.reasonType}
+                  </StyledTableCell>
+                  <StyledTableCell scope="row" align="center">
+                    {row.session}
                   </StyledTableCell>
                   <StyledTableCell align="center">{row.date}</StyledTableCell>
                   <StyledTableCell align="center">{row.month}</StyledTableCell>

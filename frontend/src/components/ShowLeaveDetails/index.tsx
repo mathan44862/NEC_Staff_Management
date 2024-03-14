@@ -8,7 +8,8 @@ interface ShowLeaves {
   month: number;
   year: number;
   reason: string;
-  reasonType:string
+  reasonType:string;
+  sesson : string
 }
 
 
@@ -60,7 +61,8 @@ const ShowLeaveDetails: React.FC = () => {
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Month</StyledTableCell>
             <StyledTableCell align="center">Year</StyledTableCell>
-          </TableRow>
+            <StyledTableCell align='center'>Sesson</StyledTableCell>
+           </TableRow>
         </TableHead>
         <TableBody>
           {userLeaveInfo.length > 0 ? (
@@ -71,11 +73,12 @@ const ShowLeaveDetails: React.FC = () => {
                 <StyledTableCell align="center">{row.date}</StyledTableCell>
                 <StyledTableCell align="center">{row.month}</StyledTableCell>
                 <StyledTableCell align="center">{row.year}</StyledTableCell>
+                <StyledTableCell align="center">{row.sesson}</StyledTableCell> 
               </StyledTableRow>
             ))
           ) : (
             <StyledTableRow>
-              <StyledTableCell colSpan={5} align="center">
+              <StyledTableCell colSpan={6} align="center">
                 No Leave
               </StyledTableCell>
             </StyledTableRow>

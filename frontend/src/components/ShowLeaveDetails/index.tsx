@@ -9,7 +9,7 @@ interface ShowLeaves {
   year: number;
   reason: string;
   reasonType:string;
-  sesson : string
+  session : string
 }
 
 
@@ -73,7 +73,7 @@ const ShowLeaveDetails: React.FC = () => {
                 <StyledTableCell align="center">{row.date}</StyledTableCell>
                 <StyledTableCell align="center">{row.month}</StyledTableCell>
                 <StyledTableCell align="center">{row.year}</StyledTableCell>
-                <StyledTableCell align="center">{row.sesson}</StyledTableCell> 
+                <StyledTableCell align="center">{row.session}</StyledTableCell> 
               </StyledTableRow>
             ))
           ) : (

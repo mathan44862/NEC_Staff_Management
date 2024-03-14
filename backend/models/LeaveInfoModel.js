@@ -9,7 +9,8 @@ const LeaveSchema = new mongoose.Schema({
     role :String,
     name:String,
     email:String,
-    reasonType:String
+    reasonType:String,
+    session:String
 });
 const LeaveInfoModel = mongoose.model('LeaveInfo', LeaveSchema);
 module.exports = LeaveInfoModel;

@@ -180,7 +180,7 @@ const approvalleaverequest = async(req,res)=>{
   try {
     const idToDelete = req.body._id;
     const leaveinfo = await LeaveRequestModel.findOne({ _id: idToDelete });
-    console.log(leaveinfo);
+    console.log(leaveinfo.session);
     const result = await LeaveRequestModel.deleteOne({ _id: idToDelete });
     if (result.deletedCount === 1) {
       const leave = new LeaveInfoModel({

@@ -126,7 +126,7 @@ const Todostatus = () => {
                 <StyledTableCell align="center">{row.task}</StyledTableCell>
                 <StyledTableCell align="center">{row.taskdescription}</StyledTableCell>
                 <StyledTableCell align="center">{row.department}</StyledTableCell>
-                <StyledTableCell align="center">{row.status}</StyledTableCell>
+                <StyledTableCell align="center" style={{color: row.status === 'finished' ? 'green' : 'red'}}>{row.status }</StyledTableCell>
                 <StyledTableCell align="center">{row.role}</StyledTableCell>
                 <StyledTableCell align="center">{row.taskby}</StyledTableCell>
                 <StyledTableCell align="center" style={{ color: isDatePastOrToday(row.date, row.month, row.year) ? 'red' : 'initial' }}>

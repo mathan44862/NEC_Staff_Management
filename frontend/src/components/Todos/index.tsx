@@ -51,7 +51,7 @@ function Todos() {
       }
     };
     fetchData();
-  }, [data, refetch]);
+  }, [data, refetch])
 
   useEffect(() => {
     setInputEntered(task !== '' && taskdescription !== '' && date !== null);

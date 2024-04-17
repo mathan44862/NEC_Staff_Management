@@ -219,14 +219,17 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon sx={{color:'white', gap:"15%"}}/>
-              </IconButton>
-            </Tooltip>
-            {user.role=="hod" ? "  HOD": user.role=="staff" ? "  STAFF": user.role=="principal" ? "  PRINCIPAL":user.role=="admin" ? "  ADMIN":null}
-            <Menu
+          <label htmlFor="logo" style={{cursor:"pointer",textAlign:"center"}} onClick={handleOpenUserMenu}>
+          <Tooltip id ="logo" title="Open settings">
+            <IconButton sx={{ p: 0 }}>
+              <AccountCircleIcon sx={{color:'white', gap:"15%"}}/>
+            </IconButton>
+          </Tooltip>
+          <span style={{marginLeft:"2px"}}>
+            {user.role === "hod" ? "HOD" : user.role === "staff" ? "STAFF" : user.role === "principal" ? "PRINCIPAL" : user.role === "admin" ? "ADMIN" : null}
+          </span>
+        </label>
+            <Menu 
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}

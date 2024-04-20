@@ -13,6 +13,7 @@ import Profile from '../components/Profile';
 import { jwtDecode } from 'jwt-decode';
 import RestrictionRouter from './RestrictionRouter';
 import RequestLeave from '../components/RequestLeave';
+import ResponsiveAppBar from '../components/Navbar';
 
 const MyRoutes = () => {
   let hasToken = localStorage.getItem('accessToken');
@@ -76,6 +77,12 @@ const MyRoutes = () => {
       path: '/Profile',
       element: (
           <Profile/>
+      ),
+    }, 
+    {
+      path: '/Navbar',
+      element: (
+        <ResponsiveAppBar/>
       ),
     }, 
   ]);

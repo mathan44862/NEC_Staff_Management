@@ -11,8 +11,7 @@ interface HeaderProps {
 const Header= () => {
   return (
     <>
-      <ResponsiveAppBar/>
-      <MyRoutes></MyRoutes>
+      <ResponsiveAppBar/>  
     </>
   );
 };

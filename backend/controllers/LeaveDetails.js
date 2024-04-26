@@ -132,16 +132,26 @@ const userLeaves = async (req,res)=>{
 
 const staffsleavedetails = async (req,res)=>{
   try {
-    console.log("hi");
+
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth returns zero-based month index
     const currentDay = currentDate.getDate();
-    const leaveInfo = await LeaveInfoModel.find({
-      date:currentDay,
-      month:currentMonth,
-      year : currentYear
-    });
+    let leaveInfo;
+    if(req.user.department === "hod"){
+       leaveInfo = await LeaveInfoModel.find({
+        date:currentDay,
+        month:currentMonth,
+        year : currentYear
+      });
+    }else{
+      leaveInfo = await LeaveInfoModel.find({
+        department:req.user.department,
+        date:currentDay,
+        month:currentMonth,
+        year : currentYear
+      });
+    }
     res.json(leaveInfo);
   } catch (error) {
     res.json(error);

@@ -11,14 +11,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import MyRoutes from '../../routes/MyRoutes';
 import { Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import MyRoutes from '../../routes/MyRoutes';
 
 const drawerWidth = 240;
 
@@ -29,29 +28,24 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
-
+  const [selectedListItem, setSelectedListItem] = React.useState('');
   const navigate = useNavigate();
 
-
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
-
   const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleListItemClick = (itemName: string) => {
+    if (itemName === selectedListItem) {
+      setSelectedListItem('');
+    } else {
+      setSelectedListItem(itemName);
     }
   };
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleSubListItemClick = (itemName: string) => {
+    setSelectedListItem(itemName);
+    navigate(`/${itemName}`);
   };
 
   const drawer = (
@@ -59,29 +53,49 @@ export default function ResponsiveDrawer(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Attendance" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Leave Request"  onClick={()=>{
-              navigate('/Leave Request')
-            }}/>
-          </ListItemButton>
-        </List>
-      </Collapse>
+        <ListItemButton onClick={() => handleListItemClick('Tasks')}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Tasks" />
+          {selectedListItem === 'Tasks' ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={selectedListItem === 'Tasks'} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('TaskList')}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Task List" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+        <ListItemButton onClick={() => handleListItemClick('Attendance')}>
+          <ListItemIcon>
+          </ListItemIcon>
+          <ListItemText primary="Attendance" />
+          {selectedListItem === 'Attendance' ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={selectedListItem === 'Attendance'} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave Request')}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Leave Request" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('LeaveApproval')}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Leave Approval" />
+            </ListItemButton>
+          </List>
+        </Collapse>
       </List>
     </div>
   );
-  // Remove this const when copying and pasting into your project.
+
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
@@ -118,8 +132,7 @@ export default function ResponsiveDrawer(props: Props) {
           container={container}
           variant="temporary"
           open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
+          onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -145,8 +158,9 @@ export default function ResponsiveDrawer(props: Props) {
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-        <Toolbar />
-        <MyRoutes/>
+        <Toolbar >
+          <MyRoutes/>
+        </Toolbar>
       </Box>
     </Box>
   );

@@ -1,9 +1,7 @@
 import { jwtDecode } from "jwt-decode";
-import Header from "../components/HomePage/Header";
-import LoginPage from "../components/LoginPage";
-import ShowLeaveDate from "../components/ShowLeaveDate";
-import ShowStaff from "../components/Admin/ShowUser";
-import TodayLeave from "../components/TodayLeave";
+import ShowLeaveDate from "../components/Attendance/pages/ShowLeaveDate";
+import ShowStaff from "../components/Attendance/Profile/Admin/ShowUser";
+import TodayLeave from "../components/Attendance/pages/TodayLeave";
 
 const ProtectedRouter = () => {
   let hasToken = localStorage.getItem('accessToken');

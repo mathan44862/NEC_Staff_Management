@@ -1,19 +1,18 @@
-import { useRoutes } from 'react-router-dom';
-import HomePage from '../components/LoginPage';
-
-import { ShowRequestPage } from '../components/ShowRequestPage';
-import ProtectedRouter from './ProtectedRouter';
-
-import AddUser from '../components/Admin/AddUser';
-import ShowLeaveDetails from '../components/ShowLeaveDetails';
-import Todos from '../components/Todos';
-import Todostatus from '../components/Todostatus';
-import Todosforstaff from '../components/Todosforstaff';
-import Profile from '../components/Profile';
 import { jwtDecode } from 'jwt-decode';
+import { useRoutes } from 'react-router-dom';
+import HomePage from '../components/Attendance/HomePage';
+import { ShowRequestPage } from '../components/Attendance/pages/ShowRequestPage';
 import RestrictionRouter from './RestrictionRouter';
-import RequestLeave from '../components/RequestLeave';
-import ResponsiveAppBar from '../components/Navbar';
+import RequestLeave from '../components/Attendance/pages/RequestLeave';
+import AddUser from '../components/Attendance/Profile/Admin/AddUser';
+import ShowLeaveDetails from '../components/Attendance/pages/ShowLeaveDetails';
+import Todos from '../components/Tasks/Todos';
+import Todostatus from '../components/Tasks/Todostatus';
+import Todosforstaff from '../components/Tasks/Todosforstaff';
+import Profile from '../components/Attendance/Profile';
+import TodayLeave from '../components/Attendance/pages/TodayLeave';
+import ShowUser from '../components/Attendance/Profile/Admin/ShowUser';
+
 
 const MyRoutes = () => {
   let hasToken = localStorage.getItem('accessToken');
@@ -21,24 +20,10 @@ const MyRoutes = () => {
   let element = useRoutes([
     {
       path: '/',
-      element: (
-        <ProtectedRouter></ProtectedRouter>
-      ),
-      children: [
-        {
-          path: 'messages',
-          element: <HomePage />
-        }
-      ]
-    },  
-    {
-      path: '/show request',
-      element: (
-        user.role === "hod" || user.role === "principal" ? <ShowRequestPage></ShowRequestPage>:<RestrictionRouter></RestrictionRouter>
-      ),
+      element: (<Profile/>),
     }, 
     {
-      path: '/Leave Request',
+      path: '/Leave',
       element: (
         user.role==="staff" || user.role==="hod" ? <RequestLeave></RequestLeave> :<RestrictionRouter></RestrictionRouter>
       ),
@@ -50,27 +35,45 @@ const MyRoutes = () => {
       ),
     }, 
     {
+      path: '/User',
+      element: (
+        user.role==="admin" ? <ShowUser/> :<RestrictionRouter></RestrictionRouter>
+      ),
+    }, 
+    {
       path: '/Leave Details',
       element: (
           user.role!=="principal" ? <ShowLeaveDetails></ShowLeaveDetails> : <RestrictionRouter></RestrictionRouter>
       ),
+    },
+    {
+      path: '/Leaverequest',
+      element: (
+          user.role!=="principal" || user.role === "hod" ? <ShowRequestPage/>: <RestrictionRouter></RestrictionRouter>
+      ),
     }, 
     {
-      path: '/Todos',
+      path: '/Assign Task',
       element: (
         user.role === "hod" || user.role ==="principal" ?<Todos></Todos> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
-      path: '/Todos Status',
+      path: '/Tasks status',
       element: (
         user.role === "hod" || user.role ==="principal"  ? <Todostatus></Todostatus> : <RestrictionRouter></RestrictionRouter>
       ),
     },
     {
-      path: '/Task',
+      path: '/Tasks',
       element: (
         user.role === "staff" || user.role==="hod" ? <Todosforstaff></Todosforstaff> : <RestrictionRouter></RestrictionRouter>
+      ),
+    },
+    {
+      path: '/Today Leave',
+      element: (
+        user.role === "staff" || user.role==="hod" ? <TodayLeave/> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
@@ -78,13 +81,7 @@ const MyRoutes = () => {
       element: (
           <Profile/>
       ),
-    }, 
-    {
-      path: '/Navbar',
-      element: (
-        <ResponsiveAppBar/>
-      ),
-    }, 
+    }
   ]);
   return element;
 };

@@ -5,8 +5,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import { store } from './store';
+import HomePage from './components/Attendance/HomePage';
 
-import HomePage from './components/HomePage';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

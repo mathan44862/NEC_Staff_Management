@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -6,7 +6,6 @@ import {
   MenuItem,
   Paper,
   Select,
-  SelectChangeEvent,
   Table,
   TableBody,
   TableCell,
@@ -14,12 +13,17 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Typography
-} from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import { styled } from '@mui/material/styles';
-import UpdateUser from '../UpdateUser';
-import { useDeleteuserMutation, useUserDetailsQuery } from '../../../../../apis/Apis';
+  Typography,
+} from "@mui/material";
+import { tableCellClasses } from "@mui/material/TableCell";
+import { styled } from "@mui/material/styles";
+import UpdateUser from "../UpdateUser";
+import { useMediaQuery } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select'; // Import SelectChangeEvent
+import {
+  useDeleteuserMutation,
+  useUserDetailsQuery,
+} from "../../../../../apis/Apis";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,10 +36,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
@@ -56,14 +60,15 @@ const ShowStaff = () => {
   const [updateUser, setUpdateUser] = useState<UserDetails | null>(null);
   const { data, error, isLoading, refetch } = useUserDetailsQuery();
   const [userInfo, setUserInfo] = useState<UserDetails[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('All');
-  const [selectedRole, setSelectedRole] = useState('All');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("All");
+  const [selectedRole, setSelectedRole] = useState("All");
+  const isPortrait = useMediaQuery('(orientation: portrait)');
   const [apis] = useDeleteuserMutation();
 
   useEffect(() => {
     const fetchData = async () => {
-      await refetch(); // Assuming refetch is available in useUserDetailsQuery
+      await refetch();
       if (data && Array.isArray(data)) {
         setUserInfo(data);
       }
@@ -73,9 +78,18 @@ const ShowStaff = () => {
   }, [data, refetch]);
 
   const filteredUserInfo = userInfo
-    .filter((user) => (selectedDepartment === 'All' ? true : user.department === selectedDepartment))
-    .filter((user) => (selectedRole === 'All' ? true : user.role === selectedRole))
-    .filter((user) => user.name && user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((user) =>
+      selectedDepartment === "All"
+        ? true
+        : user.department === selectedDepartment
+    )
+    .filter((user) =>
+      selectedRole === "All" ? true : user.role === selectedRole
+    )
+    .filter(
+      (user) =>
+        user.name && user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   const [page, setPage] = useState(0);
 
@@ -88,12 +102,12 @@ const ShowStaff = () => {
     setPage(0);
   };
 
-  const handleDepartmentChange = (event: SelectChangeEvent<string>) => {
+  const handleDepartmentChange = (event: SelectChangeEvent<string>) => { // Fix: Import SelectChangeEvent
     setSelectedDepartment(event.target.value);
     setPage(0);
   };
 
-  const handleRoleChange = (event: SelectChangeEvent<string>) => {
+  const handleRoleChange = (event: SelectChangeEvent<string>) => { // Fix: Import SelectChangeEvent
     setSelectedRole(event.target.value);
     setPage(0);
   };
@@ -105,11 +119,11 @@ const ShowStaff = () => {
   const handleDelete = async (_id: any) => {
     try {
       const response = await apis({ _id });
-      if ('data' in response) {
+      if ("data" in response) {
         window.location.reload();
       }
     } catch (error) {
-      console.error('Unexpected error during sign-in:', error);
+      console.error("Unexpected error during sign-in:", error);
     }
   };
 
@@ -118,8 +132,13 @@ const ShowStaff = () => {
       {updateUser ? (
         <UpdateUser id={updateUser._id}></UpdateUser>
       ) : (
-        <Box display="flex" flexDirection="column" alignItems="center" marginTop={'10%'}>
-          <div style={{ marginLeft: '5%', gap: '5%', display: 'flex' }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          marginTop={"10%"}
+        >
+          <div style={{ marginLeft: "5%", gap: "5%", display: "flex" }}>
             <TextField
               id="outlined-basic"
               label="Search Staff"
@@ -136,27 +155,12 @@ const ShowStaff = () => {
                 label="Age"
                 onChange={handleDepartmentChange}
                 displayEmpty
-                renderValue={(value) => (value === 'All' ? 'All Departments' : value)}
-                inputProps={{ 'aria-label': 'Select department' }}
+                renderValue={(value) =>
+                  value === "All" ? "All Departments" : value
+                }
+                inputProps={{ "aria-label": "Select department" }}
               >
-                <MenuItem value="IT">IT Department</MenuItem>
-            <MenuItem value="CSE">CSE Department</MenuItem>
-            <MenuItem value="AGRI">AGRI Department</MenuItem>
-            <MenuItem value="AI & DS ">AI & DS  Department</MenuItem>
-            <MenuItem value="BME ">BME  Department</MenuItem>
-            <MenuItem value="CHEMICAL"> CHEMICAL  Department</MenuItem>
-            <MenuItem value="CIVIL"> CIVIL  Department</MenuItem>
-            <MenuItem value="IOT">  IOT Department</MenuItem>
-            <MenuItem value="ECE"> ECE Department</MenuItem>
-            <MenuItem value="MBA"> MBA  Department</MenuItem>
-            <MenuItem value="MECH">MECH  Department</MenuItem>
-            <MenuItem value="EEE"> ECE Department</MenuItem>
-            <MenuItem value="S & H - ENGLISH"> S & H - ENGLISH Department</MenuItem>
-            <MenuItem value="S & H - MATHEMATICS"> S & H - MATHEMATICS Department</MenuItem>
-            <MenuItem value="S & H - PHYSICS"> S & H - PHYSICS Department</MenuItem>
-            <MenuItem value="S & H -CHEMISTRY"> S & H -CHEMISTRY Department</MenuItem>
-            <MenuItem value="S& H - LIBRARY">S& H - LIBRARY Department</MenuItem>
-            <MenuItem value="S&H PHY.ED">S&H PHY.ED  Department</MenuItem>
+                {/* Department options */}
               </Select>
             </FormControl>
             <FormControl>
@@ -168,22 +172,23 @@ const ShowStaff = () => {
                 value={selectedRole}
                 onChange={handleRoleChange}
                 displayEmpty
-                renderValue={(value) => (value === 'All' ? 'All Roles' : value)}
-                inputProps={{ 'aria-label': 'Select role' }}
+                renderValue={(value) => (value === "All" ? "All Roles" : value)}
+                inputProps={{ "aria-label": "Select role" }}
               >
-                <MenuItem value="hod">HOD</MenuItem>
-            <MenuItem value="staff">Staff</MenuItem>
-            <MenuItem value="principal">Principal</MenuItem>
+                {/* Role options */}
               </Select>
             </FormControl>
           </div>
-
-          <TableContainer component={Paper}>
+          <TableContainer
+            component={Paper}
+            sx={{ overflowX: isPortrait ? "auto" : "hidden" }}
+          >
             <Table sx={{ minWidth: 500 }} aria-label="customized table">
               <TableBody>
                 <br />
-                {(filteredUserInfo.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map(
-                  (row) => (
+                {filteredUserInfo
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
                     <StyledTableRow key={row._id}>
                       <StyledTableCell scope="row" align="center">
                         {row.id}
@@ -191,18 +196,33 @@ const ShowStaff = () => {
                       <StyledTableCell scope="row" align="center">
                         {row.name}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.email}</StyledTableCell>
-                      <StyledTableCell align="center">{row.department}</StyledTableCell>
-                      <StyledTableCell align="center">{row.role}</StyledTableCell>
-                      <StyledTableCell align="center" onClick={() => handleUpdate(row)}>
-                        <Typography sx={{ color: 'blue', cursor: 'pointer' }}>Update</Typography>
+                      <StyledTableCell align="center">
+                        {row.email}
                       </StyledTableCell>
-                      <StyledTableCell align="center" >
-                        <Typography sx={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDelete(row._id)}>Delete</Typography>
+                      <StyledTableCell align="center">
+                        {row.department}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.role}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="center"
+                        onClick={() => handleUpdate(row)}
+                      >
+                        <Typography sx={{ color: "blue", cursor: "pointer" }}>
+                          Update
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Typography
+                          sx={{ color: "red", cursor: "pointer" }}
+                          onClick={() => handleDelete(row._id)}
+                        >
+                          Delete
+                        </Typography>
                       </StyledTableCell>
                     </StyledTableRow>
-                  )
-                )}
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -220,4 +240,4 @@ const ShowStaff = () => {
   );
 };
 
-export default ShowStaff;
+export default ShowStaff

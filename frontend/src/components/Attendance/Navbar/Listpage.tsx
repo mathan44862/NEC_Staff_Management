@@ -24,118 +24,102 @@ const ListPage: React.FC<ListPageProps> = ({ selectedListItem, handleListItemCli
   return (
     <List>
       {
-        user.role === "admin" ?  <><ListItemButton onClick={() => handleListItemClick('User')}>
-          <ListItemIcon>
-            {/* <InboxIcon /> */}
-          </ListItemIcon>
-          <ListItemText primary="User" />
-          {selectedListItem === 'User' ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton><Collapse in={selectedListItem === 'User'} timeout="auto" unmountOnExit>
+        user.role === "admin" ? <>
+          <ListItemButton onClick={() => handleListItemClick('User')}>
+            <ListItemIcon>
+              {/* <InboxIcon /> */}
+            </ListItemIcon>
+            <ListItemText primary="User" />
+            {selectedListItem === 'User' ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={selectedListItem === 'User'} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('User')}>
-                  <ListItemIcon>
-                    <AssignmentIcon sx={{color:"#fff"}}  />
-                  </ListItemIcon>
-                  <ListItemText primary="User List" />
-                </ListItemButton> 
+              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('User')}>
+                <ListItemIcon>
+                  <AssignmentIcon sx={{ color: "#fff" }} />
+                </ListItemIcon>
+                <ListItemText primary="User List" />
+              </ListItemButton>
             </List>
-          </Collapse></> : null
-      }
-      <ListItemButton onClick={() => handleListItemClick('Tasks')}>
-        <ListItemIcon>
-          {/* <InboxIcon /> */}
-        </ListItemIcon>
-        <ListItemText primary="Tasks" />
-        {selectedListItem === 'Tasks' ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={selectedListItem === 'Tasks'} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {
-            user.role === "hod" || user.role === "staff" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Tasks')}>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Add User')}>
                 <ListItemIcon>
-                  <AssignmentIcon sx={{color:"#fff"}} />
+                  <AssignmentIcon sx={{ color: "#fff" }} />
                 </ListItemIcon>
-                <ListItemText primary="Tasks" />
-              </ListItemButton> : null
-          }
-          {
-            user.role === "hod" || user.role === "principal" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Assign Task')}>
-                <ListItemIcon>
-                  <PlaylistAddIcon sx ={{color:"#fff"}} />
-                </ListItemIcon>
-                <ListItemText primary="Assign Task" />
-              </ListItemButton> : null
-          }
-          {
-            user.role === "hod" || user.role === "principal" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Tasks Status')}>
-                <ListItemIcon>
-                  <TaskIcon sx ={{color:"#fff"}} />
-                </ListItemIcon>
-                <ListItemText primary="Tasks Status" />
-              </ListItemButton> : null
-          }
-        </List>
-      </Collapse>
-      <ListItemButton onClick={() => handleListItemClick('Attendance')}>
-        <ListItemIcon>
-        </ListItemIcon>
-        <ListItemText primary="Attendance" />
-        {selectedListItem === 'Attendance' ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={selectedListItem === 'Attendance'} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {
-            user.role === "hod" || user.role === "principal" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave')}>
-                <ListItemIcon>
-                  <PostAddIcon sx={{color:"#fff"}}  />
-                </ListItemIcon>
-                <ListItemText primary="Leave Request" />
-              </ListItemButton>:null
-          }
-          {
-            user.role === "hod" || user.role === "principal" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leaverequest')}>
-                <ListItemIcon>
-                  <VisibilityIcon sx={{color:"#fff"}}  />
-                </ListItemIcon>
-                <ListItemText primary="Leave Approval" />
-              </ListItemButton> : null
-          }
-          {
-            user.role === "hod" || user.role === "staff" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave Details')}>
-                <ListItemIcon>
-                  <EventNoteIcon sx={{color:"#fff"}}  />
-                </ListItemIcon>
-                <ListItemText primary="Leave Details" />
-              </ListItemButton> : null
-          }
-          {
-            user.role === "hod" || user.role === "staff" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave')}>
-                <ListItemIcon>
-                  <ReceiptLongIcon sx={{color:"#fff"}}  />
-                </ListItemIcon>
-                <ListItemText primary="Leave Request" />
-              </ListItemButton> : null
-          }
-          {
-            user.role === "hod" || user.role === "principal" ?
-              <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Today Leave')}>
-                <ListItemIcon>
-                  <ReceiptLongIcon  sx={{color:"#fff"}} />
-                </ListItemIcon>
-                <ListItemText primary="Today Leave" />
-              </ListItemButton> : null
-          }
-        </List>
-      </Collapse>
-    </List>
+                <ListItemText primary="Add User" />
+              </ListItemButton>
+            </List>
+          </Collapse></> :
+          <><ListItemButton onClick={() => handleListItemClick('Tasks')}>
+            <ListItemIcon>
+              {/* <InboxIcon /> */}
+            </ListItemIcon>
+            <ListItemText primary="Tasks" />
+            {selectedListItem === 'Tasks' ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton><Collapse in={selectedListItem === 'Tasks'} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                {user.role === "hod" || user.role === "staff" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Tasks')}>
+                    <ListItemIcon>
+                      <AssignmentIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Tasks" />
+                  </ListItemButton> : null}
+                {user.role === "hod" || user.role === "principal" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Assign Task')}>
+                    <ListItemIcon>
+                      <PlaylistAddIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Assign Task" />
+                  </ListItemButton> : null}
+                {user.role === "hod" || user.role === "principal" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Tasks Status')}>
+                    <ListItemIcon>
+                      <TaskIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Tasks Status" />
+                  </ListItemButton> : null}
+              </List>
+            </Collapse><ListItemButton onClick={() => handleListItemClick('Attendance')}>
+              <ListItemIcon>
+              </ListItemIcon>
+              <ListItemText primary="Attendance" />
+              {selectedListItem === 'Attendance' ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton><Collapse in={selectedListItem === 'Attendance'} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                
+                {user.role === "hod" || user.role === "principal" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leaverequest')}>
+                    <ListItemIcon>
+                      <VisibilityIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Leave Approval" />
+                  </ListItemButton> : null}
+                {user.role === "hod" || user.role === "staff" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave Details')}>
+                    <ListItemIcon>
+                      <EventNoteIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Leave Details" />
+                  </ListItemButton> : null}
+                {user.role === "hod" || user.role === "staff" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Leave')}>
+                    <ListItemIcon>
+                      <ReceiptLongIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Leave Request" />
+                  </ListItemButton> : null}
+                {user.role === "hod" || user.role === "principal" ?
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleSubListItemClick('Today Leave')}>
+                    <ListItemIcon>
+                      <ReceiptLongIcon sx={{ color: "#fff" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Today Leave" />
+                  </ListItemButton> : null}
+              </List>
+            </Collapse></>
+      }</List>
   );
 };
 
-export default ListPage;
+export default ListPage;

@@ -49,7 +49,7 @@ const MyRoutes = () => {
     {
       path: '/Leaverequest',
       element: (
-          user.role!=="principal" || user.role === "hod" ? <ShowRequestPage/>: <RestrictionRouter></RestrictionRouter>
+          user.role ==="principal" || user.role === "hod" ? <ShowRequestPage/>: <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
@@ -73,7 +73,7 @@ const MyRoutes = () => {
     {
       path: '/Today Leave',
       element: (
-        user.role === "staff" || user.role==="hod" ? <TodayLeave/> : <RestrictionRouter></RestrictionRouter>
+        user.role === "principal" || user.role==="hod" ? <TodayLeave/> : <RestrictionRouter></RestrictionRouter>
       ),
     }, 
     {
@@ -86,4 +86,4 @@ const MyRoutes = () => {
   return element;
 };
 
-export default MyRoutes;
+export default MyRoutes;

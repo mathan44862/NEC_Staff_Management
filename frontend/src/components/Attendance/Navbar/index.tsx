@@ -88,7 +88,7 @@ export default function ResponsiveDrawer(props: Props) {
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          ml: { sm: `${drawerWidth}px `},
         }}
       >
         <Toolbar>
@@ -105,7 +105,6 @@ export default function ResponsiveDrawer(props: Props) {
             </IconButton>
           )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
           </Typography>
           {auth && (
             <div>
@@ -205,6 +204,6 @@ export default function ResponsiveDrawer(props: Props) {
           <MyRoutes />
         </Toolbar>
       </Box>
-    </Box>
-  );
+    </Box>
+  );
 }

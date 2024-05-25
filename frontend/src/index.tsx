@@ -6,11 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 import { store } from './store';
 import HomePage from './components/Attendance/HomePage';
-
-
+ 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
-
 
 root.render(
   <BrowserRouter >

@@ -39,8 +39,7 @@ const ShowLeaveDetails: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await refetch(); // Correctly call refetch as a function
-        console.log(data);
+        await refetch(); 
         if (data && Array.isArray(data)) {
           setUserLeaveInfo(data);
         }
@@ -52,7 +51,7 @@ const ShowLeaveDetails: React.FC = () => {
   }, [data, refetch]); // Include refetch in the dependency array
 
   return (
-    <TableContainer component={Paper} sx={{ width: '80%', margin: '0 auto', borderRadius: '8px', marginTop: '10%' }}>
+    <TableContainer component={Paper} sx={{ width: '100%', margin: '0 auto', borderRadius: '8px', marginTop: '10%' }}>
       <Table sx={{ minWidth: 300, marginTop: '0%' }} aria-label="customized table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'blueviolet' }}>

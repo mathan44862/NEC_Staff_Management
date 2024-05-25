@@ -113,7 +113,7 @@ const LoginPage = () => {
                                         onClick={togglePasswordVisibility}
                                         edge="end"
                                     >
-                                        {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                                        {!passwordVisible ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
                             )

@@ -6,7 +6,7 @@ const signin = async (req, res) => {
     if(!email){
         res.status(500).json({ error: 'Internal Server Error' });
     }
-    try {
+    try {   
         const foundUser = await UserModel.findOne({ email });
         if (foundUser) {
             const { email, role, id, department, name,_id } = foundUser;
@@ -15,7 +15,6 @@ const signin = async (req, res) => {
                 const { email, role, id, department, name, _id } = foundUser;
                 const user = { email, role: role || 'staff', id, department, name, _id };
                 const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN);
-                
                 return res.json({ accessToken });
             } else {
                 res.json({ error: 'Account not found' });

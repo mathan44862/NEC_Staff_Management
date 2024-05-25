@@ -1,24 +1,23 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Collapse } from '@mui/material';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import MyRoutes from '../../../routes/MyRoutes';
-import { jwtDecode } from 'jwt-decode';
-import ListPage from './Listpage'; // Import the newly created component
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import MyRoutes from "../../../routes/MyRoutes";
+import { jwtDecode } from "jwt-decode";
+import ListPage from "./Listpage";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import { deleteDataFromLocalStorage } from "../Profile/index";
 
 const drawerWidth = 240;
 
@@ -29,46 +28,61 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [selectedListItem, setSelectedListItem] = React.useState('');
+  const [selectedListItem, setSelectedListItem] = React.useState("");
   const navigate = useNavigate();
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleListItemClick = (itemName: string) => {
     if (itemName === selectedListItem) {
-      setSelectedListItem('');
+      setSelectedListItem("");
     } else {
       setSelectedListItem(itemName);
     }
   };
 
   const handleSubListItemClick = (itemName: string) => {
+    console.log(itemName)
+    handleDrawerToggle();
     setSelectedListItem(itemName);
     navigate(`/${itemName}`);
   };
-
-  let hasToken = localStorage.getItem('accessToken');
-  let user: { role: String } = hasToken ? jwtDecode(hasToken) : { role: '' };
+  const theme = useTheme();
+  const isSmaller = useMediaQuery(theme.breakpoints.down("sm"));
 
   const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      {/* Use the ListPage component here */}
-      <ListPage 
-        selectedListItem={selectedListItem} 
-        handleListItemClick={handleListItemClick} 
-        handleSubListItemClick={handleSubListItemClick} 
+    <div style={{ height: "100vh", backgroundColor: "#000", color: "#fff" }}>
+      <Toolbar sx={{backgroundColor:""}}>
+        <Typography sx={{fontWeight:"550",fontSize:"22px",letterSpacing:"10px",marginLeft:"55px"}} color={"white"}>NEC</Typography>
+      </Toolbar>
+      <Divider/>
+      <ListPage
+        selectedListItem={selectedListItem}
+        handleListItemClick={handleListItemClick}
+        handleSubListItemClick={handleSubListItemClick}
       />
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
-
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -78,18 +92,56 @@ export default function ResponsiveDrawer(props: Props) {
         }}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          {isSmaller && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon sx={{ color: "#fff" }} />
+            </IconButton>
+          )}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
+          {auth && (
+            <div>
+              <Tooltip title="Logout">
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => deleteDataFromLocalStorage()}>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Box
@@ -106,8 +158,11 @@ export default function ResponsiveDrawer(props: Props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -115,8 +170,11 @@ export default function ResponsiveDrawer(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
           open
         >
@@ -125,10 +183,26 @@ export default function ResponsiveDrawer(props: Props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <Toolbar >
-          <MyRoutes/>
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            position: "relative",
+            left: !isSmaller ? "200px" : "0px",
+          }}
+        >
+          <MyRoutes />
         </Toolbar>
       </Box>
     </Box>

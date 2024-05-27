@@ -48,45 +48,28 @@ const userById = async(req,res)=>{
 }
 
 const adduser = async(req,res)=>{
-    const { name, department, id, email, role, password } = req.body;
-
-try {
-    // Log incoming data
-    console.log('Incoming data:', req.body);
-
-    // Search for existing user by ID
-    const existingUser = await UserModel.find({ id });
-    if (existingUser.length > 0) {
-        return res.json({ error: "Account already exists" });
+    const {name,department,id,email,role,password} = req.body;
+    try{
+        const Search = await UserModel.find({id});
+        if(Search.length>0){
+            res.json({ error: "Already account is find" });
+        }
+       else{
+        const User = new UserModel({
+            name,
+            department,
+            id,
+            email,
+            role,
+            password
+        });
+        const result1 = await User.save();
+        res.json({ message: "Added successful" });
+       }
     }
-
-    // Create a new user instance
-    const newUser = new UserModel({
-        name,
-        department,
-        id,
-        email,
-        role,
-        password
-    });
-
-    // Save the new user to the database
-    const result = await newUser.save();
-
-    // Respond with success message
-    res.json({ message: "Added successfully" });
-} catch (error) {
-    // Handle validation errors
-    if (error.name === 'ValidationError') {
-        console.error("Validation Error:", error);
-        return res.status(400).json({ error: "Validation Error", details: error.errors });
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-    // Log and respond with internal server error
-    console.error("Internal Server Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-}
-
 }
 
 const deleteuser = async(req,res)=>{

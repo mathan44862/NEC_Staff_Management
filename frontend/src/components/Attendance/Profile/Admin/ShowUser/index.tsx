@@ -18,8 +18,8 @@ import {
 import { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import UpdateUser from "../UpdateUser";
-import { useMediaQuery } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select'; // Import SelectChangeEvent
+import { useMediaQuery } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select"; // Import SelectChangeEvent
 import {
   useDeleteuserMutation,
   useUserDetailsQuery,
@@ -63,7 +63,7 @@ const ShowStaff = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [selectedRole, setSelectedRole] = useState("All");
-  const isPortrait = useMediaQuery('(orientation: portrait)');
+  const isPortrait = useMediaQuery("(orientation: portrait)");
   const [apis] = useDeleteuserMutation();
 
   useEffect(() => {
@@ -102,12 +102,14 @@ const ShowStaff = () => {
     setPage(0);
   };
 
-  const handleDepartmentChange = (event: SelectChangeEvent<string>) => { // Fix: Import SelectChangeEvent
+  const handleDepartmentChange = (event: SelectChangeEvent<string>) => {
+    // Fix: Import SelectChangeEvent
     setSelectedDepartment(event.target.value);
     setPage(0);
   };
 
-  const handleRoleChange = (event: SelectChangeEvent<string>) => { // Fix: Import SelectChangeEvent
+  const handleRoleChange = (event: SelectChangeEvent<string>) => {
+    // Fix: Import SelectChangeEvent
     setSelectedRole(event.target.value);
     setPage(0);
   };
@@ -240,4 +242,4 @@ const ShowStaff = () => {
   );
 };
 
-export default ShowStaff
+export default ShowStaff;

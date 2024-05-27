@@ -2,6 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import { useTodayleaveQuery } from '../../../../apis/Apis';
+import { useMediaQuery, useTheme } from "@mui/material";
 
 interface ShowLeaves {
   date: number;
@@ -38,6 +39,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const TodayLeave: React.FC = () => {
   const { data, error, isLoading, refetch } = useTodayleaveQuery();
   const [userLeaveInfo, setUserLeaveInfo] = useState<ShowLeaves[]>([]);
+  const theme = useTheme();
+  const isSmaller = useMediaQuery(theme.breakpoints.down("sm"));
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,9 +58,9 @@ const TodayLeave: React.FC = () => {
     fetchData();
   }, [data, refetch]); // Include refetch in the dependency array
 
-  return (
-    <TableContainer component={Paper} sx={{ width: '80%', margin: '0 auto', borderRadius: '8px', marginTop: '5%' }}>
-      <Table sx={{ minWidth: 300, marginTop: '0%' }} aria-label="customized table">
+  return (  
+    <TableContainer component={Paper} sx={{ width: isSmaller ? "100%" : '80%', margin: '0 auto', borderRadius: '8px', marginTop: '15%' }}>
+      <Table sx={{ minWidth: 300 }} aria-label="customized table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'blueviolet' }}>
             <StyledTableCell align="center">Name</StyledTableCell>

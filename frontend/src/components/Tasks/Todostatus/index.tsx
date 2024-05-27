@@ -10,11 +10,13 @@ import {
   TableHead,
   TableRow,
   styled,
-  tableCellClasses
-} from '@mui/material';
-import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import { useTodostatusQuery } from '../../../apis/Apis';
+  tableCellClasses,
+  Container,
+  Grid,
+} from "@mui/material";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useTodostatusQuery } from "../../../apis/Apis";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -27,10 +29,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
@@ -53,7 +55,7 @@ interface Todostatus {
 const Todostatus = () => {
   const { data, refetch } = useTodostatusQuery();
   const [userTodo, setUserTodo] = useState<Todostatus[]>([]);
-  const [selectedRole, setSelectedRole] = useState('All');
+  const [selectedRole, setSelectedRole] = useState("All");
   const [filteredTodo, setFilteredTodo] = useState<Todostatus[]>([]);
 
   useEffect(() => {
@@ -64,14 +66,16 @@ const Todostatus = () => {
           setUserTodo(data as Todostatus[]);
         }
       } catch (error) {
-        console.error('Error fetching leave data:', error);
+        console.error("Error fetching leave data:", error);
       }
     };
     fetchData();
   }, [data, refetch]);
 
   useEffect(() => {
-    const filteredData = userTodo.filter((todo) => selectedRole === 'All' || todo.role === selectedRole);
+    const filteredData = userTodo.filter(
+      (todo) => selectedRole === "All" || todo.role === selectedRole
+    );
     setFilteredTodo(filteredData);
   }, [selectedRole, userTodo]);
 
@@ -79,34 +83,56 @@ const Todostatus = () => {
     setSelectedRole(event.target.value);
   };
 
-  const isDatePastOrToday = (date: number, month: number, year: number): boolean => {
+  const isDatePastOrToday = (
+    date: number,
+    month: number,
+    year: number
+  ): boolean => {
     const currentDate = dayjs();
     const taskDate = dayjs(`${year}-${month}-${date}`);
-    return taskDate.isBefore(currentDate, 'day') || taskDate.isSame(currentDate, 'day');
+    return (
+      taskDate.isBefore(currentDate, "day") ||
+      taskDate.isSame(currentDate, "day")
+    );
   };
 
   return (
-    <div>
-      <Select
-        sx={{ margin: '20px auto', marginLeft: '10%',marginTop:'5%' }}
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        label="Role"
-        value={selectedRole}
-        onChange={handleRoleChange}
-        displayEmpty
-        renderValue={(value) => (value === 'All' ? 'Role' : value)}
-        inputProps={{ 'aria-label': 'Select role' }}
-        style={{ marginBottom: '20px', width: '100px' }}
+    <Container>
+      <Grid container spacing={2} sx={{ marginTop: "10%" }}>
+        <Grid item xs={12} md={6}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Role"
+            value={selectedRole}
+            onChange={handleRoleChange}
+            displayEmpty
+            renderValue={(value) => (value === "All" ? "Role" : value)}
+            inputProps={{ "aria-label": "Select role" }}
+            style={{ marginBottom: "20px", width: "50%" }}
+          >
+            <MenuItem value="All">All Roles</MenuItem>
+            <MenuItem value="hod">HOD</MenuItem>
+            <MenuItem value="staff">Staff</MenuItem>
+          </Select>
+        </Grid>
+      </Grid>
+      <TableContainer
+        component={Paper}
+        sx={{
+          width: "100%",
+          margin: "0 auto",
+          borderRadius: "8px",
+          marginTop: "3%",
+          overflowX: "auto",
+        }}
       >
-        <MenuItem value="All">All Roles</MenuItem>
-        <MenuItem value="hod">HOD</MenuItem>
-        <MenuItem value="staff">Staff</MenuItem>
-      </Select>
-      <TableContainer component={Paper} sx={{ width: '80%', margin: '0 auto', borderRadius: '8px', marginTop: '3%' }}>
-        <Table sx={{ minWidth: 300, marginTop: '0%' }} aria-label="customized table">
+        <Table
+          sx={{ minWidth: 300 }}
+          aria-label="customized table"
+        >
           <TableHead>
-            <TableRow sx={{ backgroundColor: 'blueviolet' }}>
+            <TableRow sx={{ backgroundColor: "blueviolet" }}>
               <StyledTableCell align="center">Name</StyledTableCell>
               <StyledTableCell align="center">ID</StyledTableCell>
               <StyledTableCell align="center">Task</StyledTableCell>
@@ -124,20 +150,36 @@ const Todostatus = () => {
                 <StyledTableCell align="center">{row.name}</StyledTableCell>
                 <StyledTableCell align="center">{row.id}</StyledTableCell>
                 <StyledTableCell align="center">{row.task}</StyledTableCell>
-                <StyledTableCell align="center">{row.taskdescription}</StyledTableCell>
-                <StyledTableCell align="center">{row.department}</StyledTableCell>
-                <StyledTableCell align="center" style={{color: row.status === 'finished' ? 'green' : 'red'}}>{row.status }</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.taskdescription}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.department}
+                </StyledTableCell>
+                <StyledTableCell
+                  align="center"
+                  style={{ color: row.status === "finished" ? "green" : "red" }}
+                >
+                  {row.status}
+                </StyledTableCell>
                 <StyledTableCell align="center">{row.role}</StyledTableCell>
                 <StyledTableCell align="center">{row.taskby}</StyledTableCell>
-                <StyledTableCell align="center" style={{ color: isDatePastOrToday(row.date, row.month, row.year) ? 'red' : 'initial' }}>
-                  {row.date + '/' + row.month + '/' + row.year}
+                <StyledTableCell
+                  align="center"
+                  style={{
+                    color: isDatePastOrToday(row.date, row.month, row.year)
+                      ? "red"
+                      : "initial",
+                  }}
+                >
+                  {row.date + "/" + row.month + "/" + row.year}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Container>
   );
 };
 

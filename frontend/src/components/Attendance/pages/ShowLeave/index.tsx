@@ -47,7 +47,7 @@ const ShowLeave: React.FC<ShowLeaveProps> = ({ year,month }) => {
     
   return (
 
-    <Stack alignItems={"center"}  id="container"  marginTop={'5%'}     marginBottom={'2%'}
+    <Stack alignItems={"center"}  id="container"  marginTop={'10%'}     marginBottom={'2%'}
     direction={isSmallScreen ? 'column' : 'row'}
             gap={isSmallScreen ? '5%' : '10%'}
     >

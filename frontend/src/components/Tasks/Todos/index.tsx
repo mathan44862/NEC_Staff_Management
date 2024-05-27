@@ -1,13 +1,23 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import TextField from '@mui/material/TextField';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+  Checkbox,
+  TextField,
+  Container,
+  Grid,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs from "dayjs";
-import { useEffect, useRef, useState } from 'react';
-import { useTodosendtodosMutation, useTodouserQuery } from '../../../apis/Apis';
+import dayjs, { Dayjs } from "dayjs";
+import { useEffect, useRef, useState } from "react";
+import { useTodosendtodosMutation, useTodouserQuery } from "../../../apis/Apis";
 
 interface TodosProps {
   selectedItems: UserDetails[];
@@ -32,49 +42,50 @@ function Todos() {
   const [staffSelected, setStaffSelected] = useState(false);
   const { data, refetch } = useTodouserQuery();
   const tableRef = useRef<HTMLDivElement>(null);
-  const [task, setTask] = useState('');
-  const [taskdescription, setTaskdescription] = useState('');
+  const [task, setTask] = useState("");
+  const [taskdescription, setTaskdescription] = useState("");
   const currentDate = new Date();
-  const [date, setDate] = useState<dayjs.Dayjs | null>(null);
+  const [date, setDate] = useState<Dayjs | null>(null);
   const [inputEntered, setInputEntered] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await refetch();
         if (data && Array.isArray(data)) {
+          console.log(data)
           setUser(data as UserDetails[]);
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
     fetchData();
-  }, [data, refetch])
+  }, [data, refetch]);
 
   useEffect(() => {
-    setInputEntered(task !== '' && taskdescription !== '' && date !== null);
+    setInputEntered(task !== "" && taskdescription !== "" && date !== null);
   }, [task, taskdescription, date]);
 
   const handleAssignWork = () => {
     setShowTable(true);
     setStaffSelected(true);
     if (tableRef.current) {
-      tableRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      tableRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
   const handleCheckboxChange = (userData: UserDetails) => {
-    const index = selectedItems.findIndex(item => item._id === userData._id);
+    const index = selectedItems.findIndex((item) => item._id === userData._id);
     if (index !== -1) {
-      setSelectedItems(prevSelectedItems => {
+      setSelectedItems((prevSelectedItems) => {
         const updatedItems = [...prevSelectedItems];
         updatedItems.splice(index, 1);
         return updatedItems;
       });
     } else {
-      setSelectedItems(prevSelectedItems => [...prevSelectedItems, userData]);
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, userData]);
     }
   };
 
@@ -82,41 +93,60 @@ function Todos() {
 
   const handleAssignTask = async () => {
     try {
-      console.log(selectedItems);
-      const formattedDate = dayjs(date).format('YYYY MM DD');
+      const formattedDate = dayjs(date).format("YYYY MM DD");
       const selectedDate = formattedDate.split(" ");
       console.log(selectedDate);
       const response = await sendTodosMutation({
         task,
         taskdescription,
-        User: selectedItems ,
+        User: selectedItems,
         date: parseInt(selectedDate[2]),
         month: parseInt(selectedDate[1]),
         year: parseInt(selectedDate[0]),
       });
-      if ('data' in response) {
-        if ('message' in response.data) {
+      if ("data" in response) {
+        if ("message" in response.data) {
           window.location.reload();
         }
       }
     } catch (error) {
-      console.error('Error sending todos:', error);
+      console.error("Error sending todos:", error);
     }
   };
 
-  const filteredUsers = user.filter(userData =>
-     userData.name && userData.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = user.filter(
+    (userData) =>
+      userData.name &&
+      userData.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '50vh', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',marginTop:'10%' }}>
-      <div style={{ maxWidth: '100%', padding: '20px', borderRadius: '8px', backgroundColor: '#FFFFFF', width: '100%', boxSizing: 'border-box',marginTop:'10%' }}>
-        <div style={{ marginBottom: '20px', maxWidth: '400px', width: '100%', padding: '0 10px', display: 'flex', flexDirection: 'column' }}>
+    <Container
+      sx={{
+        mt: 10, 
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          width: "120%",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          borderRadius: "8px",
+          backgroundColor: "#FFFFFF",
+          padding: 2,
+        }}
+      >
+        <Grid item xs={12}>
           <TextField
             id="outlined-basic"
             label="Enter Task Name"
             variant="outlined"
-            style={{ marginBottom: '10px' }}
+            fullWidth
+            style={{ marginBottom: "10px" }}
             value={task}
             onChange={(e) => setTask(e.target.value)}
           />
@@ -124,83 +154,127 @@ function Todos() {
             id="outlined-multiline-static"
             label="Enter the Task"
             multiline
-            style={{ marginBottom: '10px' }}
+            fullWidth
+            style={{ marginBottom: "10px" }}
             rows={4}
             value={taskdescription}
             onChange={(e) => setTaskdescription(e.target.value)}
           />
-          <div style={{ marginBottom: '10px' }}>
+          <div style={{ marginBottom: "10px" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                label={'Date'}
-                views={['year', 'month', 'day']}
-                minDate={dayjs(currentDate).startOf('month')}
+                label={"Date"}
+                views={["year", "month", "day"]}
+                minDate={dayjs(currentDate).startOf("month")}
                 value={date}
                 onChange={(newDate) => setDate(newDate)}
               />
             </LocalizationProvider>
           </div>
-          <Button variant="contained" onClick={handleAssignWork} disabled={!inputEntered || staffSelected} style={{ marginBottom: '10px' }}>Select Staff</Button>
+          <Button
+            variant="contained"
+            onClick={handleAssignWork}
+            disabled={!inputEntered || staffSelected}
+            fullWidth
+            style={{ marginBottom: "10px" }}
+          >
+            Select Staff
+          </Button>
           {staffSelected && (
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <TextField
-                id="outlined-basic"
-                label="Search"
-                variant="outlined"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button variant="contained" onClick={handleAssignTask} style={{ marginLeft: '10px' }}>Assign Task</Button>
-            </div>
+            <Grid
+              container
+              spacing={1}
+              alignItems="center"
+              style={{ marginBottom: "10px" }}
+            >
+              <Grid item xs={9}>
+                <TextField
+                  id="outlined-basic"
+                  label="Search"
+                  variant="outlined"
+                  fullWidth
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Button
+                  variant="contained"
+                  onClick={handleAssignTask}
+                  fullWidth
+                  disabled={user.length == 0 ? true : false}
+                >
+                  Assign Task
+                </Button>
+              </Grid>
+            </Grid>
           )}
-        </div>
-        {showTable &&
-          <div ref={tableRef} style={{ overflowX: 'auto', padding: '0 10px', marginTop: '20px' }}>
-            <CustomTable selectedItems={selectedItems} handleCheckboxChange={handleCheckboxChange} users={filteredUsers} handleAssignTask={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
-          </div>
-        }
-      </div>
-    </div>
+        </Grid>
+        {showTable && (
+          <Grid item xs={12} ref={tableRef}>
+            <CustomTable
+              selectedItems={selectedItems}
+              handleCheckboxChange={handleCheckboxChange}
+              users={filteredUsers}
+              handleAssignTask={handleAssignTask}
+            />
+          </Grid>
+        )}
+      </Grid>
+    </Container>
   );
 }
 
-function CustomTable({ selectedItems, handleCheckboxChange, users }: TodosProps & { users: UserDetails[] }) {
+function CustomTable({
+  selectedItems,
+  handleCheckboxChange,
+  users,
+  handleAssignTask,
+}: TodosProps & { users: UserDetails[] }) {
   return (
-    <div>
-      <div style={{ overflowX: 'auto' }}>
-        <TableContainer component={Paper} style={{ width: '100%', padding: '0 0px', marginBottom: '-17px' }}>
-          <Table aria-label="customized table" size="small">
-            <TableHead>
-              <TableRow style={{ backgroundColor: 'black' }}>
-                <TableCell align="center" style={{ color: 'white' }}>SELECT</TableCell>
-                <TableCell align="center" style={{ color: 'white' }}>ID</TableCell>
-                <TableCell align="center" style={{ color: 'white' }}>Name</TableCell>
-                <TableCell align="center" style={{ color: 'white' }}>Email</TableCell>
-                <TableCell align="center" style={{ color: 'white' }}>Department</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.map((userData) => (
-                <TableRow key={userData._id}>
-                  <TableCell align="center">
-                    <Checkbox
-                      checked={selectedItems.some(item => item._id === userData._id)}
-                      onChange={() => handleCheckboxChange(userData)}
-                    />
-                  </TableCell>
-                  <TableCell align="center">{userData.id}</TableCell>
-                  <TableCell align="center">{userData.name}</TableCell>
-                  <TableCell align="center">{userData.email}</TableCell>
-                  <TableCell align="center">{userData.department}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
+    <TableContainer component={Paper} style={{ marginTop: "20px" }}>
+      <Table aria-label="customized table" size="small">
+        <TableHead>
+          <TableRow style={{ backgroundColor: "black" }}>
+            <TableCell align="center" style={{ color: "white" }}>
+              SELECT
+            </TableCell>
+            <TableCell align="center" style={{ color: "white" }}>
+              ID
+            </TableCell>
+            <TableCell align="center" style={{ color: "white" }}>
+              Name
+            </TableCell>
+            <TableCell align="center" style={{ color: "white" }}>
+              Email
+            </TableCell>
+            <TableCell align="center" style={{ color: "white" }}>
+              Department
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((userData) => (
+            <TableRow key={userData._id}>
+              <TableCell align="center">
+                <Checkbox
+                  checked={selectedItems.some(
+                    (item) => item._id === userData._id
+                  )}
+                  onChange={() => {
+                    handleCheckboxChange(userData);
+                  }}
+                />
+              </TableCell>
+              <TableCell align="center">{userData.id}</TableCell>
+              <TableCell align="center">{userData.name}</TableCell>
+              <TableCell align="center">{userData.email}</TableCell>
+              <TableCell align="center">{userData.department}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

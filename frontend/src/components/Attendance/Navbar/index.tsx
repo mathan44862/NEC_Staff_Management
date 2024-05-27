@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MyRoutes from "../../../routes/MyRoutes";
-import { jwtDecode } from "jwt-decode";
 import ListPage from "./Listpage";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Menu from "@mui/material/Menu";
@@ -57,7 +56,6 @@ export default function ResponsiveDrawer(props: Props) {
   };
 
   const handleSubListItemClick = (itemName: string) => {
-    console.log(itemName)
     handleDrawerToggle();
     setSelectedListItem(itemName);
     navigate(`/${itemName}`);

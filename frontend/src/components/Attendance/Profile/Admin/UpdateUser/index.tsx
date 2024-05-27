@@ -56,7 +56,7 @@ export default function UpdateUser({id}:{id:String}) {
   }, [users]);
   const handleSubmit = async () => {
     try {
-      console.log(user?._id);
+      console.log(user?._id); 
       const response = await apis({
         _id:users?._id,
         email: formik.values.email ,
@@ -77,7 +77,7 @@ export default function UpdateUser({id}:{id:String}) {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh',marginTop:"50px" }}>
       <Stack alignItems={"center"} margin={'6%'}>
         <br />
         <br />

@@ -27,6 +27,7 @@ const LoginPage = () => {
                     console.log(response.data);
                     const accessKey: accessToken = response.data;
                     localStorage.setItem('accessToken', accessKey.accessToken);
+                    navigate("/");
                     window.location.reload();
                 }
             }

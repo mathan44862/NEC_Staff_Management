@@ -24,6 +24,7 @@ import {
   useDeleteuserMutation,
   useUserDetailsQuery,
 } from "../../../../../apis/Apis";
+import { WidthFull } from "@mui/icons-material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -138,17 +139,28 @@ const ShowStaff = () => {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          marginTop={"10%"}
+          marginTop={isPortrait ? "10%" : "0%"}
+          sx={{ width: "100%" }}
         >
-          <div style={{ marginLeft: "5%", gap: "5%", display: "flex" }}>
+          <div
+            style={{
+              marginLeft: "5%",
+              gap: "30px",
+              display: "flex",
+              flexDirection: !isPortrait ? "row" : "column",
+              marginTop: "5%",
+            }}
+          >
             <TextField
               id="outlined-basic"
               label="Search Staff"
               variant="outlined"
               value={searchQuery}
               onChange={handleSearchChange}
+              autoComplete="off"
+              sx={{ width: "100%" }}
             />
-            <FormControl>
+            <FormControl sx={{ width: "100%" }}>
               <InputLabel id="demo-simple-select-label">Department</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -162,10 +174,42 @@ const ShowStaff = () => {
                 }
                 inputProps={{ "aria-label": "Select department" }}
               >
-                {/* Department options */}
+                <MenuItem value="IT">IT Department</MenuItem>
+                <MenuItem value="CSE">CSE Department</MenuItem>
+                <MenuItem value="AGRI">AGRI Department</MenuItem>
+                <MenuItem value="AI & DS">AI & DS Department</MenuItem>
+                <MenuItem value="BME">BME Department</MenuItem>
+                <MenuItem value="CHEMICAL"> CHEMICAL Department</MenuItem>
+                <MenuItem value="CIVIL"> CIVIL Department</MenuItem>
+                <MenuItem value="IOT"> IOT Department</MenuItem>
+                <MenuItem value="ECE"> ECE Department</MenuItem>
+                <MenuItem value="MBA"> MBA Department</MenuItem>
+                <MenuItem value="MECH">MECH Department</MenuItem>
+                <MenuItem value="EEE"> ECE Department</MenuItem>
+                <MenuItem value="S & H - ENGLISH">
+                  {" "}
+                  S & H - ENGLISH Department
+                </MenuItem>
+                <MenuItem value="S & H - MATHEMATICS">
+                  {" "}
+                  S & H - MATHEMATICS Department
+                </MenuItem>
+                <MenuItem value="S & H - PHYSICS">
+                  {" "}
+                  S & H - PHYSICS Department
+                </MenuItem>
+                <MenuItem value="S & H -CHEMISTRY">
+                  {" "}
+                  S & H -CHEMISTRY Department
+                </MenuItem>
+                <MenuItem value="S& H - LIBRARY">
+                  S& H - LIBRARY Department
+                </MenuItem>
+                <MenuItem value="S&H PHY.ED">S&H PHY.ED Department</MenuItem>
+                <MenuItem value="NEC">NEC</MenuItem>
               </Select>
             </FormControl>
-            <FormControl>
+            <FormControl sx={{ width: "100%" }}>
               <InputLabel id="demo-simple-select-label">Role</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -177,15 +221,17 @@ const ShowStaff = () => {
                 renderValue={(value) => (value === "All" ? "All Roles" : value)}
                 inputProps={{ "aria-label": "Select role" }}
               >
-                {/* Role options */}
+                <MenuItem value={"staff"}>Staff</MenuItem>
+                <MenuItem value={"hod"}>HOD</MenuItem>
+                <MenuItem value={"principal"}>Principal</MenuItem>
               </Select>
             </FormControl>
           </div>
           <TableContainer
             component={Paper}
-            sx={{ overflowX: isPortrait ? "auto" : "hidden" }}
+            sx={{ width: "100%", marginLeft: isPortrait ? "" : "50px" }}
           >
-            <Table sx={{ minWidth: 500 }} aria-label="customized table">
+            <Table aria-label="customized table">
               <TableBody>
                 <br />
                 {filteredUserInfo

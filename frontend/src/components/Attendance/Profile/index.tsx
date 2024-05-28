@@ -1,6 +1,6 @@
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import UpdateUser from "./Admin/UpdateUser";
 
@@ -55,7 +55,7 @@ const Profile = () => {
         <br />
         <AccountCircleIcon sx={{ height: "20%", width: "20%" }} />
         <Typography variant="h6" component="h1">
-          {user.name}   
+          {user.name}
         </Typography>
         <Typography variant="h6" component="h6">
           {user.department}
@@ -65,7 +65,6 @@ const Profile = () => {
         </Typography>
         <UpdateUser id={user._id}></UpdateUser>
       </Stack>
-      <Stack></Stack>
     </Stack>
   );
 };

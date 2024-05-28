@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     department: { type: String, required: true },
     id: { type: String, unique: true, required: true },
     email: { type: String, required: true, match: /.+\@.+\..+/ },
-    role: { type: String, required: true, enum: ['admin', 'user', 'principal'] },
+    role: { type: String, required: true, enum: ['admin', 'staff', 'principal','hod'] },
     password: { type: String, required: true }
 });
 
